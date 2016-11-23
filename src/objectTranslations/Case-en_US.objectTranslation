@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Requests</value>
+    </caseValues>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Comments</value>
+        </caseValues>
+        <name>description_case</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>External Comments</value>
+        </caseValues>
+        <name>internal_comments_case</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <label><!-- ANC --></label>
+        <name>ANC__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address ID --></label>
+        <name>AddressID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Code --></label>
+        <name>AgencyCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- AliasName --></label>
+        <name>AliasName__c</name>
+    </fields>
+    <fields>
+        <label><!-- BlockName --></label>
+        <name>BlockName__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseOwner --></label>
+        <name>CaseOwner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Closure Comment Published --></label>
+        <name>Case_Closure_Comment_Published__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Closure Comment --></label>
+        <name>Case_Closure_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Source --></label>
+        <name>Case_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Neighborhood Cluster --></label>
+        <name>Cluster__c</name>
+    </fields>
+    <fields>
+        <label><!-- ContactEmail --></label>
+        <name>ContactEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Address --></label>
+        <name>Contact_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- CreatedBy --></label>
+        <name>CreatedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device --></label>
+        <name>Device__c</name>
+    </fields>
+    <fields>
+        <label><!-- ExpectedBusinessResolutionDate --></label>
+        <name>ExpectedBusinessResolutionDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expected Resolution Date --></label>
+        <name>Expected_Resolution_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- External System Name --></label>
+        <name>External_System_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNotes (not used) --></label>
+        <name>FlexNotes__c</name>
+    </fields>
+    <fields>
+        <label><!-- FullBlock --></label>
+        <name>FullBlock__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeoLocation --></label>
+        <name>GeoLocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address ID --></label>
+        <name>IncapsulateDCM__ADDRESS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Number Suffix --></label>
+        <name>IncapsulateDCM__ADDRNUMSUFFIX__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Number --></label>
+        <name>IncapsulateDCM__ADDRNUM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alias Name --></label>
+        <name>IncapsulateDCM__ALIASNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANC --></label>
+        <name>IncapsulateDCM__ANC__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>IncapsulateDCM__CITY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cluster --></label>
+        <name>IncapsulateDCM__Cluster__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Address --></label>
+        <name>IncapsulateDCM__FULLADDRESS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Intersection --></label>
+        <name>IncapsulateDCM__FULLINTERSECTION__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intersection ID --></label>
+        <name>IncapsulateDCM__INTERSECTIONID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latitude --></label>
+        <name>IncapsulateDCM__LATITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Longitude --></label>
+        <name>IncapsulateDCM__LONGITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- MAR ID --></label>
+        <name>IncapsulateDCM__MARID__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Grid --></label>
+        <name>IncapsulateDCM__NATIONALGRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Police District --></label>
+        <name>IncapsulateDCM__POLDIST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quadrant --></label>
+        <name>IncapsulateDCM__QUADRANT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference X --></label>
+        <name>IncapsulateDCM__REFX__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Y --></label>
+        <name>IncapsulateDCM__REFY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Road Way Seg ID --></label>
+        <name>IncapsulateDCM__ROADWAYSEGID__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>IncapsulateDCM__STATE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>IncapsulateDCM__STNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Type --></label>
+        <name>IncapsulateDCM__STREET_TYPE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>IncapsulateDCM__WARD__c</name>
+    </fields>
+    <fields>
+        <label><!-- X Coordinate --></label>
+        <name>IncapsulateDCM__XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Y Coordinate --></label>
+        <name>IncapsulateDCM__YCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zipcode --></label>
+        <name>IncapsulateDCM__ZIPCODE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intersection Id --></label>
+        <name>IntersectionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jurisdiction Department --></label>
+        <name>JurisdictionDepartment__c</name>
+    </fields>
+    <fields>
+        <label><!-- JurisdictionId --></label>
+        <name>JurisdictionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Dept Code --></label>
+        <name>Jurisdiction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Language --></label>
+        <name>Language__c</name>
+        <picklistValues>
+            <masterLabel>Amharic</masterLabel>
+            <translation><!-- Amharic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chinese</masterLabel>
+            <translation><!-- Chinese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French</masterLabel>
+            <translation><!-- French --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korean</masterLabel>
+            <translation><!-- Korean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish</masterLabel>
+            <translation><!-- Spanish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vietnamese</masterLabel>
+            <translation><!-- Vietnamese --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- LastModifiedBy --></label>
+        <name>LastModifiedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Case Comment Added --></label>
+        <name>Last_Case_Comment_Added__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Update Date --></label>
+        <name>Last_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- LatestCaseComments --></label>
+        <name>LatestCaseComments__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyID --></label>
+        <name>LegacyID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Media URL --></label>
+        <name>Media_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- OldCaseNumber --></label>
+        <name>OldCaseNumber__c</name>
+    </fields>
+    <fields>
+        <name>Origin</name>
+        <picklistValues>
+            <masterLabel>311-API</masterLabel>
+            <translation><!-- 311-API --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>311-App</masterLabel>
+            <translation><!-- 311-App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Facebook</masterLabel>
+            <translation><!-- Facebook --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Transfer</masterLabel>
+            <translation><!-- Internal Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twitter</masterLabel>
+            <translation><!-- Twitter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Police District --></label>
+        <name>POlDistrict__c</name>
+    </fields>
+    <fields>
+        <label><!-- PSA --></label>
+        <name>PSA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previous Status --></label>
+        <name>Previous_Status__c</name>
+    </fields>
+    <fields>
+        <name>Priority</name>
+        <picklistValues>
+            <masterLabel>Emergency</masterLabel>
+            <translation><!-- Emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Escalated</masterLabel>
+            <translation><!-- Escalated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Dispute</masterLabel>
+            <translation><!-- In Dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent</masterLabel>
+            <translation><!-- Urgent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Quadrant --></label>
+        <name>Quadrant__c</name>
+    </fields>
+    <fields>
+        <name>Reason</name>
+        <picklistValues>
+            <masterLabel>1- Closed, issue resolved</masterLabel>
+            <translation><!-- 1- Closed, issue resolved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2- Closed, no action required</masterLabel>
+            <translation><!-- 2- Closed, no action required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3- Closed, outside DC responsiblility</masterLabel>
+            <translation><!-- 3- Closed, outside DC responsiblility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4- Closed, Issue not verified</masterLabel>
+            <translation><!-- 4- Closed, Issue not verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5- Closed, referred to another agency</masterLabel>
+            <translation><!-- 5- Closed, referred to another agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6- Pended, item outside current budget</masterLabel>
+            <translation><!-- 6- Pended, item outside current budget --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7- In progress (used for multiple steps)</masterLabel>
+            <translation><!-- 7- In progress (used for multiple steps) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8- Open, resolution pending add&apos;l agency</masterLabel>
+            <translation><!-- 8- Open, resolution pending add&apos;l agency --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- RoadwaySegId --></label>
+        <name>RoadwaySegId__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Status --></label>
+        <name>SLA_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Number --></label>
+        <name>SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA --></label>
+        <name>SLA_and_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMD --></label>
+        <name>SMD__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Jurisdiction --></label>
+        <name>SRType_Jurisdiction__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>SRType__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SR Status --></label>
+        <name>SR_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Email On SR Closed --></label>
+        <name>Send_Email_On_SR_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Email On SR Creation --></label>
+        <name>Send_Email_On_SR_Creation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Update Email Flag --></label>
+        <name>Send_Update_Email_Flag__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Name --></label>
+        <name>Service_Request_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Id --></label>
+        <name>Service_Request_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicing Agency Expanded --></label>
+        <name>Servicing_Agency_Expanded__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicing Agency --></label>
+        <name>Servicing_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Snow Route --></label>
+        <name>SnowRoute__c</name>
+    </fields>
+    <fields>
+        <label><!-- Snow Zone --></label>
+        <name>SnowZone__c</name>
+    </fields>
+    <fields>
+        <name>Status</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Incomplete Information</masterLabel>
+            <translation><!-- Closed - Incomplete Information --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute</masterLabel>
+            <translation><!-- Dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate (Closed)</masterLabel>
+            <translation><!-- Duplicate (Closed) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate (Opened)</masterLabel>
+            <translation><!-- Duplicate (Opened) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voided</masterLabel>
+            <translation><!-- Voided --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- TestField --></label>
+        <name>TestField__c</name>
+    </fields>
+    <fields>
+        <name>Type</name>
+        <picklistValues>
+            <masterLabel>Feature Request</masterLabel>
+            <translation><!-- Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem</masterLabel>
+            <translation><!-- Problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Question</masterLabel>
+            <translation><!-- Question --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>Ward__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>Ward_picklist__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- XCOORD --></label>
+        <name>XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- YCOORD --></label>
+        <name>YCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zipcode --></label>
+        <name>Zipcode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Author External Id --></label>
+        <name>sf4twitter__Author_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Author Username --></label>
+        <name>sf4twitter__Twitter_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Conversation External Id --></label>
+        <name>sf4twitter__twitterId__c</name>
+    </fields>
+    <layouts>
+        <layout>Converted: Case Feed Layout</layout>
+        <sections>
+            <label><!-- Additional Info --></label>
+            <section>Additional Info</section>
+        </sections>
+        <sections>
+            <label><!-- Contact Info --></label>
+            <section>Contact Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- MAR Demographic Data --></label>
+            <section>MAR Demographic Data</section>
+        </sections>
+        <sections>
+            <label><!-- Servicing Agency Info --></label>
+            <section>Servicing Agency Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Info --></label>
+            <section>System Info</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Child Case --></label>
+        <name>Child_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Event --></label>
+        <name>Event</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>Log_a_Call</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewChildCase --></label>
+        <name>NewChildCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Seach --></label>
+        <name>Seach</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Task --></label>
+        <name>Task</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Clone_Case --></label>
+        <name>Clone_Case</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- UpdateDCAddress --></label>
+        <name>IncapsulateDCM__UpdateDCAddress</name>
+    </webLinks>
+</CustomObjectTranslation>

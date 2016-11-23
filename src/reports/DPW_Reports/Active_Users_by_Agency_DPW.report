@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>PROFILE</field>
+    </columns>
+    <columns>
+        <field>COMPANY_NAME</field>
+    </columns>
+    <columns>
+        <field>USERNAME</field>
+    </columns>
+    <columns>
+        <field>ACTIVE</field>
+    </columns>
+    <columns>
+        <field>LAST_LOGIN</field>
+    </columns>
+    <description>Active Licensed Users in 311Force for DPW.</description>
+    <filter>
+        <criteriaItems>
+            <column>LICENSE_TYPE</column>
+            <operator>notEqual</operator>
+            <value>G,n,b</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>PROFILE</column>
+            <operator>equals</operator>
+            <value>System Administrator,Supervisor,OUC Agent,OUCSuperuser</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ACTIVE</column>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>COMPANY_NAME</column>
+            <operator>equals</operator>
+            <value>DPW</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Active Users by Agency (DPW)</name>
+    <params>
+        <name>active</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>User</reportType>
+    <showDetails>true</showDetails>
+    <sortColumn>LAST_LOGIN</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

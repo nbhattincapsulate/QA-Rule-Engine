@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Flex Note History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Flex Note Histories</value>
+    </caseValues>
+    <fields>
+        <label><!-- Answer Date Time --></label>
+        <name>Answer_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer --></label>
+        <name>Answer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeDescriptionSourcePart1 --></label>
+        <name>CodeDescriptionSourcePart1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeDescriptionSourcePart2 --></label>
+        <name>CodeDescriptionSourcePart2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeDescription --></label>
+        <name>CodeDescription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deleted --></label>
+        <name>Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNote Question --></label>
+        <name>FlexNote_Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flex Note Id --></label>
+        <name>Flex_Note_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsSecure --></label>
+        <name>IsSecure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>Last_Modified_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modified Date --></label>
+        <name>Modified_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Questions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request History --></label>
+        <name>Service_Request_History__c</name>
+        <relationshipLabel><!-- Flex Note Histories --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Flex Note History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

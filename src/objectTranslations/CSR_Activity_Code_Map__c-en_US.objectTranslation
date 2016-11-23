@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CSR Activity Code Map</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CSR Activity Code Maps</value>
+    </caseValues>
+    <fields>
+        <label><!-- Activity code 311Force --></label>
+        <name>Activity_code_311Force__c</name>
+        <relationshipLabel><!-- CSR Activity Code Maps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CSR Activity Code --></label>
+        <name>CSR_Activity_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- CSR Activity Name --></label>
+        <name>CSR_Activity_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- New 311Force Code --></label>
+        <name>New_311Force_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Old Legacy Code --></label>
+        <name>Old_Legacy_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SRType Code --></label>
+        <name>SRType_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Name --></label>
+        <name>SR_Name__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

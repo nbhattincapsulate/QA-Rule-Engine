@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>311 Reports</label>
+            <name>X311_Reports</name>
+        </dataCategory>
+        <dataCategory>
+            <label>311 Dashboards</label>
+            <name>X311_Dashboards</name>
+        </dataCategory>
+        <dataCategory>
+            <label>IT Support Guides</label>
+            <name>IT_Support_Guides</name>
+        </dataCategory>
+        <dataCategory>
+            <label>IT config Guide</label>
+            <name>IT_config_Guide</name>
+        </dataCategory>
+        <dataCategory>
+            <label>IT Admin Guide</label>
+            <name>IT_Admin_Guide</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <label>Training and User Guides</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

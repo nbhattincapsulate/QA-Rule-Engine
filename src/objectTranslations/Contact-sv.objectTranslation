@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Address ID --></label>
+        <name>IncapsulateDCM__ADDRESS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Number Suffix --></label>
+        <name>IncapsulateDCM__ADDRNUMSUFFIX__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Number --></label>
+        <name>IncapsulateDCM__ADDRNUM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Alias Name --></label>
+        <name>IncapsulateDCM__ALIASNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANC --></label>
+        <name>IncapsulateDCM__ANC__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>IncapsulateDCM__CITY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cluster --></label>
+        <name>IncapsulateDCM__Cluster__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Address --></label>
+        <name>IncapsulateDCM__FULLADDRESS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Full Intersection --></label>
+        <name>IncapsulateDCM__FULLINTERSECTION__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intersection ID --></label>
+        <name>IncapsulateDCM__INTERSECTIONID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latitude --></label>
+        <name>IncapsulateDCM__LATITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Longitude --></label>
+        <name>IncapsulateDCM__LONGITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- MAR ID --></label>
+        <name>IncapsulateDCM__MARID__c</name>
+    </fields>
+    <fields>
+        <label><!-- National Grid --></label>
+        <name>IncapsulateDCM__NATIONALGRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Police District --></label>
+        <name>IncapsulateDCM__POLDIST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quadrant --></label>
+        <name>IncapsulateDCM__QUADRANT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ref X --></label>
+        <name>IncapsulateDCM__REFX__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ref Y --></label>
+        <name>IncapsulateDCM__REFY__c</name>
+    </fields>
+    <fields>
+        <label><!-- Road Way Seg ID --></label>
+        <name>IncapsulateDCM__ROADWAYSEGID__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>IncapsulateDCM__STATE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Name --></label>
+        <name>IncapsulateDCM__STNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- Street Type --></label>
+        <name>IncapsulateDCM__STREET_TYPE__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>IncapsulateDCM__WARD__c</name>
+    </fields>
+    <fields>
+        <label><!-- X Coordinate --></label>
+        <name>IncapsulateDCM__XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Y Coordinate --></label>
+        <name>IncapsulateDCM__YCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zipcode --></label>
+        <name>IncapsulateDCM__ZIPCODE__c</name>
+    </fields>
+    <fields>
+        <name>LeadSource</name>
+        <picklistValues>
+            <masterLabel>Advertisement</masterLabel>
+            <translation><!-- Advertisement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Employee Referral</masterLabel>
+            <translation><!-- Employee Referral --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>External Referral</masterLabel>
+            <translation><!-- External Referral --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partner</masterLabel>
+            <translation><!-- Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Relations</masterLabel>
+            <translation><!-- Public Relations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seminar - Internal</masterLabel>
+            <translation><!-- Seminar - Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seminar - Partner</masterLabel>
+            <translation><!-- Seminar - Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trade Show</masterLabel>
+            <translation><!-- Trade Show --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Word of mouth</masterLabel>
+            <translation><!-- Word of mouth --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- LegacyId --></label>
+        <name>LegacyId__c</name>
+    </fields>
+    <fields>
+        <label><!-- MotorolaUserId --></label>
+        <name>MotorolaUserId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Date --></label>
+        <name>Schedule_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Source --></label>
+        <name>sf4twitter__Contact_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook Image Url --></label>
+        <name>sf4twitter__Fcbk_Image_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook Picture --></label>
+        <name>sf4twitter__Fcbk_Picture__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook Profile Url --></label>
+        <name>sf4twitter__Fcbk_Profile_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook User Id --></label>
+        <name>sf4twitter__Fcbk_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Facebook Username --></label>
+        <name>sf4twitter__Fcbk_Username__c</name>
+    </fields>
+    <fields>
+        <help>Klicka på länken för att ändra följande status</help>
+        <label><!-- Following On Twitter --></label>
+        <name>sf4twitter__Follow_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Influencer Type --></label>
+        <name>sf4twitter__Influencer_Type__c</name>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporter</masterLabel>
+            <translation><!-- Reporter --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Is this Contact an Influencer (ie Reporter?) --></help>
+        <label><!-- Influencer --></label>
+        <name>sf4twitter__Influencer__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Klout Number --></label>
+        <name>sf4twitter__Klout_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Klout Score --></label>
+        <name>sf4twitter__Klout_Score__c</name>
+    </fields>
+    <fields>
+        <label><!-- Languages --></label>
+        <name>sf4twitter__Languages__c</name>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>sf4twitter__Level__c</name>
+        <picklistValues>
+            <masterLabel>Primary</masterLabel>
+            <translation><!-- Primary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secondary</masterLabel>
+            <translation><!-- Secondary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tertiary</masterLabel>
+            <translation><!-- Tertiary --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Origin --></label>
+        <name>sf4twitter__Origin__c</name>
+        <picklistValues>
+            <masterLabel>Facebook</masterLabel>
+            <translation>Facebook</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twitter</masterLabel>
+            <translation>Twitter</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Research This Contact --></label>
+        <name>sf4twitter__Research_this_Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Bio --></label>
+        <name>sf4twitter__Twitter_Bio__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Creation Date --></label>
+        <name>sf4twitter__Twitter_Creation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Follower Count --></label>
+        <name>sf4twitter__Twitter_Follower_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Following Count --></label>
+        <name>sf4twitter__Twitter_Following_count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Image Url --></label>
+        <name>sf4twitter__Twitter_Image_Url__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Last Tweet --></label>
+        <name>sf4twitter__Twitter_Last_Tweet__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Location --></label>
+        <name>sf4twitter__Twitter_Location__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Picture --></label>
+        <name>sf4twitter__Twitter_Picture__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Status Count --></label>
+        <name>sf4twitter__Twitter_Status_count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter User Id --></label>
+        <name>sf4twitter__Twitter_User_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Twitter Username --></label>
+        <name>sf4twitter__Twitter_Username__c</name>
+    </fields>
+    <fields>
+        <label><!-- Followed --></label>
+        <name>sf4twitter__followed__c</name>
+    </fields>
+    <quickActions>
+        <label><!-- Case --></label>
+        <name>Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Event --></label>
+        <name>Event</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>Log_a_Call</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log A Note --></label>
+        <name>Note</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Task --></label>
+        <name>Task</name>
+    </quickActions>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- UpdateDCAddress --></label>
+        <name>IncapsulateDCM__UpdateDCAddress</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Author_Info --></label>
+        <name>sf4twitter__Get_Author_Info</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Author_Info_Massive --></label>
+        <name>sf4twitter__Get_Author_Info_Massive</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Klout_Score --></label>
+        <name>sf4twitter__Get_Klout_Score</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Klout_Score_Massive --></label>
+        <name>sf4twitter__Get_Klout_Score_Massive</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_Twitter_Username --></label>
+        <name>sf4twitter__Get_Twitter_Username</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Search_Twitter_Username --></label>
+        <name>sf4twitter__Search_Twitter_Username</name>
+    </webLinks>
+</CustomObjectTranslation>

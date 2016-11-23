@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>34.0</apiVersion>
+    <description>This component loads the javascript libraries for the console search page.</description>
+    <label>Console311_Scripts</label>
+</ApexComponent>

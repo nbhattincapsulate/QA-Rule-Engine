@@ -1,0 +1,214 @@
+<apex:page standardStylesheets="false" applyHtmlTag="false" docType="html-5.0" showHeader="false" controller="Console311_SearchController" >
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>311 Console Search</title>
+            
+            <!-- Bootstrap -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+            
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+            <style>
+                .btn {
+                margin-left: 20px !important;
+                }
+                
+                #myTab {
+                border-color: #2513EB;
+                }
+                
+                #myTab li a {
+                border-color: #2513EB;
+                background-color: #337ab7;
+                color: white;
+                font-weight: bold;
+                }
+                
+                #myTab li.active a {
+                border-bottom-color: transparent;
+                background-color: #E6E7E9;
+                color: black;
+                font-weight: bold;
+                }
+                
+                .my-tab .tab-pane {
+                border: 1px solid #2513EB;
+                border-top: 0;
+                }
+                
+                th {
+                background-color: gray;
+                color: white;
+                //border:1px solid #2513EB;
+                } 
+            </style>
+        </head>
+        <body>
+            <apex:actionStatus id="searchStatus">
+                <apex:facet name="start">
+                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                        &nbsp;
+                    </div>
+                    <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                        <div style="display: inline-block; padding: 2px; background-color: #fff; width: 175px;">
+                            <img src="/img/loading32.gif" style="float: left; margin: 8px;" />
+                            <span style="display: inline-block; padding: 18px 0px;"> <b>Please Wait...</b></span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionStatus>
+            <br/>            
+             <div class="container">
+                <apex:form >
+                    <apex:actionFunction name="doSearch" action="{!doSearch}" reRender="searchResults" oncomplete="onCompleteHandler();" status="searchStatus"/>
+                    <div class="row">
+                        <div class="col-md-4">                        
+                            <apex:inputText styleClass="form-control" id="inputPassword" html-placeholder="Search String" value="{!searchString}"/>                            
+                        </div>
+                                      <div class="col-md-4"> 
+                        <button type="button" class="btn btn-primary"  onclick="doSearch();" >
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
+                        <button type="button" class="btn btn-primary" onclick="openNewCaseTab();">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;Create Case</button>
+                               </div>
+                    </div>
+                </apex:form>
+            </div>            
+            <hr/>
+            <apex:outputPanel id="searchResults" styleClass="container-fluid" layout="block">               
+                <apex:outputPanel rendered="{!if(errorMsg!='',true,false)}"> 
+                    <div class="alert alert-danger text-center"><Strong>{!errorMsg}</Strong></div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(resultsExist=='No',true,false)}" layout="block"> 
+                    <div class="alert alert-info text-center"><Strong>No records match the search criteria</Strong></div>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!if(resultsExist=='Yes',true,false)}" layout="block"> 
+                    <ul class="nav nav-tabs" id="myTab">
+                        <apex:repeat value="{!objectList}" var="objectName">
+                            <li>
+                                <a href="{!'#'+''+objectName}" data-toggle="tab">{!$ObjectType[objectName].labelPlural}</a>
+                            </li>
+                        </apex:repeat>                
+                    </ul>
+                    <div id="myTabContent" class="tab-content my-tab">
+                        <apex:repeat value="{!serachResults}" var="objectName">    
+                            <div class="tab-pane" id="{!objectName}">
+                                <apex:outputPanel rendered="{!serachResults[objectName].size==0}" layout="block">
+                                    <br/>
+                                    <div class="alert alert-info text-center"><Strong>No {!$ObjectType[objectName].labelPlural} match the search criteria</Strong></div>
+                                </apex:outputPanel>    
+                                <apex:outputPanel rendered="{!serachResults[objectName].size>0}">
+                                    <table id="results-table-{!objectName}" class="table table-hover">                                    
+                                        <thead>
+                                            <tr>
+                                                <apex:repeat value="{!$ObjectType[objectName].fieldsets['DCConsoleSearchFieldset']}" var="fld" >
+                                                    <th onmouseover="style.cursor='pointer';">
+                                                        <apex:outputText value="{!fld.Label}"/>
+                                                    </th>
+                                                </apex:repeat>                                            
+                                            </tr>
+                                        </thead>
+                                        <apex:repeat value="{!serachResults[objectName].records}" var="record">  
+                                            <tr onclick="openTab('{!record.id}'); return false;" onmouseover="style.cursor='pointer';">
+                                                <apex:repeat value="{!$ObjectType[objectName].fieldsets['DCConsoleSearchFieldset']}" var="fld">
+                                                    <td> 
+                                                        <apex:outputText value="{!record[fld]}" escape="false"/>
+                                                    </td>
+                                                </apex:repeat>
+                                            </tr>
+                                        </apex:repeat>
+                                    </table>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:repeat>                        
+                    </div>  
+                </apex:outputPanel>
+            </apex:outputPanel>              
+        </body>
+        <script>
+        <apex:includeScript value="/support/console/32.0/integration.js"/>  
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> 
+                <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/> 
+                    <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"/> 
+                        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"/> 
+                            
+                            
+                            var j$ = jQuery.noConflict();
+        var objectList=new Array();
+        <apex:repeat value="{!objectList}" var="objectName">
+            objectList.push("{!objectName}");
+        </apex:repeat>
+        
+        console.log("objectList: "+objectList);
+        
+        function onCompleteHandler(){          
+            j$('.nav-tabs > li:first-child').addClass('active');
+            j$('#myTabContent > div:first-child').addClass('active');
+            j$.each(objectList, function( index, value ) {
+                j$('#results-table-'+value).DataTable({
+                      "pageLength": 15
+                    } );     
+            });
+            
+        }
+        
+        function openNewCaseTab() {
+            sforce.console.openPrimaryTab(null, '/500/e', true, 'New Case', function(result) {              
+                if (!result.success) {
+                    //handle errors
+                }        
+                sforce.console.setTabTitle('New Case', result.id);                
+            });
+        }
+        
+        function openTab(id) {        
+            var tabId = tabIdsMap[id.substr(0, 15)];
+            console.log('contact tabId '+tabId);
+            if (tabId) {
+                sforce.console.focusPrimaryTabById( tabId );
+                sforce.console.focusSubtabById( tabId );            
+            } else {        
+                sforce.console.openPrimaryTab(null, '/' + id, true,undefined,openCallback);
+                
+            }
+        } 
+        
+        var openCallback = function openCallback(result) {
+            console.log('result ' + JSON.stringify(result));
+            //Report whether opening the new tab was successful
+            if (result.success == true) {           
+                console.log('Tab successfully opened');           
+            } else {            
+                console.log('Tab cannot be opened');            
+            }
+        };
+        
+        var tabIdsMap = {};
+        
+        sforce.console.addEventListener(sforce.console.ConsoleEvent.OPEN_TAB, function(message) {
+            console.log('Tab opened: ' + JSON.stringify(message));
+            if (message.objectId) {
+                tabIdsMap[message.objectId] = message.id;
+            }
+            
+            console.log('tabIdsMap: ' + JSON.stringify(tabIdsMap));
+        });
+        
+        sforce.console.addEventListener(sforce.console.ConsoleEvent.CLOSE_TAB, function(message) {
+            console.log('Tab Closed: ' + JSON.stringify(message));
+            if (message.objectId) {
+                //tabIdsMap[message.objectId] = null;
+                delete tabIdsMap[message.objectId];
+            }
+        }); 
+        </script>
+    </html>
+</apex:page>

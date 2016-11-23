@@ -1,0 +1,11 @@
+<h3>Automated Notification E-mail: DO NOT REPLY </h3>
+
+<br>DC311 Service Request has been submitted for <h4>{!Case.Servicing_Agency_Expanded__c} </h4></br>
+
+<br>Service Request Type:<h4>{!Case.Service_Request_Name__c}</h4></br>
+<br>Service Request Number: <h4>{!Case.CaseNumber}</h4></br>
+<br>Creation Date: <h4>{!Case.CreatedDate}</h4></br>
+<br>Resolution is expected within <h4>{!Case.SLA__c} </h4> days.</br>
+
+
+<br>To access, go to DC311.</br>

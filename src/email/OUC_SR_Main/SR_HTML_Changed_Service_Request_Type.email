@@ -1,0 +1,45 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Dear resident,<o:p></o:p></span></p><p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">{!Case.Servicing_Agency_Expanded__c}
+has just reviewed your request for </span><span style="font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">{!Case.Subject}</span><span style="font-size:
+12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"> and has
+determined that it should be changed to a different service request type. <o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.25in"><span style="font-size:
+12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Agency comments: <i>why was service request was changed to a new
+service request</i>.&nbsp; <o:p></o:p></span></p><p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="margin-left:.25in;text-indent:2.25pt"><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">We
+have closed the original request. &lt;&lt;Agency Name&gt;&gt; will now be
+handling your new service request for &lt;&lt;new service request
+name&gt;&gt;.&nbsp; &nbsp;Your new service request number is &lt;&lt;New
+SERVICE REQUEST NUMBER&gt;&gt;. This request should be complete by
+&lt;&lt;expected resolution date&gt;&gt;. <o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.25in;text-indent:2.25pt"><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="margin-left:.25in"><b><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">There
+is nothing for you to do at this time. This email is for informational purposes
+only. &nbsp;<o:p></o:p></span></b></p><p class="MsoNormal" style="margin-left:.25in"><b><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></b></p>
+
+<p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Please visit 311.dc.gov
+to check the status of your request or to find answers to frequently asked
+questions.&nbsp; You may also call 311, and
+reference service request number: &lt;&lt;SERVICE REQUEST NUMBER&gt;&gt; to
+check your status or get help with questions.&nbsp;
+An agent will be happy to answer your questions, concerns or connect you
+with the correct department.<o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Thanks again for
+contacting the Mayor’s 311 Hotline.&nbsp;<o:p></o:p></span></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Open 311 Api Key Config</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Open 311 Api Key Config</value>
+    </caseValues>
+    <fields>
+        <label><!-- Api Key --></label>
+        <name>ApiKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available SR Types For GET --></label>
+        <name>Available_SR_Types_For_GET__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available SR Types For POST --></label>
+        <name>Available_SR_Types_For_POST__c</name>
+    </fields>
+    <fields>
+        <label><!-- Available SR Types For PUT --></label>
+        <name>Available_SR_Types_For_PUT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Request Date --></label>
+        <name>Last_Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Reset --></label>
+        <name>Last_Reset__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lock Activities to be returned through GET Service calls for Private API users --></help>
+        <label><!-- Lock Activities --></label>
+        <name>Lock_Activities__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lock Flexnotes to be returned through GET Service calls for Private API users --></help>
+        <label><!-- Lock FlexNotes --></label>
+        <name>Lock_FlexNotes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Private --></label>
+        <name>Private__c</name>
+    </fields>
+    <fields>
+        <label><!-- 30 Day Usage Limit Allocation --></label>
+        <name>Usage_Limit_Allocation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set this to the date you wish to have the api key&apos;s usage be reset. The application will automatically register the next iteration 30 days from the date specified when a call is made on the reset date. --></help>
+        <label><!-- Last Reset Date --></label>
+        <name>Usage_Limit_Reset_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- 30 Day Usage Limit Used --></label>
+        <name>Usage_Limit_Used__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enable this field if you wish to force case closure comments when setting a cases status. --></help>
+        <label><!-- Are Comments Required for Status Changes --></label>
+        <name>isCommentsRequired__c</name>
+    </fields>
+    <layouts>
+        <layout>Open 311 Api Key Config Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Security Details --></label>
+            <section>Security Details</section>
+        </sections>
+        <sections>
+            <label><!-- Usage Details --></label>
+            <section>Usage Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

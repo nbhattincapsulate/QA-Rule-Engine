@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Open311 API Log</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Open311 API Logs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Api Key --></label>
+        <name>APIKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Endpoint --></label>
+        <name>Endpoint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Log --></label>
+        <name>Log__c</name>
+    </fields>
+    <fields>
+        <label><!-- Private --></label>
+        <name>Private__c</name>
+    </fields>
+    <fields>
+        <label><!-- RecordId --></label>
+        <name>RecordId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Method --></label>
+        <name>Request_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Param --></label>
+        <name>Request_Param__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Format --></label>
+        <name>Response_Format__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Success</masterLabel>
+            <translation><!-- Success --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Open311 API Log Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

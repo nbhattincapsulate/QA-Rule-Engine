@@ -1,0 +1,1069 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Contains Service Request Types and attributes.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Accept_Transfers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>not used</description>
+        <externalId>false</externalId>
+        <label>Accept Transfers (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Activities_Link_Indicator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>not used</description>
+        <externalId>false</externalId>
+        <label>Activities Link Indicator (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Jurisdiction__r.Agency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Agency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Allow_Citizen_Web_Intake__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked, this SR Type will be available for use on the Citizen Portal.</description>
+        <externalId>false</externalId>
+        <label>Allow Citizen Web Intake</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Associate_Closing_Letter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>not used</description>
+        <externalId>false</externalId>
+        <label>Associate Closing Letter (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Attachment_Link_Indicator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>not used</description>
+        <externalId>false</externalId>
+        <label>Attachment Link Indicator (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Create__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Auto Create</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ContactRequired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Not used - replaced by Contact Status picklist</description>
+        <externalId>false</externalId>
+        <label>Contact Required (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ContactStatus__c</fullName>
+        <description>Sets data validation rules for entering contact information for this SR Type.</description>
+        <externalId>false</externalId>
+        <label>Contact Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Available</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Visible</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Required (LN, FN, EM)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Default_Method__c</fullName>
+        <description>If a value is entered here, it will be used to set this field on a new Service Request when this SR Type is created.</description>
+        <externalId>false</externalId>
+        <label>Default Method</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>311-App</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internal Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Default_Priority__c</fullName>
+        <description>If a value is entered here, it will be used to set this field on a new Service Request when this SR Type is created.</description>
+        <externalId>false</externalId>
+        <label>Default Priority</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Emergency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Urgent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Default_Status__c</fullName>
+        <description>If a value is entered here, it will be used to set this field on a new Service Request when this SR Type is created.</description>
+        <externalId>false</externalId>
+        <label>Default Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>Originally intended for internal use but is not used.</description>
+        <externalId>false</externalId>
+        <label>Description (not used)</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>DuplicateDetectionMethod__c</fullName>
+        <description>Specifies duplicate detection algorithm and/or process to be implemented for this SR type.</description>
+        <externalId>false</externalId>
+        <label>Duplicate Detection Method</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>DuplicateRadius__c</fullName>
+        <description>Required when Standard duplicate detection method selected.  The is a parameter specified in feet for another SR to be considered a potential duplicate.  Enter 1 to create an effective exact address match.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>in feet</inlineHelpText>
+        <label>Duplicate Radius (feet)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duplicate_Threshold_Period__c</fullName>
+        <description>An optional parameter for duplicate detection method Standard.  This specifies the number of days prior to today for an SR to be considered a potential duplicate.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>in days</inlineHelpText>
+        <label>Duplicate Threshold Period (days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>External Description(To Be Deleted)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_Name__c</fullName>
+        <description>If populated, this is the service name displayed on the citizen portal.</description>
+        <externalId>false</externalId>
+        <label>External Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flex_Note_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Flex Note Count</label>
+        <summaryForeignKey>ServiceRequestTypeFlexNote__c.Service_Request_Type__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Flex_Notes_Link_Indicator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Not used.</description>
+        <externalId>false</externalId>
+        <label>Flex Notes Link Indicator (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Group</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Jurisdiction__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Based on legacy CSR, this field defines the Agency and sub-department at that agency responsible for servicing this SR Type.</description>
+        <externalId>false</externalId>
+        <label>Agency Dept Code</label>
+        <referenceTo>Jurisdiction__c</referenceTo>
+        <relationshipLabel>Service Request Types</relationshipLabel>
+        <relationshipName>Service_Request_Types</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Keep_SR_Open__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Not used.</description>
+        <externalId>false</externalId>
+        <label>Keep SR Open (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Keywords__c</fullName>
+        <externalId>false</externalId>
+        <label>Keywords</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LongExternalDescription__c</fullName>
+        <externalId>false</externalId>
+        <label>External Description</label>
+        <length>131072</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Object__c</fullName>
+        <description>Required field - will always be set to Case.</description>
+        <externalId>false</externalId>
+        <label>Object</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Case</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Participant_Link_Indicator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Not used.</description>
+        <externalId>false</externalId>
+        <label>Participant Link Indicator (not used)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <description>Brief internal comments for configuration administrators</description>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLAType__c</fullName>
+        <description>Defines the units (ie business days, calendar days) that apply to the value entered in the SLA field.</description>
+        <externalId>false</externalId>
+        <label>SLA Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Business days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Calendar days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SLA__c</fullName>
+        <description>a number in days based on the selected SLA type by which the service request should be completed by the servicing agency.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>in days</inlineHelpText>
+        <label>SLA</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SR_Alert_Message__c</fullName>
+        <description>Text entered displays at top of Agent Console when SR Type is selected.</description>
+        <externalId>false</externalId>
+        <label>SR Alert Message</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SendEmailOnSRClosed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked, this is used by a Workflow Rule to cause a citizen notification email (sent to the linked contact&apos;s email address) upon closure of Service Requests of this type.</description>
+        <externalId>false</externalId>
+        <label>Send Email On SR Closed</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SendEmailOnSRCreation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked, this is used by a Workflow Rule to cause a citizen notification email (sent to the linked contact&apos;s email address) upon creation of Service Requests of this type.</description>
+        <externalId>false</externalId>
+        <label>Send Email On SR Creation</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ServiceLocationRequired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Service Location Required</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ServiceLocationStatus__c</fullName>
+        <description>Not used - planned as enhancement to Service Location Required checkbox.</description>
+        <externalId>false</externalId>
+        <label>ServiceLocationStatus (not used)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Required</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Available</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Visible</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Service_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Servicing_Agency_Expanded__c</fullName>
+        <externalId>false</externalId>
+        <formula>Jurisdiction__r.Servicing_Agency_Expanded__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Servicing Agency Expanded</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <description>If specified, this SR Type will be available for entry only if Start Date is equal or prior to today&apos;s date.</description>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Stop_Date__c</fullName>
+        <description>If specified, this SR Type will be available for entry only if Stop Date is equal or greater than today&apos;s date.</description>
+        <externalId>false</externalId>
+        <label>Stop Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Service Request Type</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Description__c</columns>
+        <columns>Duplicate_Threshold_Period__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_ActivPortal</fullName>
+        <booleanFilter>(1 or 2) and (3 or 4) AND 5</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Allow_Citizen_Web_Intake__c</columns>
+        <columns>LongExternalDescription__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>lessOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Allow_Citizen_Web_Intake__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Portal SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>All_ActiveUI</fullName>
+        <booleanFilter>(1 or 2) and (3 or 4)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Allow_Citizen_Web_Intake__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>lessOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All Active Agent Console SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>All_InActive</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Allow_Citizen_Web_Intake__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Inactive SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>Bad_Weather</fullName>
+        <booleanFilter>1 OR 2 or 3 or 4 or 5</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Name__c</field>
+            <operation>contains</operation>
+            <value>snow</value>
+        </filters>
+        <filters>
+            <field>Service_Name__c</field>
+            <operation>contains</operation>
+            <value>flood</value>
+        </filters>
+        <filters>
+            <field>Service_Name__c</field>
+            <operation>contains</operation>
+            <value>homeless</value>
+        </filters>
+        <filters>
+            <field>Service_Name__c</field>
+            <operation>contains</operation>
+            <value>power</value>
+        </filters>
+        <filters>
+            <field>Service_Name__c</field>
+            <operation>contains</operation>
+            <value>trees</value>
+        </filters>
+        <label>Weather Impacts</label>
+        <sharedTo>
+            <group>DDOT</group>
+            <group>DDOT_group</group>
+            <group>DPW_public_Group</group>
+            <group>OUC_Group</group>
+            <group>OUC_Report_Managers</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>DDOE_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>DDOE</value>
+        </filters>
+        <label>DDOE SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>DDOT_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>DuplicateDetectionMethod__c</columns>
+        <columns>DuplicateRadius__c</columns>
+        <columns>Duplicate_Threshold_Period__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>DDOT</value>
+        </filters>
+        <label>DDOT SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>DMV_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>DMV</value>
+        </filters>
+        <label>DMV SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>DPW_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>DPW</value>
+        </filters>
+        <label>DPW SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>FEMS_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>FEMS</value>
+        </filters>
+        <label>FEMS SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>OUCTest_ServiceRequestType</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <filterScope>Queue</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>ORM</value>
+        </filters>
+        <label>OUCTest</label>
+        <queue>OUCTest</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OUC_DPW_Queue_ServiceRequestType</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OUC DPW Queue</label>
+        <queue>OUC_DPW_Queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OUC_SR_Types</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Jurisdiction__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+            <value>OUC</value>
+        </filters>
+        <label>OUC SR Types</label>
+    </listViews>
+    <listViews>
+        <fullName>SR_Types_Inactive</fullName>
+        <booleanFilter>(1 and 2) or (3 and 4)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>Description__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Stop_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>SR Types - Inactive</label>
+    </listViews>
+    <listViews>
+        <fullName>SR_Types_Incomplete</fullName>
+        <booleanFilter>1 or 2 or (3 and 4) or (5 and 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>DuplicateDetectionMethod__c</columns>
+        <columns>DuplicateRadius__c</columns>
+        <columns>Duplicate_Threshold_Period__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Flex_Note_Count__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Agency__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>DuplicateDetectionMethod__c</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </filters>
+        <filters>
+            <field>DuplicateRadius__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>SLA__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>SLAType__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>SR Types - Incomplete</label>
+    </listViews>
+    <listViews>
+        <fullName>SR_Types_No_SLA</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SLA__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>SR Types - No SLA</label>
+    </listViews>
+    <listViews>
+        <fullName>SR_Types_With_SLA</fullName>
+        <columns>NAME</columns>
+        <columns>Service_Name__c</columns>
+        <columns>Agency__c</columns>
+        <columns>Flex_Note_Count__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Stop_Date__c</columns>
+        <columns>SLA__c</columns>
+        <columns>SLAType__c</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SLA__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>SR Types - With SLA</label>
+    </listViews>
+    <listViews>
+        <fullName>TestQueue_ServiceRequestType</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TestQueue</label>
+        <queue>TestQueue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Service Code</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Service Request Types</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Service_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Object__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Stop_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Flex_Note_Count__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Group__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Object__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Stop_Date__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Service_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Group__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Object__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Start_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Stop_Date__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Remarks__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Object__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Stop_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Enforce_Unique_Service_RequestType_Code</fullName>
+        <active>true</active>
+        <description>this validation prevents duplicate service code name</description>
+        <errorConditionFormula>IF(ISNEW(), IF( UPPER(Name) == UPPER(VLOOKUP( $ObjectType.ServiceRequestType__c.Fields.Name , $ObjectType.ServiceRequestType__c.Fields.Name , Name)),true , false),AND(ISCHANGED(Name), IF( UPPER(Name) == UPPER(VLOOKUP($ObjectType.ServiceRequestType__c.Fields.Name,$ObjectType.ServiceRequestType__c.Fields.Name, Name)),true,false)))</errorConditionFormula>
+        <errorMessage>Service code cannot have duplicate value.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SLA_type_required_on_SLA_field_value</fullName>
+        <active>false</active>
+        <description>SLA type field is required when SLA field has a value</description>
+        <errorConditionFormula>AND( NOT(ISBLANK( SLA__c)),ISPICKVAL(SLAType__c ,&quot;&quot;))</errorConditionFormula>
+        <errorDisplayField>SLAType__c</errorDisplayField>
+        <errorMessage>Please select the SLA Type</errorMessage>
+    </validationRules>
+</CustomObject>

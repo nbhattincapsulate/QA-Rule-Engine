@@ -1,0 +1,5 @@
+<apex:page standardController="Case">   
+  <apex:map width="100%" height="680px" mapType="roadmap" center="{!case.Address__c}" zoomLevel="15" rendered="{!if(case.Address__c!=null,true,false)}">
+    <apex:mapMarker title="Case Location" position="{!case.Address__c}"/> 
+  </apex:map>
+</apex:page>

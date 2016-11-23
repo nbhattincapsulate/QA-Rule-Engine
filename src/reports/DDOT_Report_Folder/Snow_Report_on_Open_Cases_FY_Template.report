@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case$SR_Status__c</field>
+    </columns>
+    <columns>
+        <field>Case$SnowZone__c</field>
+    </columns>
+    <columns>
+        <field>Case$SnowRoute__c</field>
+    </columns>
+    <columns>
+        <field>Case$Address__c</field>
+    </columns>
+    <columns>
+        <field>Case$Subject</field>
+    </columns>
+    <columns>
+        <field>Case$AgencyCode__c</field>
+    </columns>
+    <columns>
+        <field>Case$Jurisdiction__c</field>
+    </columns>
+    <columns>
+        <field>Case$Owner</field>
+    </columns>
+    <columns>
+        <field>Case$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Case$ClosedDate</field>
+    </columns>
+    <description>Snow Report Template for the fiscal year</description>
+    <filter>
+        <criteriaItems>
+            <column>Case$Subject</column>
+            <operator>contains</operator>
+            <value>snow</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$SR_Status__c</column>
+            <operator>notContain</operator>
+            <value>Closed,Voided,Closed - Incomplete Information</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Snow Report on Open Cases  FY Template</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Contact_and_Service_Request_History_JP_sample_2__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Case$CreatedDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>

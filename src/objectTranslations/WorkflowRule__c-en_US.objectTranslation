@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Workflow Rule</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Workflow Rules</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Actions --></label>
+        <name>DisplayActions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rule Criteria --></label>
+        <name>DisplayfilterLogic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Evaluation Rule --></label>
+        <name>Evaluation_Rule__c</name>
+        <picklistValues>
+            <masterLabel>On Click Event</masterLabel>
+            <translation><!-- On Click Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Record is created</masterLabel>
+            <translation><!-- Record is created --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Record is created or edited</masterLabel>
+            <translation><!-- Record is created or edited --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Record is created or edited and did not previously meet the rule criteria</masterLabel>
+            <translation><!-- Record is created or edited and did not previously meet the rule criteria --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Captures the logic based on position of the rule criteria For Example : if a rule had 3 criteria : Criteria 1, Criteria 2, Criteria 3  the Filter logic could be : 1 AND 2 OR 3 --></help>
+        <label><!-- Filter Logic --></label>
+        <name>Filter_Logic__c</name>
+    </fields>
+    <fields>
+        <label><!-- FormattedFilterLogic --></label>
+        <name>FormattedFilterLogic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Name --></label>
+        <name>Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Archived</masterLabel>
+            <translation><!-- Archived --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Task SubCat --></label>
+        <name>Task_SubCat__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version --></label>
+        <name>Version__c</name>
+    </fields>
+    <layouts>
+        <layout>Workflow Rule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Generic Rule --></label>
+        <name>Generic</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Jurisdiction__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Lists Jurisdictions and Servicing Agency codes</description>
+    <label>Jurisdictions</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Department__c</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Jurisdiction Code</displayNameOverride>
+            <field>Name</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Agency__c</field>
+            <table>Jurisdiction__c</table>
+        </columns>
+        <masterLabel>Jurisdiction</masterLabel>
+    </sections>
+</ReportType>

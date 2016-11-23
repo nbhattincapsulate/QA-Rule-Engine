@@ -1,0 +1,1823 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRController">
+   <apex:form id="statusCheck" styleClass="statusCheck form-horizontal">     
+      <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+         <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="cache-control" content="no-store,no-cache" />
+            <meta http-equiv="pragma" content="no-cache" />
+            <meta http-equiv="expires" content="0" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>OUC 311 | Portal</title>
+            
+            <!-- include all css and js file -->
+            <c:OUC311_Assets />                        
+
+             
+             <script>
+                $(document).ready(function() {
+                    var displayMap = $('#useMap').length > 0 ? true : false;
+               
+                    if (displayMap) {
+                        $('#trMap').show();
+                        $('#trMapNextButton').show();
+                      
+                        var lat = 51.03;
+                        var lng = -114.05;
+                        var zoom = 12;
+                        var city = 'Washington, D.C.';
+                        var isConstraintEnabled = false;
+                        
+                        init(lat,lng,zoom,city,isConstraintEnabled);
+                    }
+                });
+            </script>  
+            
+            <script language="javascript" type="text/javascript">
+                // 1/24/12 MJB CR4101
+                // Trap Enter key events in text input fields
+                $(':text').keypress(function(e) {
+                    var loKey;
+        
+                    if (window.event) {
+                        loKey = window.event.keyCode;
+                    }
+                    else {
+                        loKey = e.which;
+                    }
+        
+                    if (loKey == 13) {
+                        document.getElementById("EnterKeyPressedInTextbox").value = true;
+                    }
+                });
+            </script>       
+            
+            <style> 
+                #mapcontainer {
+                  position: relative;
+                  width: 100%;
+                  height: 350px;
+                  margin-top: 10px;
+                  float: left;
+                  top:0;
+                  left:0;
+                  margin-left:-10px;
+                }
+                 
+                #map {
+                  width: 100%;
+                  height: 100%;
+                  border: 1px solid black;
+                  position: absolute;
+                }
+                 
+                #boundsLegend,#viewportLegend {
+                  position: absolute;
+                  background-color: white;
+                  right: 1px;
+                  font-family: sans-serif;
+                  font-size: small;
+                  padding: 2px;
+                  color: #222222;
+                  display: none;
+                }
+                 
+                #boundsLegend {
+                  border: 1px solid red;
+                  bottom: 40px;
+                }
+                 
+                #viewportLegend {
+                  border: 1px solid blue;
+                  bottom: 15px;
+                }
+                 
+                #responseStatus {
+                  display: none;
+                }
+                 
+                #responseCount {
+                  display: none;
+                }
+                 
+                #responseInfo {
+                  margin-top: 10px;
+                  background-color: #eeeeee;
+                  border: 1px solid #999999;
+                  padding: 10px;
+                  width: 600px;
+                  display: none;
+                }
+                 
+                .info {
+                  border-top: 1px solid #666666;
+                  padding: 4px;
+                  padding-left: 8px;
+                  font: 10pt sans-serif;
+                  margin-left: 4px;
+                  margin-right: 4px;
+                  cursor: pointer;
+                  background-color: white;
+                }
+                 
+                .infoWindowContent {
+                  width: 272px;
+                  height: 50px;
+                  overflow: auto;
+                }
+    
+                .infoWindowContent2 {
+                  width: 272px;
+                  height: 100px;
+                  overflow: auto;
+                }
+                 
+                .tabContent {
+                  font: 10pt sans-serif;
+                  border-collapse: collapse;
+                  table-layout: auto;
+                }
+                 
+                #matches {
+                  margin-top: 10px;
+                  width: 320px;
+                  height: 490px;
+                  float: left;
+                  border: 1px solid #666666;
+                  display: none;
+                  overflow: auto;
+                }
+                 
+                h1 {
+                  border-bottom: 1px solid #999999;
+                  font-family: sans-serif;
+                  padding-bottom: 12px;
+                  width: 650px;
+                  margin-bottom: 0px;
+                }
+                 
+                #inputForm {
+                  width: 650px;
+                  margin: 10px;
+                }
+                 
+                #footer {
+                  padding-top: 4px;
+                  font-family: sans-serif;
+                  font-size: 8pt;
+                  clear: both;
+                  width: 650px;
+                  border-top: 1px solid #999999;
+                }
+                 
+                #instructions {
+                  padding-bottom: 8px;
+                }
+                 
+                .key {
+                  /*text-align: right;*/
+                  font-weight: bold;
+                  vertical-align: top;
+                  white-space: nowrap 
+                }
+                 
+                .value {
+                  vertical-align: top;  
+                }
+                 
+                #options {
+                  margin-top: 5px;
+                }
+                 
+                #biasViewport,#country {
+                  margin-right: 16px;
+                }
+                 
+                #newFeatures {
+                  position: absolute;
+                  top: 1px;
+                  right: -2px;
+                  background-color: #ffffd0;
+                  border: 1px solid black;
+                  font-family: sans-serif;
+                  font-size: 8pt;
+                  padding: 2px;
+                }
+            </style>                                                                 
+           
+              
+            <script>
+                if (top.frames.length != 0)
+                    top.location = self.document.location;
+            </script> 
+           
+         </head>
+         <body>
+            <!-- header -->
+            <c:OUC311_Header tab="{!loggedInUsername}"/>
+            <!-- end  of header -->
+            
+            <!-- Features Section -->
+            <span class="breakPoint" id="s1"></span>
+            
+            <div class="section p-no-top bg-grey ">
+               <div class="container">               
+                  <!-- Nav Tabs -->
+                  <ul class="lg-tabs">
+                     <li class="active">
+                        <a href="#submit" data-toggle="tab">
+                           <i class="fa fa-edit"></i>
+                           <h3>Submit a Request</h3>
+                        </a>
+                     </li>
+                     <li class=" ">
+                        <a href="#status" data-toggle="tab" data-wow-delay="0.25s">
+                           <i class="fa fa-flag"></i>
+                           <h3>Check Status</h3>
+                        </a>
+                     </li>
+                     <li class=" ">
+                        <a href="#history" data-toggle="tab" data-wow-delay="0.5s">
+                           <i class="fa fa-history"></i>
+                           <h3>Request History</h3>
+                        </a>
+                     </li>
+                     <!--<li class=" ">
+                        <a href="#map" data-toggle="tab" data-wow-delay="0.5s">
+                            <i class="fa fa-map-marker"></i>
+                            <h3>Requests Map</h3>
+                        </a>
+                        
+                        </li>-->
+                     <li class=" ">
+                        <a href="#faq" data-toggle="tab" data-wow-delay="1s">
+                           <i class="fa fa-question"></i>
+                           <h3>FAQ</h3>
+                        </a>
+                     </li>
+                     <!--<li class=" ">
+                        <a href="#font" data-toggle="tab" data-wow-delay="1s">
+                            <i class="fa fa-folder-open"></i>
+                            <h3>Directory</h3>
+                        </a>
+                        </li>-->
+                  </ul>
+                  <!-- Tab panes -->
+                  <div class="space-sm"></div>
+                  <div class="tab-content lg-tab-content">
+                     <div class="tab-pane active in well" id="submit">
+                        <div class="row">
+                           <div class="col-md-12 tabbable responsive">                                                         
+                                <h3 class="text-primary">Request a City Service</h3>                            
+                         
+                              <br/>
+                              <ul class="nav nav-tabs">
+                                 <li class="{!IF(service_type == true,'active','disabled')}"><a href="{!IF(service_type == true,'#tab1','')}" data-toggle="tab">Select Service</a></li>
+                                 <li class="{!IF(((service_location== true)||(ServiceLocAddressDetails == true)||(dupliacteAddressDetection == true)),'active','disabled')}"><a href="{!IF(service_location == true,'#tab2','')}" data-toggle="tab">Location</a></li>
+                                 <li class="{!IF(service_information== true,'active','disabled')}"><a href="{!IF(service_information == true,'#tab3','')}" data-toggle="tab">Information</a></li>
+                                 <li class="{!IF(contact_information== true,'active','disabled')}"><a href="{!IF(contact_information == true,'#tab4','')}" data-toggle="tab">Contact</a></li>
+                                 <li class="{!IF((attachment  == true),'active','disabled')}"><a href="{!IF(attachment == true,'#tab5','')}" data-toggle="tab">Attachment</a></li>
+                                 <li class="{!IF(((review_submit == true) || (review_result == true)),'active','disabled')}"><a href="{!IF(review_submit == true,'#tab5','')}" data-toggle="tab">Review &amp; Submit</a></li>
+                              </ul>
+                              <div class="tab-content">
+                                 <div class="{!IF(service_type == true,'tab-pane fade in active','tab-pane fade in')}" id="tab1" >                                    
+                                    <apex:outputpanel id="service_type">
+                                       <apex:pageBlock >
+                                             <apex:outputPanel rendered="{!service_type}">                                              
+                                                
+                                                <form>
+                                                  <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h3 class="text-primary">Request a City Service</h3>
+                                                        <p>Please select a Service Request type from the list and click Go to search for the type of service you require. </p>
+                                                     </div>
+                                                  </div>                                                             
+                                                          
+                                                  <div class="space"></div>
+                                                  <apex:outputPanel rendered="{!error_msg}" style="color:red;">
+                                                     <apex:pageMessages id="error_msg"/>
+                                                  </apex:outputPanel>                                                                                           
+                                                 <div class="space"></div>
+                                                  <div class="form-group icon">
+                                                    <label for="name" class="col-sm-2 control-label">Service Type</label>
+                                                      <div class="col-sm-3">
+                                                        <div class="control">
+                                                          <apex:selectList styleClass="form-control"  value="{!serviceType}" multiselect="false" size="1" id="combobox" style="padding: 0px 0px; height:20px;">
+                                                            <apex:selectOptions value="{!ServiceRequestItems}"/>
+                                                              <!--<apex:actionsupport event="onchange" action="{!performAction}" rerender="service_location" status="counterStatus"/>-->
+                                                          </apex:selectList>                                                                               
+                                                        </div>
+                                                      </div>&nbsp;&nbsp;
+                                                      
+
+                                                      <apex:commandButton styleClass="btn btn-primary btn-xlg scroll" value="Go" action="{!performAction}"  status="counterStatus"/>
+                                                  </div>                    
+                                                                                                      
+                                                </form>
+                                             </apex:outputPanel>
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                 </div>
+
+                                 <div class="{!IF(((service_location == true) || (ServiceLocAddressDetails == true ) || (dupliacteAddressDetection == true)),'tab-pane fade in active','tab-pane fade in')}" id="tab2">                                   
+                                    <apex:outputPanel id="service_location">
+                                       <apex:pageBlock >                                         
+                                             <apex:outputPanel rendered="{!service_location}">                                                
+
+                                                <!-- Map inputs -->
+                                                  <input id="lsGuid" name="lsGuid" type="hidden" value="95bf24666fa04cd491af375dd99feda4" />
+                                                  <input id="lsId" name="lsId" type="hidden" value="S0003" />
+                                                  <input id="useMap" name="useMap" type="hidden" value="Y" />
+                                                  <input id="EnterKeyPressedInTextbox" name="EnterKeyPressedInTextbox" type="hidden" value="False" />
+                                                <!-- end Map inputs -->                                               
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                      <h3 class="text-primary">Location of Service</h3>                                                                           
+                                                      <p>Please enter the incident location or property address as applicable.A location is optional unless the fields are marked with a *.To report a concern at or near an intersection, enter both street names (separated by an @) in the Street Address field.The system will suggest valid locations to select from.For example:  Macleod Tr@45 Ave would be a valid entry.Numbered streets and avenues must be entered as a number (i.e. 45) not as text (i.e. Forty Five).</p>
+                                                   </div>
+                                                </div>
+                                                <div class="space"></div>                                                                   
+                                                <div class="row">
+                                                    <div class="col-md-3"> 
+                                                      <h4>Service Type:</h4>
+                                                    </div>
+                                                    <div class="col-md-8"> 
+                                                      <h4>{!selSelectedRequestTypeName}</h4>
+                                                    </div>
+                                                </div>       
+                                                <input id="hdnError" name="hdnError" type="hidden" value="" /> 
+                                                <div class="row">
+                                                    <div class="col-md-12"> 
+                                                      <div class="form-result" id="form-result"></div>
+                                                      <apex:outputPanel rendered="{!error_msg}" style="color:red;">
+                                                         <apex:pageMessages id="error_msg"/>
+                                                      </apex:outputPanel>
+                                                    </div>               
+                                                </div>
+                                                <div class="space"></div>
+                                                 
+                                                <input id="Address_SuggestPrefix" name="Address.SuggestPrefix" type="hidden" value="Address" />
+                                                <input id="Address_DisplayAddress" name="Address.DisplayAddress" type="hidden" value="" />
+                                                <input id="Address_Details" name="Address.Details" type="hidden" value="" />
+                                                <input id="Address_RelatedTableCode" name="Address.RelatedTableCode" type="hidden" value="PRCINST" />
+                                                <input id="Address_SuggestServiceMethod" name="Address.SuggestServiceMethod" type="hidden" value="GetLocationListWithCommonLocs" />
+                                                <input id="Address_StreetAddressLength" name="Address.StreetAddressLength" type="hidden" value="620" />
+                                                <input id="Address_LocationRequiredIND" name="Address.LocationRequiredIND" type="hidden" value="Y" />
+                                    
+                                                <div class="row">
+                                                  <div class="col-md-12 col-sm-12">
+                                                    <div class="form-group icon">
+                                                      <label for="name" class="col-sm-2 control-label">* Address</label>
+                                                      <div class="col-sm-7">
+                                                        <div class="control">
+                                                          <input id="Address_StreetAddress" name="Address.StreetAddress"  maxlength="40" onChange="javascript:submitQuery();" value="" class="form-control"/>
+                                                          <apex:inputHidden Value="{!street}" id="StreetAddress">
+                                                            <apex:actionSupport event="onchange">
+                                                              <apex:param value="{!street}" assignTo="{!street}" />
+                                                            </apex:actionsupport>
+                                                          </apex:inputHidden>
+                                                          <i class="fa fa-search"></i>
+                                                        </div>
+                                                      </div>
+                                                    </div>                                  
+                                                    <div class="form-group icon">
+                                                      <label for="name" class="col-sm-2 control-label">City</label>
+                                                      <div class="col-sm-7">
+                                                        <div class="control">
+                                                          <input id="Address_City" class="form-control" name="Address.City" value="WASHINGTON" readonly="readonly"/>
+                                                          <apex:inputHidden id="City" value="{!city}"></apex:inputHidden>
+                                                          <i class="fa fa-home"></i>
+                                                        </div>
+                                                      </div>
+                                                    </div>                                 
+                                                                      
+                                                    <div class="form-group icon">
+                                                      <label for="name" class="col-sm-2 control-label">State</label>
+                                                      <div class="col-sm-7">
+                                                        <div class="control">
+                                                          <input id="Address_State" maxlength="2" class="form-control" name="Address.State" value="DC" readonly="readonly"/>
+                                                          <apex:inputHidden value="{!state}" id="State"></apex:inputHidden>
+                                                          <i class="fa fa-home"></i>
+                                                        </div>
+                                                      </div>
+                                                    </div>                                  
+                                                                   
+                                                    <div class="form-group icon">
+                                                      <label for="name" class="col-sm-2 control-label">Zip Code</label>
+                                                      <div class="col-sm-7">
+                                                        <div class="control">
+                                                          <input id="Address_Zip" name="Address.Zip" class="form-control" value=""  maxlength="5" onKeyPress="return numbersonly(this, event)"/>
+                                                          <apex:inputHidden Value="{!zipCode}" id="Zip">
+                                                            <apex:actionSupport event="onchange">
+                                                              <apex:param value="{!zipCode}" assignTo="{!zipCode}" />
+                                                            </apex:actionsupport>
+                                                          </apex:inputHidden>
+                                                          <i class="fa fa-home"></i>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                                         
+                                                    <script type="text/javascript">                 
+                                                      function numbersonly(myfield, e, dec){
+                                                        var key;
+                                                        var keychar;
+                                                      
+                                                        if (window.event)
+                                                           key = window.event.keyCode;
+                                                        else if (e)
+                                                           key = e.which;
+                                                        else
+                                                           return true;
+                                                        
+                                                        keychar = String.fromCharCode(key);
+                                                      
+                                                        // control keys
+                                                        if ((key==null) || (key==0) || (key==8) || 
+                                                            (key==9) || (key==13) || (key==27) )
+                                                           return true;
+                                                      
+                                                        // numbers
+                                                        else if ((("0123456789").indexOf(keychar) > -1))
+                                                           return true;
+                                                      
+                                                        // decimal point jump
+                                                        else if (dec && (keychar == "."))
+                                                           {
+                                                           myfield.form.elements[dec].focus();
+                                                           return false;
+                                                           }
+                                                        else
+                                                           return false;
+                                                        }                 
+                                                      
+                                                      </script>                                                     
+                                                       <script type="text/javascript">
+                                                          <!--var $j=jQuery.noConflict();-->
+                                                          
+                                                          function address(){
+                                                            var address= $('#Address_StreetAddress').val();
+                                                            var city= $('#Address_City').val();
+                                                            var state= $('#Address_State').val();
+                                                            var zip= $('#Address_Zip').val();
+                                                           
+                                                            if(address != null || address != ''){
+                                                                var add= $("[id*='StreetAddress']").val(address);                                                                                                                              
+                                                            }
+                                                            
+                                                            /*if(city != null || city != ''){
+                                                              
+                                                                 $("[id*='City']").val(city.toString().toUpperCase()); 
+                                                            }
+                                                            
+                                                            if(state != null || state != ''){
+                                                               $("[id*='State']").val(state.toString().toUpperCase());
+                                                            }*/
+                                                            
+                                                            if(zip != null || zip != ''){
+                                                              $("[id*='Zip']").val(zip); 
+                                                            }
+                                                          }                                          
+                                                                                                                                                                    
+                                                       </script>
+                                                                        
+                                                        <div class="form-group icon">
+                                                            <label for="name" class="col-sm-2 control-label">Building</label>
+                                                            <div class="col-sm-7">
+                                                               <div class="control">
+                                                                    <input id="Address_Building" class="form-control" maxlength="20" value="" />
+                                                                    <apex:inputHidden Value="{!building}" id="building">
+                                                                        <apex:actionSupport event="onchange">
+                                                                          <apex:param value="{!building}" assignTo="{!building}" />
+                                                                        </apex:actionsupport>
+                                                                      </apex:inputHidden>
+                                                                    <i class="fa fa-home"></i>
+                                                               </div>
+                                                            </div>
+                                                        </div>
+                                                                     
+                                                       <div class="form-group icon">
+                                                          <label for="name" class="col-sm-2 control-label">Floor</label>
+                                                          <div class="col-sm-7">
+                                                             <div class="control">
+                                                                  <input id="Address_Floor" class="form-control" maxlength="5" value=""  onKeyPress="return numbersonly(this, event)"/> 
+                                                                  <apex:inputHidden Value="{!floor}" id="floor">
+                                                                    <apex:actionSupport event="onchange">
+                                                                      <apex:param value="{!floor}" assignTo="{!floor}" />
+                                                                    </apex:actionsupport>
+                                                                  </apex:inputHidden>
+                                                                  <i class="fa fa-home"></i>
+                                                             </div>
+                                                          </div>
+                                                      </div>
+                                                                     
+                                                     <div class="form-group icon">
+                                                        <label for="name" class="col-sm-2 control-label">Unit</label>
+                                                        <div class="col-sm-7">
+                                                           <div class="control">
+                                                                 <input id="Address_Unit" class="form-control" maxlength="5" value=""  onKeyPress="return numbersonly(this, event)"/>
+                                                                <apex:inputHidden Value="{!unit}" id="unit">
+                                                                    <apex:actionSupport event="onchange">
+                                                                      <apex:param value="{!unit}" assignTo="{!unit}" />
+                                                                    </apex:actionsupport>
+                                                                </apex:inputHidden>
+                                                                <i class="fa fa-home"></i>
+                                                           </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript" ></script>
+                                                    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script> 
+                                                    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/map.js')}"/>-->                                                                   
+                                                    <div id="trMap" height="250">                         
+                                                       <div class="form-group icon">
+                                                          <label for="name" class="col-sm-2 control-label"></label>                                                                              
+                                                      </div>
+                                                    </div>                         
+                                                    <div id="responseInfo">
+                                                       <div id="responseStatus">
+                                                          <div> 
+                                                             <span style="font-weight: bold">Location Selected:  </span> 
+                                                             <span id="statusValue"></span> <span id="statusDescription" style="color:Red;"></span>
+                                                          </div>
+                                                       </div>
+                                                       <div id="responseCount"> 
+                                                          <span style="font-weight: bold;">Matches returned: </span> 
+                                                          <span id="matchCount"></span> 
+                                                       </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-sm-2"> 
+                                                    </div>                                                    
+                                                    <div class="col-md-6 col-sm-6">                                                   
+                                                        <div id="mapcontainer">
+                                                           <div id="map"></div>
+                                                           <div id="boundsLegend">Bounds</div>
+                                                           <div id="viewportLegend">Viewport</div>
+                                                        </div>
+                                                     </div>
+                                                    <div id="matches"></div> 
+                                                    
+                                                    <div class="space-sm"></div>
+                                                      <div class="form-group icon">
+                                                        <div class="col-sm-offset-0 col-sm-3 text-center">                                                       
+                                                          <apex:commandButton value="Previous" action="{!Previous_service_location}"  styleClass="btn btn-primary btn-xlg scroll"/>&nbsp;&nbsp;
+                                                          <apex:commandButton value="Next" action="{!service_location}" onclick=" return address();" styleClass="btn btn-primary btn-xlg scroll">
+                                                              <apex:param value="{!street}" assignTo="{!street}" />
+                                                              <apex:param value="{!city}" assignTo="{!city}" />
+                                                              <apex:param value="{!zipCode}" assignTo="{!zipCode}" />                                                                                                                                                     
+                                                            </apex:commandButton>                                         
+                                                          <div class="clear"></div>
+                                                        </div>
+                                                      </div>                                                 
+                                                   
+                                                  </div>
+                                                </div>
+                                             </apex:outputPanel>
+
+                                             <apex:outputPanel rendered="{!ServiceLocAddressDetails}">                                               
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                     <h3 class="text-primary">Location of Service</h3>                                                                         
+                                                    <p>Please enter the incident location or property address as applicable.A location is optional unless the fields are marked with a *.To report a concern at or near an intersection, enter both street names (separated by an @) in the Street Address field.The system will suggest valid locations to select from.For example:  Macleod Tr@45 Ave would be a valid entry.Numbered streets and avenues must be entered as a number (i.e. 45) not as text (i.e. Forty Five).</p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-3"> 
+                                                    <h4>Service Type:</h4>
+                                                  </div>
+                                                  <div class="col-md-8">
+                                                    <h4>{!selSelectedRequestTypeName}</h4>
+                                                  </div>
+                                                </div>                                                                            
+                                                <input id="hdnError" name="hdnError" type="hidden" value="" />
+                                                <div class="row">
+                                                  <div class="col-md-2"> 
+                                                    <apex:pageMessages id="errormsg"/>
+                                                  </div>
+                                                </div>
+                                                <div class="space"></div>
+                                                <div class="row">                           
+                                                  <div class="col-md-12">                                                                          
+                                                    <p style="color:red;">Similar locations were found. Please select one of the following:<br/></p>
+                                                  </div>
+                                                </div>
+                                                
+                                                <div class="row">                           
+                                                  <div class="col-md-12">                                                                          
+                                                    <apex:pageblock id="allcons">
+                                                      <apex:pageblocktable id="allcons" value="{!result}" var="con">
+                                                        <apex:column >
+                                                           <apex:actionsupport action="{!selectedlocationlist}" event="onclick" rerender="ServiceLocAddressDetails" immediate="true"  status="counterStatus">
+                                                              <input type="radio" name="radiobtn">                                                                                                                   
+                                                              <apex:param name="conid" value="{!con}" assignTo="{!seladressloc}"></apex:param>
+                                                              </input>                                   
+                                                           </apex:actionsupport>
+                                                        </apex:column>
+                                                        <apex:column >
+                                                           <span class="VSBaseFont fsLabel">
+                                                              <apex:outputLabel value="{!con}" style="font-weight: lighter;"></apex:outputlabel>
+                                                           </span>
+                                                        </apex:column>
+                                                      </apex:pageblocktable>
+                                                    </apex:pageblock>
+                                                  </div> 
+                                                </div>
+                                                <div class="space"></div>
+                                                <div class="row">
+                                                  <div class="col-md-12">   
+                                                    <apex:actionStatus startText="(Processing...Please Wait)" stopText="" id="counterStatus"/>
+                                                  </div>
+                                                </div>                                                
+                                                <div class="space-sm"></div>
+                                                <div class="row">                                                   
+                                                   <div class="form-group icon">
+                                                      <div class="col-sm-offset-0 col-sm-3 text-center">                                                                                              
+                                                        <apex:commandButton value="Previous" action="{!Previous_service_location}" styleClass="btn btn-primary btn-xlg scroll" />&nbsp;&nbsp;
+                                                        <apex:commandButton value="Next" action="{!service_info}" id="btn" styleClass="btn btn-primary btn-xlg scroll"></apex:commandButton>                                                        
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                             </apex:outputPanel>
+                                             
+                                             <apex:outputPanel rendered="{!dupliacteAddressDetection}">
+                                                 <div class="row">
+                                                  <div class="col-md-12">
+                                                    <h3 class="text-primary">Potential duplicates were found.</h3>                                                                       
+                                                    
+                                                  </div>
+                                                </div>                                           
+                                                 <table class="form-control">
+                                                    <thead>
+                                                        <th>SR.No</th>
+                                                        <th>Case Number</th>
+                                                        <th>ServiceType Name</th>
+                                                        <th>Address</th>
+                                                        <th>Status</th>
+                                                        <th>Created Date</th>
+                                                     </thead>
+                                                     <tbody>
+                                                         <apex:variable var="dupcount" value="{!1}"/>
+                                                            <apex:repeat value="{!duplicateSRList}" var="dupcase">
+                                                            <tr>
+                                                                <td>{!dupcount}</td>
+                                                                <td>{!dupcase.CaseNumber}</td>
+                                                                <td>{!dupcase.SRType__r.Service_Name__c}</td>
+                                                                <td>{!dupcase.Address__c}</td>
+                                                                <td>{!dupcase.Status}</td>
+                                                                <td>{!dupcase.CreatedDate}</td>
+                                                            </tr>
+                                                            <apex:variable var="dupcount" value="{!dupcount + 1}"/>
+                                                            </apex:repeat>
+                                                      </tbody>                                                               
+                                                 </table> 
+                                                 <div class="space-sm"></div>
+                                                 <div class="row">                                                   
+                                                   <div class="form-group icon">
+                                                      <div class="col-sm-offset-0 col-sm-4 text-center">                                                                                              
+                                                        <apex:commandButton value="Previous" action="{!Previous_service_location}" styleClass="btn btn-primary btn-xlg scroll" />&nbsp;&nbsp;
+                                                        <apex:commandButton value="Proceed" action="{!potentialduplicatedetection}" id="butn" styleClass="btn btn-primary btn-xlg scroll"></apex:commandButton>                                                        
+                                                        
+                                                      </div>
+                                                  </div>
+                                                </div>                                                                                              
+                                             </apex:outputPanel>                                         
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                    <!-- end service_location-->
+                                 </div>
+
+                                 <div class="{!IF(service_information == true,'tab-pane fade in active','tab-pane fade in')}" id="tab3">                                    
+                                    <apex:outputPanel id="service_information" >
+                                       <apex:pageBlock >
+                                           <apex:outputPanel rendered="{!service_information}">
+
+                                               <div class="row">
+                                                  <div class="col-md-12">
+                                                    <h3 class="text-primary">Additional Information</h3>                                                                          
+                                                    <p>Please provide as much information as possible then click the Next Step button.
+                                                      <i>&nbsp;All fields marked with a * are mandatory</i>
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">                 
+                                                        
+                                                    <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">      
+                                                      <div class="col-md-3"> 
+                                                        <h4>Service Type:</h4>          
+                                                      </div>
+                                                
+                                                      <div class="col-md-8">          
+                                                        <h4>{!selSelectedRequestTypeName}</h4>
+                                                      </div>         
+                                                     
+                                                    </apex:pageBlock>
+                                                
+                                                    <apex:pageBlock rendered="{!IF(ServiceLocationRequired = false,true,false)}">
+                                                      <div class="col-md-3"> 
+                                                        <h4>Service Type:</h4>          
+                                                      </div>
+                                                      <div class="col-md-8">          
+                                                        <h4>{!selSelectedRequestTypeName}</h4>
+                                                      </div>       
+                                                    </apex:pageBlock>   
+                                                  </div>
+                                                </div>                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                    <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                                      <div class="col-md-3"> 
+                                                        <h4>Service Location:</h4>          
+                                                      </div>
+                                                      <div class="col-md-8">          
+                                                        <h4>{!fulladdress}</h4>
+                                                      </div>       
+                                                    </apex:pageBlock>
+                                                  </div>
+                                                </div>
+                                                
+                                                <input id="hdnError" name="hdnError" type="hidden" value="" />
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                    <span  style="color:red; font-size:1.2em; display:inline-block;">
+                                                      <apex:pageMessages id="errormsg"/>
+                                                    </span>
+                                                  </div>
+                                                </div>                         
+                                                        
+                                                <!--Start Component tags -->
+                                                <style>
+                                                span {
+                                                font-size: 15px;
+                                                line-height: 22px;
+                                                vertical-align: top;
+                                                }
+                                                </style>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                    <apex:pageblock >
+                                                      <apex:repeat value="{!serviceRequestQuestionWrapList}" var="items">
+                                                        <apex:variable var="IndexValue" value="{!0}"/>
+                                                        <apex:repeat value="{!items.questionAnswerList}" var="SQ">
+                                                                           
+                                                          <!-- question -->
+                                                          <div class="col-md-3">                                
+                                                            <apex:panelGrid columns="1">
+                                                              <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==true}" style="vertical-align:top;">
+                                                               
+                                                                  *
+                                                                  <apex:outputText value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputText>
+                                                                  &nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+                                                              
+                                                              </apex:outputPanel>
+                                                            </apex:panelGrid>
+                                                
+                                                            <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==false}" style="vertical-align:top;">
+                                                              <apex:outputText value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputText>
+                                                              &nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+                                                            </apex:outputPanel>
+                                                          </div>
+                                                                              
+                                                          <!-- input fields -->
+                                                          <div class="col-md-7">                               
+                                                            <apex:outputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Picklist'}" id="picklistOPTPanelid" >
+                                                               <apex:selectList styleclass="form-control" value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                                   <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                               </apex:selectList>
+                                                               
+                                                               <apex:selectList styleclass="form-control" value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" disabled="true" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" >
+                                                                   <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                               </apex:selectList>
+                                                               
+                                                               <apex:OutputPanel rendered="{!SQ.isRenderText==true}" >
+                                                                   <apex:inputField styleclass="form-control" value="{!SQ.answer.Answer__c}"/><tr><td></td><td>
+                                                                   <span>(Please select a value from the list or enter one .)</span>
+                                                                   </td></tr>
+                                                               </apex:OutputPanel>
+                                                       
+                                                           </apex:outputPanel> 
+                                                       
+                                                           <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}" >
+                                                               <apex:inputField styleclass="form-control" value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                               <apex:outputField styleclass="form-control" value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}"/>
+                                                           </apex:OutputPanel> 
+                                                       
+                                                           <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                                               <apex:inputText styleclass="form-control" value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                               <apex:inputText styleclass="form-control" id="dateTimeAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateTimeAnswerFieldId}', true);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                                <span>
+                                                                    [&nbsp; 
+                                                                <apex:outputLink value="javascript:DatePicker.insertDate('{!NOW()}', '{!$Component.dateTimeAnswerFieldId}', true);">{!NOW()}
+                                                                </apex:outputLink>
+                                                                 &nbsp;]</span>
+                                                           </apex:OutputPanel>
+                                                       
+                                                           <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date'}">
+                                                               <apex:inputText styleclass="form-control" value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                               <apex:inputText styleclass="form-control" id="dateAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateAnswerFieldId}', false);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                                <span>
+                                                                    [&nbsp;
+                                                                <apex:outputLink value="javascript:DatePicker.insertDate('{!TODAY()}', '{!$Component.dateAnswerFieldId}', true);">{!TODAY()}
+                                                                </apex:outputLink>
+                                                                 &nbsp;]</span>
+                                                           </apex:OutputPanel>
+                                                           
+                                                           <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+                                                              <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+                                                              <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+                                                            <script>
+                                                              $(function() {
+                                                                $("[id*='dateAnswerFieldId']").datepicker();
+                                                              });
+                                                            </script>
+                                                       
+                                                           <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='TextArea'}">
+                                                               <apex:inputTextArea styleclass="form-control" value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                               <apex:inputTextArea styleclass="form-control" value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/> 
+                                                           </apex:OutputPanel>
+                                                           
+                                                            <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='MultiPicklist'}">
+                                                               <apex:repeat value="{!SQ.questionMultiPicklistValueList}" var="MPL">
+                                                                   <ul style="list-style-type: none; padding: 0px;margin: -13px;">
+                                                                       <li style="margin-left: -2px;padding:02px">
+                                                                           <!--<apex:inputCheckbox value="{!MPL.isSelectedQuestion}"/>
+                                                                           <apex:outputText value="{!MPL.questionMultiPicklistItem}"/>   -->
+                                                                           
+                                                                           <apex:selectCheckboxes styleclass="form-control" value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true">
+                                                                                <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                           </apex:selectCheckboxes>
+                                                                           
+                                                                           <apex:selectCheckboxes styleclass="form-control" value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                                                <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                           </apex:selectCheckboxes>
+                                                                       </li>
+                                                                   </ul>
+                                                               </apex:repeat> 
+                                                           </apex:OutputPanel>
+                                                        
+                                                          </div>                                                         
+                                                          <apex:variable var="IndexValue" value="{!IndexValue+1}"/>
+                                                          <div class="space"></div>
+                                                        </apex:repeat>
+                                                      </apex:repeat>
+                                                    </apex:pageblock>
+                                                  </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12"> 
+                                                                
+                                                    <apex:outputPanel layout="block" rendered="{!if(AND(selectedServiceRequestType!=null,NOT(serviceRequestQuestionWrapList.size == 0)),true,false)}">
+                                                      <!--<apex:commandbutton action="{!doSubmit}" value="Submit"/>-->
+                                                    </apex:outputPanel>
+                                                  </div>
+                                                </div>                     
+                                                                     
+                                                 <!--called from onchange of picklist datatype-->
+                                                 <apex:actionfunction name="doFunctionCall" action="{!doRenderInputText}" rerender="picklistOPTPanelid,pageblockID">
+                                                    <apex:param name="answer" value="" assignTo="{!selAnswerValue}"/>
+                                                    <apex:param value="" name="selIndex" assignTo="{!selIndex}"></apex:param>
+                                                 </apex:actionfunction>
+                                                
+                                                
+                                                <!-- End component tags -->
+                                                <div class="space-sm"></div>
+                                                <div class="row">                                                   
+                                                   <div class="form-group icon">
+                                                      <div class="col-sm-offset-0 col-sm-3 text-center">         
+
+                                                          <apex:commandButton value="Previous" action="{!Previous_service_location1}" styleClass="btn btn-primary btn-xlg scroll" />&nbsp;&nbsp;
+                                                          <apex:commandButton value="Next" action="{!contact_info}" styleClass="btn btn-primary btn-xlg scroll"/>              
+                                                        </div>
+                                                    </div>                                                                                                  
+                                               </div>
+                                             </apex:outputPanel>
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                    <!-- end service_information--> 
+                                 </div>
+                                 
+                                 <div class="{!IF(contact_information == true,'tab-pane fade in active','tab-pane fade in')}" id="tab4">                                   
+                                    <h3 class="text-primary">Contact Information</h3> 
+                                    <apex:outputPanel id="contact_information"  >
+                                       <apex:pageBlock >
+                                             <apex:outputPanel rendered="{!contact_information}">                                                 
+                                                   <script type="text/javascript">
+                                                      function numbersonly(myfield, e, dec)
+                                                      {
+                                                        var key;
+                                                        var keychar;
+                                                        
+                                                        if (window.event)
+                                                           key = window.event.keyCode;
+                                                        else if (e)
+                                                           key = e.which;
+                                                        else
+                                                           return true;
+                                                        keychar = String.fromCharCode(key);
+                                                        
+                                                        // control keys
+                                                        if ((key==null) || (key==0) || (key==8) || 
+                                                            (key==9) || (key==13) || (key==27)  || (key==86) || (key==67) )
+                                                           return true;
+                                                        
+                                                        // numbers
+                                                        else if ((("0123456789-").indexOf(keychar) > -1))
+                                                           return true;
+                                                        
+                                                        // decimal point jump
+                                                        else if (dec && (keychar == "."))
+                                                           {
+                                                           myfield.form.elements[dec].focus();
+                                                           return false;
+                                                           }
+                                                        else
+                                                           return false;
+                                                      }
+                                                         
+                                                      
+                                                   </script> 
+
+                                                   <script type="text/javascript">           
+                                                       var specialKeys = new Array();
+                                                       specialKeys.push(8); //Backspace
+                                                       specialKeys.push(9); //Tab
+                                                       specialKeys.push(46); //Delete
+                                                       specialKeys.push(36); //Home
+                                                       specialKeys.push(35); //End
+                                                       specialKeys.push(37); //Left
+                                                       specialKeys.push(39); //Right
+                                                       specialKeys.push(32); //space                                            
+                                                       
+                                                       function IsAlphaNumeric(e) {
+                                                           var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+                                                           var ret = ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+                                                           document.getElementById("error").style.display = ret ? "none" : "inline";
+                                                           return ret;
+                                                       } 
+                                                       
+                                                       function isAlpha(keyCode)
+                                                        {
+                                                        
+                                                            return ((keyCode >= 65 && keyCode <= 90) || keyCode == 8 || keyCode == 9  || keyCode == 32 || keyCode == 190)
+                                                        
+                                                        }                                        
+                                                                
+                                                    </script>
+
+
+                                                  <div class="row">
+                                                      <div class="col-md-12"> 
+                                                        <div class="form-result" id="form-result"></div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12">
+                                                        <span  style="color:red; font-size:1.2em; display:inline-block;">
+                                                          <apex:pageMessages id="error_msg"/>
+                                                        </span>
+                                                      </div>
+                                                    </div>   
+                                                    
+                                                    <input id="Participants_0__ParticipantDefID" name="Participants[0].ParticipantDefID" type="hidden" value="897793" />
+                                                    <input id="Participants_0___primaryEmailCode" name="Participants[0]._primaryEmailCode" type="hidden" value="PRIMARY" />
+                                                    <input id="Participants_0___primaryLocationCode" name="Participants[0]._primaryLocationCode" type="hidden" value="HOME" />
+                                                    <input id="Participants_0___primaryNameCode" name="Participants[0]._primaryNameCode" type="hidden" value="LEGALNAM" />
+                                                    <input id="Participants_0___primaryPhoneCode" name="Participants[0]._primaryPhoneCode" type="hidden" value="HOME" />
+                                                    <input id="Participants_0___resourceCode" name="Participants[0]._resourceCode" type="hidden" value="CONTACT" />
+                                                    <input id="Participants_0___ownerGroupCode" name="Participants[0]._ownerGroupCode" type="hidden" value="DEPATRAN" />
+                                                    <input id="Participants_0__RequiredInd" name="Participants[0].RequiredInd" type="hidden" value="N" />
+                                                    <input id="Participants_0__NameReqInd" name="Participants[0].NameReqInd" type="hidden" value="N" />
+                                                    <input id="Participants_0__AddressReqInd" name="Participants[0].AddressReqInd" type="hidden" value="N" />
+                                                    <input id="Participants_0__PhoneReqInd" name="Participants[0].PhoneReqInd" type="hidden" value="N" />
+                                                    <input id="Participants_0__EmailReqInd" name="Participants[0].EmailReqInd" type="hidden" value="N" />
+                                                    <input id="Participants_0__ParticipantDescription" name="Participants[0].ParticipantDescription" type="hidden" value="Contact" />
+                                                    <input id="Participants_0__ResourceTypeCode" name="Participants[0].ResourceTypeCode" type="hidden" value="CONTACT" />
+                                                    <input id="Participants_0__PersonNameInd" name="Participants[0].PersonNameInd" type="hidden" value="Y" />
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12">       
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">First Name</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" value="{!selContact.FirstName}" id="Participants_0__FirstName" maxlength="30" onkeydown="return isAlpha(event.keyCode);"/>
+                                                              <i class="fa fa-user"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                                
+                                                    <div class="row">
+                                                      <div class="col-md-12">        
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">* Last Name</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" Value="{!selContact.LastName}"  id="Participants_0__LastName"  maxlength="30" onkeydown="return isAlpha(event.keyCode);"/>
+                                                              <i class="fa fa-user"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>  
+
+                                                    <div class="row">
+                                                      <div class="col-md-12"> 
+                                                        <div class="form-group icon">
+                                                            <label for="name" class="col-sm-3 control-label">* Email Address</label>
+                                                            <div class="col-sm-8">
+                                                               <div class="control">
+                                                                     <apex:inputText styleClass="form-control" Value="{!selContact.Email}" id="Participants_0__EmailAddress" maxlength="30"></apex:inputText>
+                                                                    <i class="fa fa-envelope"></i>
+                                                               </div>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>                                                                         
+                                                             
+                                                    <input id="Participants_0__Address_SuggestPrefix" name="Participants[0].Address.SuggestPrefix" type="hidden" value="Participants_0__Address" />
+                                                    <input id="Participants_0__Address_DisplayAddress" name="Participants[0].Address.DisplayAddress" type="hidden" value="" />
+                                                    <input id="Participants_0__Address_Details" name="Participants[0].Address.Details" type="hidden" value="" />
+                                                    <input id="Participants_0__Address_RelatedTableCode" name="Participants[0].Address.RelatedTableCode" type="hidden" value="RESINST" />
+                                                    <input id="Participants_0__Address_SuggestServiceMethod" name="Participants[0].Address.SuggestServiceMethod" type="hidden" value="GetLocationList" />
+                                                    <input id="Participants_0__Address_StreetAddressLength" name="Participants[0].Address.StreetAddressLength" type="hidden" value="200" />
+                                                    <input id="Participants_0__Address_LocationRequiredIND" name="Participants[0].Address.LocationRequiredIND" type="hidden" value="N" />
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12"> 
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">Street Address</label>
+                                                          <div class="col-sm-8">
+                                                             <div class="control">
+                                                                   <apex:inputText styleClass="form-control" value="{!selContact.MailingStreet}" id="Participants_0__Address_StreetAddress" maxlength="40"/>
+                                                                  <i class="fa fa-home"></i>
+                                                             </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12">            
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">City</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputtext styleClass="form-control" value="{!selContact.MailingCity}" maxlength="20" id="Participants_0__Address_City" onkeydown="return isAlpha(event.keyCode);"/>
+                                                              <i class="fa fa-home"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12"> 
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">State</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputtext styleClass="form-control" Value="{!selContact.MailingState}" maxlength="3" id="Participants_0__Address_State" onkeydown="return isAlpha(event.keyCode);"/>
+                                                              <i class="fa fa-home"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                      <div class="col-md-12"> 
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">Zip Code</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" Value="{!selContact.MailingPostalCode}" id="Participants_0__Address_Zip" maxlength="5" onKeyPress="return numbersonly(this, event)"/>
+                                                              <i class="fa fa-home"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div> 
+                                                                                                                
+                                                    <div class="row">
+                                                      <div class="col-md-12">                                                          
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">Phone Number</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" id="Participants_0__PhoneNumber" value="{!selContact.Phone}" maxlength="14"/>
+                                                              <i class="fa fa-phone"></i>
+                                                             </div>
+                                                           </div>
+                                                         </div>
+                                                       </div>
+                                                    </div>
+                                                                
+                                                    <div class="row">
+                                                      <div class="col-md-12">          
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">Phone Number Ext</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" Value="{!selContact.OtherPhone}" id="Participants_0__PhoneExtension"  maxlength="14"/>
+                                                              <i class="fa fa-phone"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                               
+                                                    <apex:inputHidden id="contact_required" value="{!ContactRequired}" />
+                                                 </apex:outputPanel>
+                                           </apex:pageBlock>
+                                        </apex:outputPanel>
+                                        <!-- end contact_information-->
+                                    
+                                        <!-- comments_attachments-->   
+                                        <apex:outputPanel id="comments_attachments"  >
+                                           <apex:pageBlock >
+                                                 <apex:outputPanel rendered="{!comments_attachments}">                                               
+                                                    <input id="hdnError" name="hdnError" type="hidden" value="" />                                                
+                        
+                                                    <div class="row">
+                                                      <div class="col-md-12">  
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-sm-3 control-label">Comments</label>
+                                                          <div class="col-sm-8">
+                                                            <div class="control">
+                                                              <apex:inputTextarea styleclass="form-control" id="tbxComments" rows="8" cols="40" value="{!comments}"/>
+                                                              <i class="fa fa-message"></i>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    
+                                                    <div class="space-sm"></div>
+                                                    <div class="row">                                                   
+                                                       <div class="form-group icon">
+                                                          <div class="col-sm-offset-0 col-sm-3 text-center">       
+
+                                                              <apex:commandButton value="Previous" action="{!prev_service_info}"  status="counterStatus" styleClass="btn btn-primary btn-xlg scroll"/>&nbsp;&nbsp;                                                           
+                                                              <apex:commandButton value="Next" action="{!attachment}"  status="counterStatus" onclick="Submit(); return  false;" styleClass="btn btn-primary btn-xlg scroll">
+                                                                  <apex:param assignTo="{!commentvalue}" value="{!comments}"/>
+                                                              </apex:commandButton>
+                                                            </div>
+                                                         </div>
+                                                    </div> 
+                                                 </apex:outputPanel>
+                                           </apex:pageBlock>
+                                        </apex:outputPanel>
+                                        <!-- end comments_attachments-->  
+                                      </div>
+                                      
+                                  <div class="{!IF(attachment == true,'tab-pane fade in active','tab-pane fade in')}" id="tab1" >                                    
+                                    <apex:outputpanel id="attachment">
+                                       <apex:pageBlock >
+                                             <apex:outputPanel rendered="{!attachment}">                                              
+                                                
+                                                <form enctype="multipart/form-data">
+                                                  <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h3 class="text-primary">Attachment</h3>
+                                                        <p>Maximum file size limit is 5 MB.</p>
+                                                     </div>
+                                                  </div>                                                             
+                                                          
+                                                  <div class="space"></div>
+                                                  <div class="form-result" id="form-result"></div>
+                                                  <apex:outputPanel rendered="{!error_msg}" style="color:red;">
+                                                     <apex:pageMessages id="error_msg"/>
+                                                  </apex:outputPanel>                                                                                           
+                                                 <div class="space"></div>
+                                                 
+                                                  <div class="form-group icon">
+                                                    <label for="name" class="col-sm-2 control-label">Filename</label>
+                                                      <div class="col-sm-4">
+                                                        <div class="control">
+                                                          <apex:inputText value="{!attach.name}" id="fileName"/>                                                                                 
+                                                        </div>
+                                                      </div>
+                                                  </div>                                               
+                                                 
+                                                  <div class="form-group icon">
+                                                    <label for="name" class="col-sm-2 control-label">Description</label>
+                                                      <div class="col-sm-4">
+                                                        <div class="control">
+                                                          <apex:inputTextarea value="{!attach.description}" id="description"/>                                                                                 
+                                                        </div>
+                                                      </div>
+                                                  </div> 
+                                                  
+                                                   <div class="form-group icon">
+                                                    <label for="name" class="col-sm-2 control-label">File</label>
+                                                      <div class="col-sm-4">
+                                                        <div class="control">
+                                                          <apex:inputFile value="{!attach.body}" filename="{!attach.name}" size="50" id="file"/>                                                                                 
+                                                        </div>
+                                                      </div>
+                                                  </div> 
+                                                  
+                                                  <div class="space-sm"></div>
+                                                    <div class="row">                                                   
+                                                       <div class="form-group icon">
+                                                          <div class="col-sm-offset-0 col-sm-3 text-center">        
+
+                                                              <apex:commandButton value="Previous" action="{!prev_attachment}"  status="counterStatus" styleClass="btn btn-primary btn-xlg scroll"/>&nbsp;&nbsp;                                                            
+                                                              <apex:commandButton value="Next" action="{!review_submit}"  status="counterStatus" styleClass="btn btn-primary btn-xlg scroll">
+                                                                  
+                                                              </apex:commandButton>
+                                                            </div>
+                                                         </div>
+                                                    </div>                   
+                                                                                                      
+                                                </form>
+                                             </apex:outputPanel>
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                 </div>
+
+                                  <div class="{!IF((review_submit == true)|| (review_result == true),'tab-pane fade in active','tab-pane fade in')}" id="tab5">
+                              
+                                    <h3 class="text-primary">Review and Submit</h3>
+                                    <!-- review_submit-->
+                                    <apex:outputPanel id="review_submit">
+                                       <apex:pageBlock >
+                                             <apex:outputPanel rendered="{!review_submit}">                                                
+                                                <div class="row">
+                                                   <div class="col-md-12">
+                                                      <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                                         <div class="col-md-3">
+                                                            <h4>Service Type:</h4>
+                                                         </div>
+                                                         <div class="col-md-8">
+                                                            <h4>{!selSelectedRequestTypeName}</h4>
+                                                         </div>
+                                                      </apex:pageBlock>
+                                                
+                                                      <apex:pageBlock rendered="{!IF(ServiceLocationRequired = false,true,false)}">
+                                                         <div class="col-md-3">
+                                                            <h4>Service Type:</h4>
+                                                         </div>
+                                                         <div class="col-md-8">
+                                                            <h4>{!selSelectedRequestTypeName}</h4>
+                                                         </div>         
+                                                      </apex:pageBlock>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                   <div class="col-md-12">
+                                                      <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                                         <div class="col-md-3">
+                                                            <h4>Service Location:</h4>
+                                                         </div>
+                                                         <div class="col-md-9">
+                                                            <h4>{!fulladdress}</h4>
+                                                         </div>         
+                                                      </apex:pageBlock>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                   <div class="col-md-12">            
+                                                      <apex:pageBlock rendered="{!IF(tempFlexNotesList != null,true,false)}">
+                                                         <div class="col-md-12">
+                                                            <h4>Service Information</h4>
+                                                         </div>
+                                                
+                                                          
+                                                       <!-- flexNotes question To Review -->
+                                                       <apex:repeat value="{!serviceRequestQuestionWrapList}" var="sRl">
+                                                          <apex:repeat value="{!sRl.questionAnswerList}" var="SQ">
+                                                              <div class="row">
+                                                                   <div class="col-md-12">
+                                                                         <!-- question -->
+                                                                        <div class="col-md-3"> 
+                                                                           <apex:outPutField value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outPutField>
+                                                                           &nbsp;&nbsp;
+                                                                        </div>
+                                                                        <div class="col-md-7"> 
+                                                                           <apex:outputField value="{!SQ.answer.Answer__c}"/>
+                                                                        </div>
+                                                                   </div>
+                                                               </div>
+                                                          </apex:repeat>
+                                                       </apex:repeat>
+                                                       <!-- flex note question to review -->
+                                                                          
+                                                      </apex:pageBlock>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                   <div class="col-md-12">
+                                                      <apex:pageBlock rendered="{!IF(selContact.lastname != null,true,false)}">
+                                                         <div class="col-md-12">
+                                                            <h4>Contact Information</h4>
+                                                         </div>
+                                                
+                                                         <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-3"> 
+                                                                   Name:              
+                                                                </div>
+                                                                <div class="col-md-7"> 
+                                                                   {!selContact.FirstName}&nbsp;&nbsp;{!selContact.LastName}
+                                                                </div>
+                                                             </div>
+                                                         </div>
+                                                
+                                                         <div class="row">
+                                                             <div class="col-md-12">
+                                                                <div class="col-md-3"> 
+                                                                   Address:
+                                                                </div>
+                                                                <div class="col-md-7"> 
+                                                                   {!selContact.MailingStreet},{!selContact.MailingCity},{!selContact.MailingState},{!selContact.MailingPostalCode}
+                                                                </div>
+                                                             </div>
+                                                         </div>
+                                                
+                                                         <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="col-md-3"> 
+                                                                   Phone:
+                                                                </div>
+                                                                <div class="col-md-7"> 
+                                                                   {!selContact.Phone}
+                                                                </div>
+                                                             </div>
+                                                         </div>
+                                                
+                                                         <div class="row">
+                                                             <div class="col-md-12">
+                                                                <div class="col-md-3"> 
+                                                                   Email:
+                                                                </div>
+                                                                <div class="col-md-7"> 
+                                                                   {!selContact.Email}
+                                                                </div>
+                                                              </div>
+                                                         </div>
+                                                      </apex:pageblock>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                   <div class="col-md-12">
+                                                      <div class="col-md-12">
+                                                         <h4>Comments</h4>
+                                                      </div>
+                                                
+                                                      <div class="row">
+                                                         <div class="col-md-12">
+                                                             <div class="col-md-3"> 
+                                                                Additional Comments:              
+                                                             </div>
+                                                             <div class="col-md-7"> 
+                                                                {!comments}
+                                                             </div>
+                                                         </div>
+                                                      </div>        
+                                                   </div>
+                                                </div>
+                                                <div class="space-sm"></div>
+                                                <div class="row">                                                   
+                                                   <div class="form-group icon">
+                                                      <div class="col-sm-offset-0 col-sm-3 text-center">        
+
+                                                          <apex:commandButton value="Previous" action="{!contact_info}"  status="counterStatus" styleClass="btn btn-primary btn-xlg scroll"/>&nbsp;&nbsp;                                                       
+                                                          <apex:commandbutton action="{!doSubmit}" value="Submit" id="btnSubmit" styleClass="btn btn-primary btn-xlg scroll"></apex:commandbutton>
+                                                       </div>
+                                                    </div>
+                                                </div> 
+                                             </apex:outputPanel>
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                    <!-- end review_result-->  
+                                    
+                                    <!-- review_result-->      
+                                    <apex:outputPanel id="review_result">
+                                       <apex:pageBlock >
+                                             <apex:outputPanel rendered="{!review_result}">                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                      <h4>Thank you.</h4>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                      <p>
+                                                         The service request has been successfully submitted. The tracking number is 
+                                                         <apex:outputLabel value="{!casenumber.CaseNumber}"></apex:outputLabel>                              .
+                                                      </p>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                      <p>
+                                                        Select an option below if you would like to create another service request.                             .
+                                                      </p>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                      <input checked="checked" id="rbtnlCreateNewSROptions1" name="rbtnlCreateNewSROptions" type="radio" value="rbtnThisLocation" onclick="myFunction()"/> Create a new service request at this location.
+                                                      <apex:inputHidden Value="{!radiobtn1}" id="rbtnlCreateNewSROptions1">
+                                                         <apex:actionSupport event="onchange">
+                                                           <apex:param value="{!radiobtn1}" assignTo="{!radiobtn1}" />                                                                                                                                 
+                                                         </apex:actionsupport>
+                                                      </apex:inputHidden>
+                                                   </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                  <div class="col-md-12">
+                                                      <input id="rbtnlCreateNewSROptions2" name="rbtnlCreateNewSROptions" type="radio" value="rbtnDifferentLocation" onclick="myFunction()"/> Create a new service request at a different location.
+                                                      <apex:inputHidden Value="{!radiobtn2}" id="rbtnlCreateNewSROptions2">
+                                                         <apex:actionSupport event="onchange">
+                                                           <apex:param value="{!radiobtn2}" assignTo="{!radiobtn2}" />                                                                                                                                 
+                                                         </apex:actionsupport>
+                                                      </apex:inputHidden>
+                                                   </div>
+                                                </div>
+                                                                
+                                                <script>
+                                                   function myFunction() {
+                                                       var x = document.getElementById("rbtnlCreateNewSROptions1").checked;                                                                                                   
+                                                       //alert('x--------------->'+x);
+                                                       var check_radiobtn1= $j("[id*='rbtnlCreateNewSROptions1']").val(x);  
+                                                   
+                                                       var y = document.getElementById("rbtnlCreateNewSROptions2").checked;
+                                                       //alert('y--------------->'+y);
+                                                       var check_radiobtn2= $j("[id*='rbtnlCreateNewSROptions2']").val(y);  
+                                                   }
+                                                </script> 
+                                                
+                                                <div class="space-sm"></div>
+                                                <div class="row">                                                   
+                                                   <div class="form-group icon">
+                                                      <div class="col-sm-offset-0 col-sm-3 text-center">        
+
+                                                          <apex:commandButton value="Next" action="{!review_action_next}" onclick="myFunction();" styleClass="btn btn-primary btn-xlg scroll"/>&nbsp;&nbsp;                                                      
+                                                          <apex:commandbutton action="{!review_action_finish}" value="Finish" id="btnSubmit" styleClass="btn btn-primary btn-xlg scroll"/>
+                                                       </div>
+                                                    </div>
+                                                </div>                                
+        
+                                             </apex:outputPanel>
+                                       </apex:pageBlock>
+                                    </apex:outputPanel>
+                                    <!-- end review_result--> 
+                                       
+                                 </div>
+                              </div>
+                              <!-- /tab-content -->
+                           </div>
+                           <!-- /tabbable -->
+                        </div>
+                     </div>
+                     <div class="tab-pane animated fadeIn well" id="status">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <h3 class="text-primary">Check Service Request Status</h3>
+                              <p>This section allows you to check the status of previously submitted service requests. Please enter the service request # provided with the service request to look up the status. </p>
+                           </div>
+                        </div>
+                        <div class="space"></div>
+                        <div class="row">
+                           <!--<div class="col-md-12 col-sm-12">
+                              <div id="form-messages"></div>
+                              <form class="form-horizontal" role="form" id="search-form" method="post">
+                                 <div class="form-group icon">
+                                    <label for="name" class="col-sm-3 control-label">Service Request Number</label>
+                                    <div class="col-sm-6">
+                                       <div class="control">
+                                          <input type="text" value="{!requestId}" class="form-control" id="name" placeholder="Service Request Number (eg: 11-00000001)" name="name" required="true"></input>
+                                          <i class="fa fa-search"></i>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="space-sm"></div>
+                                 <div class="form-group icon">
+                                    <div class="col-sm-offset-3 col-sm-6 text-center">
+                                       <button type="submit" name="submit" class="btn btn-primary">Check</button>
+                                       <a href="javascript:contactUsSubmit();" class="btn btn-primary" ><span>Check Status</span></a>
+                                    </div>
+                                 </div>
+                              </form>
+                              <div class="space visible-xs"></div>
+                           </div>-->
+                            <apex:outputPanel id="StatusCheck">
+                                   <apex:outputPanel rendered="{!rend}">
+                                       <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/jquery-1-8-2.js')}"/>
+                                       <script type="text/javascript">
+                                          function numbersonly(myfield, e, dec)
+                                          {
+                                            var key;
+                                            var keychar;
+                                            
+                                            if (window.event)
+                                               key = window.event.keyCode;
+                                            else if (e)
+                                               key = e.which;
+                                            else
+                                               return true;
+                                            keychar = String.fromCharCode(key);
+                                            
+                                            // control keys
+                                            if ((key==null) || (key==0) || (key==8) || 
+                                                (key==9) || (key==13) || (key==27)  || (key==86) || (key==67) )
+                                               return true;
+                                            
+                                            // numbers
+                                            else if ((("0123456789-").indexOf(keychar) > -1))
+                                               return true;
+                                            
+                                            // decimal point jump
+                                            else if (dec && (keychar == "."))
+                                               {
+                                               myfield.form.elements[dec].focus();
+                                               return false;
+                                               }
+                                            else
+                                               return false;
+                                          }
+                                             
+                                          
+                                       </script>                      
+                                       <div class="sixteen columns">
+                                            <div class="standard-form compressed style-2">                                                
+                                                <div class="form-result" id="form-result"></div>
+                                                <div style="color:red;display;inline;">                                                
+                                                     <apex:pageMessages id="status_check_error_msg"/>                                                    
+                                                </div><br/>                                              
+                                                 <form class="contactForm" id="contactus" name="contactus">
+                                                     <div class="form-group icon">
+                                                        <label for="name" class="col-sm-3 control-label">Service Request Number</label>
+                                                        <div class="col-sm-6">
+                                                           <div class="control">
+                                                              <apex:inputText value="{!requestId}" id="SRNumber" styleClass="form-control" required="false" html-placeholder="Service Request Number (eg: 11-00000001)" maxlength="12" onKeyPress="return numbersonly(this, event)"/>
+                                                               
+                                                              <i class="fa fa-search"></i>
+                                                           </div>
+                                                        </div>                                                       
+                                                     </div> 
+                                                      <div class="form-group icon">
+                                                        <label for="name" class="col-sm-3 control-label">Email</label>
+                                                        <div class="col-sm-6">
+                                                           <div class="control">
+                                                              <apex:inputText value="{!email}" id="Email" styleClass="form-control" required="false" html-placeholder="Email Address (eg: abc@xyz.com)" maxlength="30"/>
+                                                             
+                                                              <i class="fa fa-envelope"></i>
+                                                           </div>
+                                                        </div>
+                                                     </div>                                                        
+                                                     
+                                                     <div class="form-group icon">
+                                                        <div class="col-sm-offset-3 col-sm-6 text-center">
+                                                            <apex:actionFunction name="statuscheck" action="{!action}" reRender="StatusCheck,StatusCheckResult"> 
+                                                              <apex:param value="" assignTo="{!requestId}" name="requestId"/>
+                                                             <apex:param value="" assignTo="{!email}" name="email"/>
+                                                           </apex:actionFunction>
+                                                           
+                                                           <!--<button type="submit" name="submit" class="btn btn-primary">Check</button>-->
+
+                                                           <apex:commandlink onclick="contactUsSubmit(); return  false;" styleclass="btn btn-primary" value="Status Check" style="top:85px;">                                                             
+                                                             
+                                                           </apex:commandlink>
+                                                        </div>
+                                                     </div>                                                    
+                                                     <div class="space visible-xs"></div>
+                                                 </form>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                               
+                                <apex:outputPanel id="StatusCheckResult">
+                                    <apex:outputPanel rendered="{!render}" >
+                                        
+                                        <div class="col-md-12 col-sm-12"> 
+                                             <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDX9ur1Wl-FKC6j6RUbt6t9WdtDAjM4pLQ&q={!caserecord.Address__c}"></iframe>                                                                                                                                   
+
+                                        </div>                                       
+
+                                        <div class="col-md-12 col-sm-12">
+                                           <span class="hr mapdv"></span>                                          
+                                        </div>
+                                         
+                                        
+                                        <div class="col-md-8 col-sm-8">
+                                            <h5 class="semi"><a href="#">Service Request Status Details</a></h5>                          
+                                            <p>
+                                                Service Request Number: &nbsp;{!caserecord.CaseNumber__c}<br />
+                                                Service Type: &nbsp; {!SrId}<br />
+                                                    <!--<apex:repeat value="{!servicename}" var="sr">
+                                                    <apex:input value="{!sr.Service_Name__c}" />                                                               
+                                                        {!sr.Service_Name__c}                                                       
+                                                    </apex:repeat><br /> -->                         
+                                                Service Location:&nbsp; {!caserecord.Address__c}<br />                 
+                                                Status:&nbsp;{!caserecord.status__c}<br />
+
+                                               Created On:&nbsp; {!caserecord.CreatedBy__c}
+                                            </p>                          
+                                         
+                                        </div>                                                                      
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="standard-form compressed">
+                                                <h5 class="semi"><a href="#">Activities Performed</a></h5>
+                                                 <apex:variable var="count" value="{!1}"/>
+                                                        <apex:repeat value="{!caserecord}" var="c">                                                          
+                                                            <apex:repeat value="{!c.OUC_Activity_Histories__r}" var="tsk">
+                                                             <apex:pageBlock rendered="{!IF(tsk.External_Comments__c !=null,true,false)}">
+                                                                <p>                                                   
+                                                                    {!count}. <strong>{! tsk.Task_Short_Name__c}</strong><br />   
+                                                                    Status:&nbsp;{! tsk.Status__c}<br />  
+                                                                    Due Date:&nbsp;{! tsk.Due_Date__c} <br /> 
+                                                                    Completed Date:&nbsp;{! tsk.Completion_Date__c } <br /> 
+                                                                    Details:&nbsp;{! tsk.External_Comments__c}  
+                                                                </p>
+                                                                </apex:pageBlock>
+                                                                <apex:variable var="count" value="{!count + 1}"/>
+                                                            </apex:repeat>
+                                                        </apex:repeat>                                               
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                        </div>
+                     </div>
+                     <div class="tab-pane animated fadeIn well" id="history">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <h3 class="text-primary">History</h3>
+                              <!-- <div class="col-md-4 col-sm-4">
+                               
+                                 <apex:commandLink action="{!get_case_history}" value="Check Request History Details" id="rh" reRender="login,logout,rh_case"/> <br/>                                 
+
+                              </div>-->
+                              <apex:outputPanel id="logout">
+                              <apex:outputPanel rendered="{!loggedout}">
+                                  <div class="col-md-12 col-sm-12">
+                                   <p>Please login to check the request history details.</p>
+                                  </div>
+                              </apex:outputPanel>
+                              </apex:outputPanel>
+                              
+                              <apex:outputPanel id="login">
+                              <apex:outputPanel rendered="{!loggedIn}">
+                                   <div class="col-md-12 col-sm-12">
+                                       <apex:outputPanel rendered="{!rh_error_msg}">
+                                           <apex:pageMessage id="rh_error_msg" severity="Error"></apex:pageMessage>
+                                       </apex:outputPanel>
+                                       <apex:outputPanel id="rh_case">
+                                       <apex:outputPanel rendered="{!if(rh_error_msg != true,'','false')}">
+                                            <table class="form-control">
+                                                <thead>
+                                                    <th>SR.No</th>
+                                                    <th>Service Request Number</th>
+                                                    <th>Service Type</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
+                                                    <th>Priority</th>
+                                                    <th>Case Origin</th>
+                                                    <th>SLA</th>
+                                                    <th>Open Date</th>
+                                                    <th>Expected Resolution Date</th>
+                                                </thead>
+                                                <tbody>
+                                                <apex:variable var="casecount" value="{!1}"/>
+                                                <apex:repeat value="{!loggedin_user_case}" var="luc">
+                                        <!-- <p>
+                                              Service Request Number: &nbsp;{!luc.CaseNumber__c}<br />
+                                              Service Type: &nbsp; {!luc.SRType__c}<br />                                                                          
+                                              Address:&nbsp; {!luc.Address__c}<br />                 
+                                              Status:&nbsp;{!luc.status__c}<br />
+                                              Priority:&nbsp; {!luc.Priority__c}<br />
+                                              Case Origin: &nbsp;{!luc.Origin__c}<br />
+                                              SLA: &nbsp; {!luc.SLA__c}<br />                                                                       
+                                                       
+                                              Open Date:&nbsp;{!luc.DateTimeOpened__c}<br />
+                                              Expected Resolution Date:&nbsp; {!luc.Expected_Resolution_Date__c}
+                                            </p>-->
+                                                  <tr>
+                                                    <td>{!casecount}</td>
+                                                    <td>{!luc.CaseNumber__c}</td>
+                                                    <td>{!luc.SRType__c}</td>
+                                                    <td>{!luc.Address__c}</td>
+                                                    <td>{!luc.Status__c}</td>
+                                                    <td>{!luc.Priority__c}</td>
+                                                    <td>{!luc.Origin__c}</td>
+                                                    <td>{!luc.SLA__c}</td>
+                                                    <td>{!luc.DateTimeOpened__c}</td>
+                                                    <td>{!luc.Expected_Resolution_Date__c}</td>
+                                                  </tr>
+                                                  <apex:variable var="casecount" value="{!casecount + 1}"/>
+                                                </apex:repeat>
+                                                </tbody> 
+                                            </table>  
+                                       </apex:outputPanel>
+                                       </apex:outputPanel>                 
+                                   </div>
+                              </apex:outputPanel>
+                              </apex:outputPanel>                                                        
+                           </div>
+                        </div>
+                     </div>
+                     <!--<div class="tab-pane  animated fadeIn" id="map">
+                        <div class="row">
+                        </div>
+                        </div>-->
+                     <div class="tab-pane  animated fadeIn well" id="faq">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <h3 class="text-primary">Frequently Asked Questions</h3>                              
+                              <div class="col-md-4 col-sm-4">
+                                 <!--<a>All Service Types with description</a> 
+                                 <a>All Service Types with servicing agency and sla</a> --> 
+                                 
+                                 <apex:commandLink action="{!fetch_FaqSrdescription}" value="All Service Types with description" id="FAQd" reRender="FAQ_D,FAQ_S"/> <br/>                                 
+                                 <apex:commandLink action="{!fetch_FaqSrsla}" value="All Service Types with servicing agency and service resolution estimates" id="FAQs" reRender="FAQ_D,FAQ_S"/>       
+                              </div>
+                              
+                               <apex:outputPanel id="FAQ_D">
+                                  <apex:outputPanel rendered="{!FAQ_D}" >
+                                      <div class="col-md-8 col-sm-8">
+                                         <apex:variable var="faqcount" value="{!1}"/>
+                                         <apex:repeat value="{!FaqSrdescription}" var="faq_srd">                                              
+
+                                            <p> 
+                                                <apex:pageBlock rendered="{!IF(faq_srd.External_Name__c !=null,true,false)}">
+                                                     {!faqcount}.<strong>{! faq_srd.External_Name__c}</strong><br />   
+                                                     Description:&nbsp;{! faq_srd.Description__c}<br />   
+                                                </apex:pageBlock> 
+                                                <apex:pageBlock rendered="{!IF(faq_srd.External_Name__c ==null,true,false)}">
+                                                     {!faqcount}.<strong>{! faq_srd.Service_Name__c}</strong><br />   
+                                                     Description:&nbsp;{! faq_srd.Description__c}<br />   
+                                                </apex:pageBlock>                                               
+                                                                                                                                            
+                                            </p> 
+                                            <apex:variable var="faqcount" value="{!faqcount + 1}"/>                                           
+
+                                         </apex:repeat>               
+                                      </div>
+                                  </apex:outputPanel>
+                               </apex:outputPanel>  
+                               
+                                <apex:outputPanel id="FAQ_S">
+                                  <apex:outputPanel rendered="{!FAQ_S}" >
+                                      <div class="col-md-8 col-sm-8">
+                                        <apex:variable var="faqcount1" value="{!1}"/>
+                                        <apex:repeat value="{!FaqSrsla}" var="faq_srsla">                                                
+
+                                            <p>
+                                                <apex:pageBlock rendered="{!IF(faq_srsla.External_Name__c !=null,true,false)}">                                                   
+                                                    {!faqcount1}.<strong>{! faq_srsla.External_Name__c}</strong><br />   
+                                                    Servicing Agency:&nbsp;{! faq_srsla.Agency__c}<br />
+                                                    Service Resolution Estimate:&nbsp;{! faq_srsla.SLA__c}<br />
+                                                </apex:pageBlock> 
+                                                <apex:pageBlock rendered="{!IF(faq_srsla.External_Name__c ==null,true,false)}"> 
+                                                    {!faqcount1}.<strong>{! faq_srsla.Service_Name__c}</strong><br />   
+                                                    Servicing Agency:&nbsp;{! faq_srsla.Agency__c}<br />
+                                                    Service Resolution Estimate:&nbsp;{! faq_srsla.SLA__c}<br />
+                                                </apex:pageBlock>                                             
+                                            </p>
+                                            <apex:variable var="faqcount1" value="{!faqcount1+ 1}"/>
+                                        </apex:repeat>            
+                                      </div>
+                                  </apex:outputPanel>
+                               </apex:outputPanel>   
+                                                            
+                                                     
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>           
+            
+            <style>
+                td, th {
+                    padding: 9px;
+                }
+                
+                table{
+                  overflow-y:auto;
+                }
+            </style>
+            
+            <!-- footer -->
+            <c:OUC311_Footer />
+            <!-- end of footer -->
+         </body>
+      </html>
+   </apex:form>
+</apex:page>

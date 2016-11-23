@@ -1,0 +1,149 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SiteLoginController">
+    <apex:form id="statusCheck" styleClass="statusCheck">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+           <head>
+                <meta charset="utf-8" />
+                <title>OUC | Login</title>
+                
+                <!-- include all css and files -->
+                <c:OUC_Assests />
+         
+                <style>
+                    #errorMsg{
+                        color:#FF0000;
+                        font-size:0.7em;
+                        margin-left: 10px;
+                    }
+                    
+                    .body .standard-form p.note {
+                        width: 225px;
+                        margin-left: -17px;
+                    }
+                    
+                    .body .sidebar ul.blogs li p a {
+                        display: block;
+                        font-family: "Open Sans";
+                        font-size: 13px;
+                        font-weight: 500;
+                        line-height: 0;
+                        margin: 8px 0 9px;
+                    }
+                </style>              
+            </head>
+
+            <body>
+                <div class="page-wrapper">
+                    <div class="slug-pattern">
+                        <div class="overlay">
+                            <div class="slug-cut"></div>
+                        </div>
+                    </div>
+               
+                    <!-- header --> 
+                    <c:OUC_Header tab="Login"/>
+                    <!-- end of header -->   
+                   
+                    
+                    <div class="shadow"></div>
+                    <div class="container">
+                        <div class="page-title">
+                            <div class="rg"></div>
+                            <h1>Login</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="body">
+                    <div class="body-round"></div>
+                    <div class="body-wrapper">
+                        <div class="side-shadows"></div>
+                        <div class="content">
+                            <div class="container callout standard">
+                                <div class="twelve columns">
+                                    <h4>Login</h4>
+                                </div>                                
+                            </div>
+                            <div class="callout-hr"></div>
+                              
+                            <div class="container">
+                                <apex:outputPanel id="login">
+                                   <apex:outputPanel > 
+                                        <div class="twelve columns">
+                                            <div class="standard-form compressed">
+                                                <h4 class="semi"></h4>
+                                                <div class="form-result"><apex:pageMessages id="error_msg"/></div>
+                                                 <form class="contactForm" id="contactus" name="contactus">                                                    
+                                                    <apex:inputText value="{!username}" id="Email" styleClass="input" maxlength="40" html-placeholder="Email Address *" style="float: left; margin: 0 30px 16px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 35px; text-indent: 5px;"/><br /><br /><br />
+                                                    <apex:inputSecret value="{!password}" id="password" styleClass="input" maxlength="25"  html-placeholder="Password *" style="float: left; margin: 0 30px 16px -337px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 35px; text-indent: 5px;"></apex:inputSecret><br /><br /><br /><br />
+                                                    <div class="submit" style="float:left; margin-left:200px;">
+                                                        <apex:actionFunction name="login" action="{!login}" reRender="login"> 
+                                                            <apex:param value="" assignTo="{!username}" name="Email"/>
+                                                            <apex:param value="" assignTo="{!password}" name="password"/>
+                                                        </apex:actionFunction>                                                 
+                                                                                                        
+                                                        <a class="button color" href="javascript:loginSubmit();"><span style="margin-left:25px;">Login</span></a>
+                                                      </div>
+                                                      <div class="clear"></div>
+                                                 </form>
+                                            </div>
+                                        </div><!-- .twelve columns -->
+                                     </apex:outputPanel>
+                                  </apex:outputPanel> 
+
+                                <div class="four columns">
+                                    <div class="sidebar">
+                                        <div class="sideborder"></div>
+                                        <h5></h5>
+                                        <ul class="blogs">
+                                            <li>
+                                                <div class="border">
+                                                    <img src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/lock_32.png')}" />
+                                                    <a class='link' href="#"></a>
+                                                </div>
+                                                <p>
+                                                    <a href="#">Forgot Password?</a>                                                    
+                                                </p>
+                                                <div class="clear"></div>
+                                            </li>
+                                            <li>
+                                                <div class="border">
+                                                    <img src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/lock_32.png')}" />
+                                                    <a class='link' href="#"></a>
+                                                </div>
+                                                <p>
+                                                    <a href="#">Lost Activation Email?</a>                                                    
+                                                </p>
+                                                <div class="clear"></div>
+                                            </li>
+                                            <li>
+                                                <div class="border">
+                                                    <img src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/user_add_32.png')}" />
+                                                    <a class='link' href="../apex/Register"></a>
+                                                </div>
+                                                <p>
+                                                    <a href="../apex/Register">Create an Account</a>                                                    
+                                                </p>
+                                                <div class="clear"></div>
+                                            </li>
+                                        </ul>
+                                    </div><!-- .sidebar -->
+                                </div><!-- .four columns -->
+                            
+                            </div>
+                        </div>
+                     </div>
+                 </div> 
+                 
+                  <!-- footer -->
+                    <c:OUC_Footer />
+                    <!-- end of footer -->                     
+                            
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.color.animation.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/ajax_default.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/email_conf.js')}"/>            
+            
+            </body>
+
+        </html>
+    </apex:form>
+</apex:page>

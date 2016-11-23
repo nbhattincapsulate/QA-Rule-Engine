@@ -1,0 +1,145 @@
+<apex:component >
+  <!-- Live Agent Button -->
+  <style>
+  .live-agent-button {
+    position: fixed;
+    top: 45%;
+    right: 0;
+    background: #4CAF50;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .live-agent-button:before {
+    content: ' ';
+    height: 20px;
+    width: 20px;
+    display: block;
+    margin-bottom: 3px;
+    background: URL({!URLFOR($Resource.OUC311, 'OUC311/assets/images/live_agent/ic_headset_mic_white_24dp_2x.png')}) 0 0 no-repeat; 
+    background-size: 100%;
+  }
+
+  .live-agent-button.offline {
+    background: #9E9E9E;
+    color: rgba(0,0,0,0.3);
+  }
+
+  .live-agent-button.offline:before {
+    background: URL({!URLFOR($Resource.OUC311, 'OUC311/assets/images/live_agent/ic_headset_mic_grey_24dp_2x.png')}) 0 0 no-repeat; 
+    background-size: 100%;
+  }
+
+  .live-agent-button:hover {
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .live-agent-button.offline:hover {
+    color: rgba(0,0,0,0.3);
+    cursor: not-allowed;
+  }
+
+  .live-agent-button p {
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .live-agent-button p:nth-child(4) {
+    margin-bottom: 8px;
+  }
+
+  .live-agent-button.offline p:nth-child(4) {
+    margin-bottom: 0px;
+  }
+  </style>
+
+  <a id="liveagent_button_online_573t0000000KyjL" class="live-agent-button" href="javascript://Chat" style="display: none;" onclick="liveagent.startChat('573t0000000KyjL')">
+    <p>L</p>
+    <p>i</p>
+    <p>v</p>
+    <p>e</p>
+    <p>H</p>
+    <p>e</p>
+    <p>l</p>
+    <p>p</p>
+  </a>
+  <div id="liveagent_button_offline_573t0000000KyjL" style="display: none;" class="live-agent-button offline">
+    <p>O</p>
+    <p>F</p>
+    <p>F</p>
+    <p>L</p>
+    <p>I</p>
+    <p>N</p>
+    <p>E</p>
+  </div>
+
+  <script type="text/javascript">
+      /*if (!window._laq) { window._laq = []; }
+        window._laq.push(function(){liveagent.showWhenOnline('573r00000004C9N', document.getElementById('liveagent_button_online_573r00000004C9N'));
+        liveagent.showWhenOffline('573r00000004C9N', document.getElementById('liveagent_button_offline_573r00000004C9N'));
+      });*/
+	
+      if (!window._laq) { window._laq = []; }
+        window._laq.push(function(){
+          liveagent.showWhenOnline('573t0000000KyjL', document.getElementById('liveagent_button_online_573t0000000KyjL'));
+          liveagent.showWhenOffline('573t0000000KyjL', document.getElementById('liveagent_button_offline_573t0000000KyjL'));
+        });
+  </script>
+
+  <!-- Live Agent Deployment -->
+  <!--<script type='text/javascript' src='https://c.la1wx.salesforceliveagent.com/content/g/js/35.0/deployment.js'></script>
+  <script type='text/javascript'>
+      //liveagent.init('https://d.la1wx.salesforceliveagent.com/chat', '572r00000004C9S', '00Dr00000000YcJ');
+  </script>-->
+  <script type='text/javascript' src='https://c.la1wx.salesforceliveagent.com/content/g/js/37.0/deployment.js'></script>
+  <script type='text/javascript'>
+    liveagent.enableLogging();
+    liveagent.init('https://d.la1wx.salesforceliveagent.com/chat', '572t0000000KyjG', '00D350000000Ufz');
+  </script>
+
+  <!-- Attributes  -->
+  <apex:attribute name="injectCordovaApple" type="Boolean" required="false" default="false" description="True to include Cordova for Apple Devices" />
+  <apex:attribute name="injectCordovaAndroid" type="Boolean" required="false" default="false" description="True to include Cordova for Android Devices" />
+
+  <!-- Scripts -->
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-1.11.1.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-migrate-1.2.1.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/moment/moment.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/detectmobilebrowser.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery.easing.1.3.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap/js/bootstrap.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-inview/jquery.inview.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/FitVids/jquery.fitvids.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-placeholder/jquery.placeholder.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/flexslider/jquery.flexslider-min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/responsive-tabs/responsive-tabs.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-select/js/bootstrap-select.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-fileinput/js/fileinput.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/requirejs/require.js')}" />
+
+  <apex:outputpanel layout="none" rendered="{!injectCordovaApple}">
+    <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/cordova/iOS/cordova.js')}" />
+  </apex:outputpanel>
+
+  <apex:outputpanel layout="none" rendered="{!injectCordovaAndroid}">
+    <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/cordova/Android/cordova.js')}" />
+  </apex:outputpanel>
+
+  <!-- Google Maps-->
+  <!-- <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/map.js')}"/>   -->
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/js/dc-map.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/js/form-validations-311.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.DC311, 'DC311/assets/ajax/ajax_default.js')}" />
+
+  <!--[if !IE]>-->
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/js/animations.js')}" />
+  <!--<![endif]-->
+
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/js/main.js')}" />
+</apex:component>

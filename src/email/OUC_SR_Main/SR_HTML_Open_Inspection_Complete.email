@@ -1,0 +1,47 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Dear resident,<o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">{!OUC_Activity__c.SR_Agency__c}
+has completed an inspection on your request for {!OUC_Activity__c.Case_Subject__c} at {!OUC_Activity__c.SR_Address__c} on {!OUC_Activity__c.Completion_Date__c}&nbsp;. This is
+the first step in completing your request. <o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">The agency comments on
+this request were: {!OUC_Activity__c.External_Comments__c} *<o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">The expected resolution
+date for this request is {!OUC_Activity__c.SR_Expected_Resolution_Date__c}.<o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Please visit 311.dc.gov
+to check the status of your request or to find answers to frequently asked
+questions.&nbsp; You may also call 311, and
+reference service request number: {!OUC_Activity__c.Case__c} to check your status or
+get help with questions. An agent will be happy to answer your questions,
+concerns or connect you with the correct department.<o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; margin-left: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Thanks again for
+contacting the Mayor’s 311 Hotline. <o:p></o:p></span></p><p class="MsoNormal" style="font-family: arial; font-size: 12pt; text-indent: 0.25in;"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="font-family: arial; font-size: 12pt;"><i><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">*Agency
+comments</span></i></p><p class="MsoListParagraphCxSpFirst" style="text-indent:-.25in;mso-list:l0 level1 lfo1"></p><ul><li><span style="text-indent: -0.25in; font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">Inspection complete. Work scheduled to
+begin.</span></li><li><span style="text-indent: -0.25in; font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">Inspection complete. Work requested has
+been added to the infrastructure priority requests for upcoming year
+(2017). &nbsp;</span></li></ul><!--[if !supportLists]--><p></p><p class="MsoNormal" style="font-size: 12pt;">
+
+</p><p class="MsoNormal" style="font-family: arial; font-size: 12pt;"><i><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></i></p><p class="MsoNormal"><span style="font-variant-numeric: normal; font-stretch: normal; line-height: normal;">&nbsp;</span></p><p style="font-family: arial; font-size: 12pt;"></p><p class="MsoListParagraph" style="font-family: arial; font-size: 12pt; text-indent: -0.25in;"><span style="font-size:12.0pt;line-height:115%;
+font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><o:p></o:p></span></p>]]></td>
+</tr>
+</table>

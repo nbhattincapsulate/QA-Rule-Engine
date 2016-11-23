@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Request Type</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Request Types</value>
+    </caseValues>
+    <fields>
+        <label><!-- Accept Transfers (not used) --></label>
+        <name>Accept_Transfers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activities Link Indicator (not used) --></label>
+        <name>Activities_Link_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency --></label>
+        <name>Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Allow Citizen Web Intake --></label>
+        <name>Allow_Citizen_Web_Intake__c</name>
+    </fields>
+    <fields>
+        <label><!-- Associate Closing Letter (not used) --></label>
+        <name>Associate_Closing_Letter__c</name>
+    </fields>
+    <fields>
+        <label><!-- Attachment Link Indicator (not used) --></label>
+        <name>Attachment_Link_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Auto Create --></label>
+        <name>Auto_Create__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Required (not used) --></label>
+        <name>ContactRequired__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Status --></label>
+        <name>ContactStatus__c</name>
+        <picklistValues>
+            <masterLabel>Available</masterLabel>
+            <translation><!-- Available --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Visible</masterLabel>
+            <translation><!-- Not Visible --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Required (LN, FN, EM)</masterLabel>
+            <translation><!-- Required (LN, FN, EM) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Default Method --></label>
+        <name>Default_Method__c</name>
+        <picklistValues>
+            <masterLabel>311-App</masterLabel>
+            <translation><!-- 311-App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Transfer</masterLabel>
+            <translation><!-- Internal Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Default Priority --></label>
+        <name>Default_Priority__c</name>
+        <picklistValues>
+            <masterLabel>Emergency</masterLabel>
+            <translation><!-- Emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent</masterLabel>
+            <translation><!-- Urgent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Default Status --></label>
+        <name>Default_Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Description (not used) --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duplicate Detection Method --></label>
+        <name>DuplicateDetectionMethod__c</name>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- in feet --></help>
+        <label><!-- Duplicate Radius (feet) --></label>
+        <name>DuplicateRadius__c</name>
+    </fields>
+    <fields>
+        <help><!-- in days --></help>
+        <label><!-- Duplicate Threshold Period (days) --></label>
+        <name>Duplicate_Threshold_Period__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Description(To Be Deleted) --></label>
+        <name>External_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Name --></label>
+        <name>External_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flex Note Count --></label>
+        <name>Flex_Note_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flex Notes Link Indicator (not used) --></label>
+        <name>Flex_Notes_Link_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Group --></label>
+        <name>Group__c</name>
+    </fields>
+    <fields>
+        <label><!-- Agency Dept Code --></label>
+        <name>Jurisdiction__c</name>
+        <relationshipLabel><!-- Service Request Types --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Keep SR Open (not used) --></label>
+        <name>Keep_SR_Open__c</name>
+    </fields>
+    <fields>
+        <label><!-- Keywords --></label>
+        <name>Keywords__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Description --></label>
+        <name>LongExternalDescription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>Object__c</name>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Participant Link Indicator (not used) --></label>
+        <name>Participant_Link_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Remarks --></label>
+        <name>Remarks__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Type --></label>
+        <name>SLAType__c</name>
+        <picklistValues>
+            <masterLabel>Business days</masterLabel>
+            <translation><!-- Business days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Calendar days</masterLabel>
+            <translation><!-- Calendar days --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- in days --></help>
+        <label><!-- SLA --></label>
+        <name>SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Alert Message --></label>
+        <name>SR_Alert_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Email On SR Closed --></label>
+        <name>SendEmailOnSRClosed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send Email On SR Creation --></label>
+        <name>SendEmailOnSRCreation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Location Required --></label>
+        <name>ServiceLocationRequired__c</name>
+    </fields>
+    <fields>
+        <label><!-- ServiceLocationStatus (not used) --></label>
+        <name>ServiceLocationStatus__c</name>
+        <picklistValues>
+            <masterLabel>Available</masterLabel>
+            <translation><!-- Available --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Visible</masterLabel>
+            <translation><!-- Not Visible --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Required</masterLabel>
+            <translation><!-- Required --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Service Name --></label>
+        <name>Service_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicing Agency Expanded --></label>
+        <name>Servicing_Agency_Expanded__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Service Request Type Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Service code cannot have duplicate value. --></errorMessage>
+        <name>Enforce_Unique_Service_RequestType_Code</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select the SLA Type --></errorMessage>
+        <name>SLA_type_required_on_SLA_field_value</name>
+    </validationRules>
+</CustomObjectTranslation>

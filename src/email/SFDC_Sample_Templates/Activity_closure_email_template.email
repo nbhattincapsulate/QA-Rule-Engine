@@ -1,0 +1,14 @@
+Dear Citizen ,
+
+The Activity {!OUC_Activity__c.Name} for Service Request {!OUC_Activity__c.Case__c} is {!OUC_Activity__c.Status__c}. Please find the details below:
+
+Case Number:{!OUC_Activity__c.Case__c}
+Case Subject: {!OUC_Activity__c.Case_Subject__c}
+Case Status: {!OUC_Activity__c.SR_Status__c}
+Activity Name: {!OUC_Activity__c.Final_Task_Short_Name__c}
+Activity Date: {!OUC_Activity__c.CreatedDate}
+Activity Status: {!OUC_Activity__c.Status__c}
+Comments: {!OUC_Activity__c.External_Comments__c}
+
+Thank you,
+DC 311

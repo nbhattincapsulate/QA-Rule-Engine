@@ -1,0 +1,30 @@
+<apex:component >
+   <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />    
+   
+    
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/base.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/skeleton.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/layout.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/child.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/animate.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/prettyPhoto.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery-1-8-2.js')}"/>   
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/default.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.easing.1.3.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.carousel.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.color.animation.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.prettyPhoto.js')}"/>
+    
+    <!-- bootstrap  -->
+     <!--<apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/bootstrap.min.css')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/bootstrap.min.js')}"/>-->
+      <!-- end of bootstrap   -->
+    
+    <!-- color pickers -->
+    <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/colorpicker.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/colorpicker.js')}"/>
+    <!-- end of color pickers -->
+
+</apex:component>

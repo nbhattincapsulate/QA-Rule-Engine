@@ -1,0 +1,100 @@
+<apex:page standardController="OUC_Activity__c" extensions="SRActivitiesEditExtension" >
+     <apex:includeScript value="//code.jquery.com/jquery-1.11.1.js" />
+     <apex:sectionHeader title="SR Activity Edit" subtitle="{!OUC_Activity__c.Name}"/>
+     <apex:pagemessages id="errmsg"/>
+     <apex:form >
+        <apex:pagemessages />
+         <apex:pageBlock title="SR Activity Edit">
+             <apex:pageBlockButtons >
+                 <apex:commandButton action="{!save}" value="Save" rerender="errmsg"/>
+                 <apex:commandButton action="{!Cancel}" value="Cancel"/>
+             </apex:pageBlockButtons>
+             
+             <apex:pageBlockSection title="Service Request Information" rendered="{!NOT(ISNULL(service_request))}" id="SR">
+                     <apex:outputfield value="{!service_request.CaseNumber}" label="Service Request Id" />
+                     <apex:outputfield value="{!service_request.Service_Request_Name__c}" label="Service Request Type" />
+                     <apex:outputfield value="{!service_request.Status}" label="SR Status" />
+                     <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                     <apex:outputfield value="{!service_request.description}" label="Comments" />
+             </apex:pageBlockSection>
+             
+             <apex:pageBlockSection title="Information" id="Info">
+                     <!--<apex:repeat value="{!$ObjectType.OUC_Activity__c.FieldSets.FieldAvailableForEditInVFP}"  var="f">
+                                
+                                <apex:inputField rendered="{!f.label!='UI Outcome'}" value="{!OUC_Activity__c[f.fieldPath]}" required="{!OR(f.required, f.dbrequired)}"/>
+                                 
+                                <apex:selectList rendered="{!f.label=='UI Outcome'}" value="{!OUC_Activity__c[f.fieldPath]}" multiselect="false" size="1"> 
+                                    <apex:selectOption itemValue="" itemLabel="--Select--"></apex:selectOption>
+                                    <apex:selectOptions value="{!outComeValues}"> </apex:selectOptions>
+                                </apex:selectList>
+                     
+                     </apex:repeat>-->
+                     <!-- <apex:inputField value="{!OUC_Activity__c.Name}"/> -->
+                     <apex:inputField value="{!OUC_Activity__c.Final_Task_Short_Name__c}"  label="SR Activity Name"/>
+                     <apex:inputField value="{!OUC_Activity__c.Status__c}" onchange="SRActivityStatusUpdate()" id="Status__c">
+                     </apex:inputField>
+                     <apex:outputField value="{!OUC_Activity__c.Completion_Date__c}" id="Completion_Date__cDisplay"/>
+                     <apex:outputField value="{!OUC_Activity__c.Due_Date__c}"/>
+                     <apex:outputField value="{!OUC_Activity__c.Activity_Type__c}" label="Activity Type Code"/>
+                     <apex:selectList value="{!OUC_Activity__c.Allowable_Outcomes__c}" onchange="UIOutcomeUpdate()" multiselect="false" size="1" id="Allowable_Outcomes__c" label="Outcome"> 
+                                    <apex:selectOption itemValue="" itemLabel="--Select--"></apex:selectOption>
+                                    <apex:selectOptions value="{!outComeValues}"> </apex:selectOptions>
+                     </apex:selectList>
+                     <apex:inputField value="{!OUC_Activity__c.External_Comments__c}" id="External_Comments__c"/>
+                     <apex:inputHidden value="{!OUC_Activity__c.Completion_Date__c}" id="Completion_Date__c" />
+             </apex:pageBlockSection>
+         
+         
+         </apex:pageBlock>
+     
+     </apex:form>
+     <script>
+        j$ = jQuery.noConflict();
+
+
+        j$(document).ready(function() {
+            // Handle apex_inputhidden issue with dates: Copy the text format SFDC can parse into the value attribute so completion dates uaffected can be saved
+            var hidvalText = j$("[id*=Completion_Date__c]").text().trim();
+            if(hidvalText.length!=0 ) j$("[id*=Completion_Date__c]").val(hidvalText);
+        });
+        
+        function SRActivityStatusUpdate() {
+            //var hidvalText = j$("[id*=Completion_Date__c]").text();
+            //var d = new Date(hidvalText );
+            
+            var now = new Date();
+            //alert('hidvalText: ' + hidvalText + ' - Hidden parse to string: ' + d.toString() + '  -- Now to string: ' + now.toString());
+            var hours = now.getHours()>12 ? now.getHours()-12 : now.getHours();
+            if(hours==0) hours=12;
+            
+            var strDateTime = [[AddZero(now.getMonth() + 1), AddZero(now.getDate()), now.getFullYear()].join("/"), [hours, AddZero(now.getMinutes())].join(":"), now.getHours() >= 12 ? "PM" : "AM"].join(" ");
+            //Update what is saved by the controller
+            j$("[id*=Completion_Date__c]").val(strDateTime);
+            // update what is displayed to the user
+            j$("[id*=Completion_Date__cDisplay]").text(strDateTime);
+            
+        }
+
+        function UIOutcomeUpdate() {
+            UIOutcome = j$('[id*=Allowable_Outcomes__c] option:selected').text();
+            UIOutcomeValue = j$('[id*=Allowable_Outcomes__c] option:selected').val();
+            console.log('Outcome: ' + UIOutcome);
+            
+            // if a any outcome is selected, set SR Status to completed
+            if(UIOutcomeValue != '') {
+                j$("[id*=Status__c]").val('Completed');
+                // Also trigger the onchange for SR Status code
+                SRActivityStatusUpdate();
+            }
+            
+            //alert(UIOutcome);
+        }
+        
+        //Pad given value to the left with "0"
+        function AddZero(num) {
+            return (num >= 0 && num < 10) ? "0" + num : num + "";
+        }
+
+ 
+     </script>
+</apex:page>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>FlexNote Question</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FlexNote Questions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Access Classification --></label>
+        <name>Access_Classification__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer Values --></label>
+        <name>AnswerValues__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data Type --></label>
+        <name>Answer_Type__c</name>
+        <picklistValues>
+            <masterLabel>Date</masterLabel>
+            <translation><!-- Date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Date/Time</masterLabel>
+            <translation><!-- Date/Time --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MultiPicklist</masterLabel>
+            <translation><!-- MultiPicklist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Picklist</masterLabel>
+            <translation><!-- Picklist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Text</masterLabel>
+            <translation><!-- Text --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TextArea</masterLabel>
+            <translation><!-- TextArea --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Answer Values(delete) --></label>
+        <name>Answer_Values__c</name>
+    </fields>
+    <fields>
+        <label><!-- Citizen Web Intake --></label>
+        <name>Citizen_Web_Intake__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code (not used) --></label>
+        <name>Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flex Note --></label>
+        <name>FlexNote__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hint Text --></label>
+        <name>Hint_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsSecure --></label>
+        <name>IsSecure__c</name>
+    </fields>
+    <fields>
+        <label><!-- List --></label>
+        <name>List__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Name --></label>
+        <name>Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Alias --></label>
+        <name>QuestionAlias__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question(delete) --></label>
+        <name>Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Questions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Required --></label>
+        <name>Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- SRJunctionCount --></label>
+        <name>SRJunctionCount__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Intake Entry Form --></label>
+        <name>SR_Intake_Entry_Form__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Mass Entry Form --></label>
+        <name>SR_Mass_Entry_Form__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Resolution Activity Form --></label>
+        <name>SR_Resolution_Activity_Form__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Single Work Order Report --></label>
+        <name>SR_Single_Work_Order_Report__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Summary Report --></label>
+        <name>SR_Summary_Report__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sequence Number --></label>
+        <name>Sequence_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>FlexNote Question Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>FlexNoteQuestionLayout Privileges</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- FlexNote Question code cannot have duplicate value. --></errorMessage>
+        <name>Enforce_Unique_FlexNote_Question_Code</name>
+    </validationRules>
+</CustomObjectTranslation>

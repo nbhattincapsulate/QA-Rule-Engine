@@ -1,0 +1,493 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalController">
+   <apex:form id="statusCheck" styleClass="statusCheck form-horizontal">     
+        <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+        <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+        <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+        <head>
+            <title>DC 311 | OUC</title>
+            <c:OUC311_Portal_Styles />                                   
+            <style> 
+            .filter-parent {
+				    font-size: 18px;
+				    position: relative;
+				}
+            	.filter-parent label {
+				    left: 17px;
+				    position: absolute;
+				    top: 8px;
+				    padding-left:14px;
+				}
+	            .filter-parent #search-my-service-requests{
+				    border-radius: 23px;
+				    padding-left: 43px;
+				    padding-right: 43px;
+				    background-color: transparent; 
+				    position: relative;
+				}
+				
+                .history{
+                    padding-bottom:50px;
+                }
+                
+            </style>
+            <!-- Comments Styling -->
+            <style>
+              .collapsable-comments-header h3:after {
+                content: "\f078";
+                font-family: "FontAwesome";
+                font-size: 1em;
+                font-style: normal;
+                font-weight: normal;
+                margin-right: 10px;
+                text-decoration: inherit;
+                vertical-align: middle;
+                position: absolute;
+  				right: 7px;
+  				top: 10px;
+              }
+                
+              .collapsable-comments-header h3.collapsed:after {
+                content: "\f054"; 
+              }
+                
+              .collapsable-comments-header h3 {
+                text-align: center;
+                margin-top: 10px;
+              }
+                
+              .collapsable-comments-header {
+                cursor: pointer; 
+                margin-bottom: 12px;
+                -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  				-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  				box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+              }
+                
+              #collapsableComments {
+                -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  				-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  				box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  				padding-top: 20px;
+  				padding-bottom: 50px; 
+              }
+                
+              .comment-offset {
+                margin-left: 30px; 
+              }
+                
+              .comment-list {
+                position: relative;
+                top: 50px; 
+                width: 100%;
+                margin-left: 0;
+              }
+                
+              .comment {
+                padding-right: 0;
+              }
+                
+              .comment .comment-content {
+                float: left;
+                max-width: 90%;
+              }
+                
+              .comment .comment-user-picture {
+                float: left;   
+              }
+                
+              .comment.owner .comment-user-picture {
+                left: 0px;
+                padding: 0;
+                position: absolute;
+              }
+                
+              .comment.user .comment-content, .comment.user .comment-user-picture {
+                float: right;   
+                padding: 0;
+              }
+                
+              .comment.user .comment-content {
+                position: relative;
+                right: 8%;
+                padding-right: 15px;
+              }
+                
+              .comment.owner .comment-content {
+                position: relative;
+                left: 58px;
+              }
+                
+              .comment .comment-content p {
+                margin-bottom: 0;
+                padding: 10px 10px 17px 10px;  
+              }
+                
+              .comment .comment-content .comment-text {
+                background-color: #f5f5f5;
+                border-radius: 5px;    
+              }
+                
+              .comment.owner .comment-content .comment-text {
+                background-color: #d9edf7;  
+                color: #31708f;
+              }
+                
+              .comment.user .comment-content .comment-text:after{
+                content: ' ';
+                position: absolute;
+                width: 0;
+                height: 0;
+                left: auto;
+                right: -5px;
+                top: auto;
+                bottom: 39px;
+                border: 20px solid;
+                transform: rotateX(180deg);
+                border-color: #f5f5f5 transparent transparent transparent;
+              }
+                
+              .comment.owner .comment-content .comment-text:after{
+                content: ' ';
+                position: absolute;
+                width: 0;
+                height: 0;
+                left: -20px;
+                right: auto;
+                top: 0px;
+                bottom: auto;
+                border: 20px solid;
+                border-color: #d9edf7 transparent transparent transparent;
+              }
+                
+              .comment-datetime {
+                font-size: 9px;
+                position: relative;
+              }
+                
+              .comment.owner .comment-content .comment-datetime {
+                left: -10px;
+              }
+                
+              .comment.user .comment-content .comment-datetime {
+                right: -10px;   
+                float: right;
+              }
+                
+              .comment.user .comment-user-picture {
+                position: absolute;
+                bottom: 40px;
+                right: 0px;
+              }
+                                            
+              .comment .comment-user-picture .user-picture {
+                top: 1px;
+                height: 48px;
+                width: 48px;
+                padding: 0px;
+                cursor: pointer;
+                margin-left: 13px;   
+                border-radius: 50%;
+                background: #d9edf7;
+                transition: 0.6s;
+                transform-style: preserve-3d;
+                position: relative;
+              }
+                                            
+              .comment.user .comment-user-picture .user-picture {
+                background: #f5f5f5;
+                margin-left: 0;
+              }
+                                            
+              .comment .comment-user-picture .user-picture {
+                text-align: center;
+                padding-top: 12px;
+                font-size: 17px;   
+              }
+                                            
+              .comment .comment-user-picture .user-picture p {
+                text-transform: uppercase;
+              }
+                                            
+              .comment.owner .comment-user-picture .user-picture p {
+                color: #31708f;
+              }
+            </style>
+            <script>
+                if (top.frames.length != 0)
+                    top.location = self.document.location;
+            </script> 
+           
+         </head>
+         <body data-spy="scroll" onload="checkIfloggedIn();">
+            <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="{!loggedInUsername}" loggedInUserFullName="{!loggedInUserFullName}"/>
+            <!-- end  of header -->
+            
+                <!-- ******FEATURES****** -->
+         
+             <div class="section">
+               <div class="history container">               
+                  <!-- Tab panes -->
+                  <div class="space-sm"></div>
+                  <div class="">
+                     <div class="animated fadeIn" id="history">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <!-- <div class="col-md-4 col-sm-4">
+                               
+                                 <apex:commandLink action="{!get_case_history}" value="Check Request History Details" id="rh" reRender="login,logout,rh_case"/> <br/>                                 
+
+                              </div>-->             
+                              <script>
+                               function checkIfloggedIn(){
+		                         getCaseHistory();
+		                       }
+		                     </script>
+                              <apex:actionfunction name="getCaseHistory" action="{!get_case_history}" rerender="login"></apex:actionfunction>
+                              <apex:actionFunction name="getComments" action="{!getCaseComments}" rerender="comments-container" status="commentStatus"/>
+                     		  
+                              <apex:outputPanel id="login">
+                              <apex:outputPanel rendered="{!loggedIn}">
+                              <apex:outputPanel rendered="{!rend}">
+                                   <div class="col-md-12 col-sm-12">
+                                   		<h3 class="text-primary text-center">My Service Requests</h3>
+                                        <!--<div id="search" class="filter-parent col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+										  <label for="filter-by"><i class="fa fa-search"></i></label>
+										  <div style="position: relative; height: 46px; display: block;">
+											  <input tabindex="1" class="form-control" id="search-my-service-requests" placeholder="Search by Service Request Type"></input>
+										  </div>
+										</div> -->
+                                       <apex:outputPanel rendered="{!IF(custom_error_msg != null && custom_error_msg != '',True,False)}">
+							           	<div class="alert alert-danger" role="alert">
+			                            	<apex:outputText value="{!custom_error_msg}"></apex:outputText>
+							          	</div>                      
+			                           </apex:outputPanel>
+                                       <apex:outputPanel id="rh_case">
+                                       <apex:outputPanel rendered="{!if(rh_error_msg != true,'','false')}">
+                                       		<div class="row">
+	                                       		<apex:variable var="casecount" value="{!1}"/>
+	                                        	<apex:repeat value="{!loggedin_user_case}" var="luc">
+	                                        	
+	                                        	  <div class="col-md-6 col-sm-6 col-xs-12">
+				                                    <div class="panel widget service-history-panel" style="background-color: #f5f5f5;" data-service="{! LOWER(luc.SRType__c)}">
+				                                     	<apex:pageBlock rendered="{!IF(luc.Status__c =='Open',true,false)}">
+															<div class="panel-body text-center bg-info" style="padding: 0px;">
+										                		<h4>{!luc.Status__c}</h4>
+										                	</div>
+														</apex:pageBlock>
+														<apex:pageBlock rendered="{!IF(luc.Status__c =='Closed',true,false)}">
+															<div class="panel-body text-center bg-success" style="padding: 0px;">
+										                		<h4>{!luc.Status__c}</h4>
+										                	</div>
+														</apex:pageBlock>
+														<apex:pageBlock rendered="{!IF(luc.Status__c !='Open' && luc.Status__c !='Closed',true,false)}">
+															<div class="panel-body text-center bg-warning" style="padding: 0px;">
+										                		<h4>{!luc.Status__c}</h4>
+										                	</div>
+														</apex:pageBlock>
+																                                    
+										                <div class="panel-heading text-center">
+										                	<div class="row">
+											                    <h2>{!luc.Name}</h2>
+											                    <h3>{!luc.SRType__c}</h3>
+                                                                <h5><i class="fa fa-clock-o fa-fw"></i><c:FormatDateTime date_Timevalue="{!luc.DateTimeOpened__c}"/></h5>
+											                    <i class="fa fa-map-marker fa-fw"></i>{!luc.Address__c}
+										                    </div>
+										                    <div class="row">
+										                    	<!--  <a class="btn btn-xs btn-link pull-right" href="#">View details</a> -->
+										                    	 <apex:commandlink styleclass="btn btn-xs btn-link pull-right" value="View details" action="{!checkStatus}">
+										                    	 	 <apex:param name="requestId" assignTo="{!requestId}" value="{!luc.Name}"/>
+										                    	 	 <apex:param name="email" assignTo="{!email}" value="{!loggedInUsername}"/>
+										                    	 </apex:commandlink>
+										                    </div>
+										                </div>
+										                <!--<ul class="list-group">
+										                    <li class="list-group-item">
+										                        <i class="fa fa-map-marker fa-fw"></i>{!caserecord.Address__c}
+										                    </li>
+										                </ul>  -->
+										            </div>
+			                                    </div>            
+	                                        		<!--<div class="col-md-4 col-sm-6 col-xs-12">
+	                                        			   <div class="panel widget service-history-panel" style="background-color: #f5f5f5;" data-service="{! LOWER(luc.SRType__c)}">
+										                     <div class="panel-body">
+										                        <div class="row row-table">
+										                           <div class="col-xs-12">
+										                           	  <h4 class="pull-right"><span class="label label-success">{!luc.Status__c}</span></h4>
+										                              <h3>{!luc.CaseNumber__c}</h3>
+										                              <h4>{!luc.SRType__c}</h4>
+										                              <ul class="list-unstyled">
+										                                 <li class="mb-sm"><em class="fa fa-map-marker fa-fw"></em>{!luc.Address__c}</li>
+										                                 <li class="mb-sm"><em class="fa fa-clock-o fa-fw"></em>{!luc.DateTimeOpened__c}</li>
+										                              </ul>
+										                           </div>
+										                        </div>
+										                     </div>
+										                  </div>
+	                                        		</div>  -->
+	                                                <apex:variable var="casecount" value="{!casecount + 1}"/>
+	                                            </apex:repeat>
+                                       		</div>
+                                       </apex:outputPanel>
+                                       </apex:outputPanel>                 
+                                   </div>
+                                   </apex:outputPanel> 
+                                   <apex:outputPanel id="StatusCheckResult">
+                                    <apex:outputPanel rendered="{!render}" >
+                                    <br/>
+				                        <div class="row pull-left">
+				                           <div class="col-md-12">
+                                               <i class="fa fa-backward"></i> <a href="/ServiceRequestHistory">Back to History</a>
+				                           </div>
+				                        </div>
+				                        <br/>
+				                        <div class="row text-center">
+				                           <div class="col-md-12">
+				                              <h3 class="text-primary">Service Status</h3>
+				                           </div>
+				                        </div>
+                                        <!--<div class="col-md-12 col-sm-12 col-xs-12">
+                                        	<h5 class="semi"><a href="#">Service Request</a></h5> 
+	                                        			   <div class="panel widget service-history-panel" style="background-color: #f5f5f5;">
+										                     <div class="panel-body">
+										                        <div class="row row-table">
+										                           <div class="col-xs-12">
+										                           	  <h4 class="pull-right"><span class="label label-success">{!caserecord.status__c}</span></h4>
+										                              <h3>{!caserecord.CaseNumber__c}</h3>
+										                              <h4>{!SrId}</h4>
+										                              <ul class="list-unstyled">
+										                                 <li class="mb-sm"><em class="fa fa-map-marker fa-fw"></em>{!caserecord.Address__c}</li>
+										                              </ul>
+										                           </div>
+										                        </div>
+										                     </div>
+										                  </div>
+	                                    </div>  -->
+	                                    <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 30px;">
+		                                    <div class="panel widget service-history-panel" style="background-color: #f5f5f5;">
+		                                     	<div class="panel-body text-center bg-primary" style="padding: 0px;">
+								                	<h4>{!caserecord.status__c}</h4>
+								                </div>			                                    
+								                <div class="panel-heading text-center">
+								                    <h2>{!caserecord.Name}</h2>
+								                    <h3>{!SrId}</h3>
+								                    <h5><i class="fa fa-clock-o fa-fw"></i><c:FormatDateTime date_Timevalue="{!caserecord.DateTimeOpened__c}"/></h5>
+								                    <i class="fa fa-map-marker fa-fw"></i>{!caserecord.Address__c}
+								                </div>
+							               
+								                <!--<ul class="list-group">
+								                    <li class="list-group-item">
+								                        <i class="fa fa-map-marker fa-fw"></i>{!caserecord.Address__c}
+								                    </li>
+								                </ul>  -->
+								            </div>
+	                                    </div>        
+                                        
+                                        <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+									        <div class="hpanel">
+									         <apex:variable var="count" value="{!1}"/>
+                                                        <apex:repeat value="{!caserecord}" var="c">                                                          
+                                                            <apex:repeat value="{!c.OUC_Activity_Histories__r}" var="tsk">
+                                                             <apex:pageBlock rendered="{!IF(tsk.External_Comments__c !=null,true,false)}">
+                                                                 <apex:pageBlock rendered="{!IF(count ==1,true,false)}">
+                                                                   <div class="panel-heading">
+														                <h4>Activities Performed</h4>
+														            </div>
+														         </apex:pageBlock>
+														         <div class="panel-body text-center bg-info" style="padding: 0px;"><strong><h4>{! tsk.Task_Short_Name__c}</h4></strong></div>
+														            <div class="panel-body list" style="background-color: #f5f5f5;">
+														                	
+														                 <div class="list-item-container">
+														                    <div class="">
+														                    	<small><i class="fa fa-flag"></i> Status</small>
+														                        <h4 class="no-margins font-extra-bold text-success text-center">{! tsk.Status__c}</h4>
+														                        
+														                    </div>
+														                    <div class="list-item">
+														                    	<small><i class="fa fa-clock-o fa-fw"></i> Due Date</small>	
+															                    <h5 class="no-margins font-extra-bold text-color3 text-center"><c:FormatDateTime date_Timevalue="{!tsk.Due_Date__c}"/></h5>
+														                    </div>
+														                      <div class="list-item">
+														                        <small><i class="fa fa-clock-o fa-fw"></i> Completed Date</small>
+															                    <h5 class="no-margins font-extra-bold text-color3 text-center"><c:FormatDateTime date_Timevalue="{!tsk.Completion_Date__c}"/></h5>
+														                    </div>
+														                     <div class="list-item">
+														                    	<small class="text-center"><i class="fa fa-comments"></i> Comments</small>
+														                        <h5 class="no-margins font-extra-bold">{! tsk.External_Comments__c}</h5>
+														                    </div>
+														                </div>
+														
+														            </div>
+														            <br/>
+                                                                </apex:pageBlock>
+                                                                <apex:variable var="count" value="{!count + 1}"/>
+                                                            </apex:repeat>
+                                                        </apex:repeat>      
+									          
+									        </div>
+    
+                                        </div>
+                                        
+                                        <div class="collapsable-comments-header col-xs-12">
+                                          <h3 class="text-primary collapsed" data-toggle="collapse" data-target="#collapsableComments" aria-expanded="false" aria-controls="collapsableComments">Leave a comment</h3>    
+                                        </div>
+                                        
+                                        <div id="collapsableComments" class="col-md-12 col-sm-12 col-xs-12 collapse" style="margin-bottom: 65px;">
+                                          <!-- Service Comments -->
+                                            <script>getComments();</script>
+                                            <apex:outputPanel id="comments-container" styleClass="comments-container" layout="block">
+                                                <c:New_CaseComment_Input caseCommentBody="{!caseCommentBody}" saveCommentFunc="{!saveCaseComment}" />
+                                                
+                                                <apex:outputPanel styleClass="comment-list comment-offset" layout="block">
+                                                  <apex:actionStatus startText="Obtaining comments..." id="commentStatus" />
+                                                  <apex:repeat value="{!caseComments}" var="comment">
+                                                    <div class="comment col-xs-11 col-sm-12 {!IF(comment.CreatedById == loggedInUserId,'user','owner')}">
+                                                        <div class="comment-user-picture col-xs-1">
+                                                          <div class="user-picture">
+                                                            <p>{!caseCommentOwnerMap[comment.Id]}</p>
+                                                          </div>
+                                                        </div>
+                                                        <div class="comment-content">
+                                                          <p class="comment-text">{!comment.CommentBody}</p>
+                                                          <p class="comment-datetime">{!comment.CreatedBy.Name} · <c:FormatDateTime date_Timevalue="{!comment.CreatedDate}"/></p>    
+                                                        </div>
+                                                    </div>
+                                                  </apex:repeat>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                        
+                                        <!--<div class="col-md-12 col-sm-12"> 
+                                             <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDX9ur1Wl-FKC6j6RUbt6t9WdtDAjM4pLQ&q={!caserecord.Address__c}"></iframe>                                                                                                                                   
+
+                                        </div>                                       
+
+                                        <div class="col-md-12 col-sm-12">
+                                           <span class="hr mapdv"></span>                                          
+                                        </div>-->
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                              </apex:outputPanel>
+                              </apex:outputPanel>                                                        
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>          
+     
+            
+         
+            
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+         </body>
+      </html>
+   </apex:form>
+</apex:page>

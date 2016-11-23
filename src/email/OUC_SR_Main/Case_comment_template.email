@@ -1,0 +1,15 @@
+Dear Citizen ,
+
+Thank you for submitting your request using DC311!  We welcome the opportunity to serve you.
+
+A comment has been added to your Service Request {!Case.CaseNumber}. Please read the comment below.
+
+Service Request Number: {!Case.CaseNumber}
+Service Request Type:{!Case.Subject}
+Servicing Agency: {!Case.Servicing_Agency_Expanded__c}
+Service Request Status: {!Case.Status}
+Comments: {!Case.LatestCaseComments__c}
+
+If you require additional information or the issue has not been resolved, please refer to the agency website 311.dc.gov for more information.  If this is an urgent matter or hazardous condition, please call 311.  
+
+DC 311

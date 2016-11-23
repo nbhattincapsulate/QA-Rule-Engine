@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>EAI Source</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>EAL Sources</value>
+    </caseValues>
+    <fields>
+        <label><!-- Complete date --></label>
+        <name>Complete_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Data --></label>
+        <name>Data__c</name>
+    </fields>
+    <fields>
+        <label><!-- Details --></label>
+        <name>Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- EAI Event Code --></label>
+        <name>EAI_Event_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- EID --></label>
+        <name>EID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Date --></label>
+        <name>Event_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Event Type Code --></label>
+        <name>Event_Type_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference ID --></label>
+        <name>Reference_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Code --></label>
+        <name>SR_Type_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source Code --></label>
+        <name>Source_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status Code --></label>
+        <name>Status_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Target Code --></label>
+        <name>Target_Code__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

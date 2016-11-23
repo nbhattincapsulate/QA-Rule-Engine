@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>DCM Addr Good JSON</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>DCM Addr Good JSON</value>
+    </caseValues>
+    <fields>
+        <label><!-- ADDRESS_ID --></label>
+        <name>ADDRESS_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ADDRNUMSUFFIX --></label>
+        <name>ADDRNUMSUFFIX__c</name>
+    </fields>
+    <fields>
+        <label><!-- ADDRNUM --></label>
+        <name>ADDRNUM__c</name>
+    </fields>
+    <fields>
+        <label><!-- ALIASNAME --></label>
+        <name>ALIASNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANC_2002 --></label>
+        <name>ANC_2002__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANC_2012 --></label>
+        <name>ANC_2012__c</name>
+    </fields>
+    <fields>
+        <label><!-- ANC --></label>
+        <name>ANC__c</name>
+    </fields>
+    <fields>
+        <label><!-- CENSUS_TRACT --></label>
+        <name>CENSUS_TRACT__c</name>
+    </fields>
+    <fields>
+        <label><!-- CITY --></label>
+        <name>CITY__c</name>
+    </fields>
+    <fields>
+        <label><!-- CLUSTER_ --></label>
+        <name>CLUSTER__c</name>
+    </fields>
+    <fields>
+        <label><!-- ConfidenceLevel --></label>
+        <name>ConfidenceLevel__c</name>
+    </fields>
+    <fields>
+        <label><!-- FOCUS_IMPROVEMENT_AREA --></label>
+        <name>FOCUS_IMPROVEMENT_AREA__c</name>
+    </fields>
+    <fields>
+        <label><!-- FULLADDRESS --></label>
+        <name>FULLADDRESS__c</name>
+    </fields>
+    <fields>
+        <label><!-- HAS_ALIAS --></label>
+        <name>HAS_ALIAS__c</name>
+    </fields>
+    <fields>
+        <label><!-- HAS_CONDO_UNIT --></label>
+        <name>HAS_CONDO_UNIT__c</name>
+    </fields>
+    <fields>
+        <label><!-- HAS_RES_UNIT --></label>
+        <name>HAS_RES_UNIT__c</name>
+    </fields>
+    <fields>
+        <label><!-- HAS_SSL --></label>
+        <name>HAS_SSL__c</name>
+    </fields>
+    <fields>
+        <label><!-- IMAGEDIR --></label>
+        <name>IMAGEDIR__c</name>
+    </fields>
+    <fields>
+        <label><!-- IMAGENAME --></label>
+        <name>IMAGENAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- IMAGEURL --></label>
+        <name>IMAGEURL__c</name>
+    </fields>
+    <fields>
+        <label><!-- LATITUDE --></label>
+        <name>LATITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- LONGITUDE --></label>
+        <name>LONGITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- NATIONALGRID --></label>
+        <name>NATIONALGRID__c</name>
+    </fields>
+    <fields>
+        <label><!-- NBHD_ACTION --></label>
+        <name>NBHD_ACTION__c</name>
+    </fields>
+    <fields>
+        <label><!-- POLDIST --></label>
+        <name>POLDIST__c</name>
+    </fields>
+    <fields>
+        <label><!-- PSA --></label>
+        <name>PSA__c</name>
+    </fields>
+    <fields>
+        <label><!-- QUADRANT --></label>
+        <name>QUADRANT__c</name>
+    </fields>
+    <fields>
+        <label><!-- RES_TYPE --></label>
+        <name>RES_TYPE__c</name>
+    </fields>
+    <fields>
+        <label><!-- ROADWAYSEGID --></label>
+        <name>ROADWAYSEGID__c</name>
+    </fields>
+    <fields>
+        <label><!-- ROC --></label>
+        <name>ROC__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMD_2002 --></label>
+        <name>SMD_2002__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMD_2012 --></label>
+        <name>SMD_2012__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMD --></label>
+        <name>SMD__c</name>
+    </fields>
+    <fields>
+        <label><!-- SSL --></label>
+        <name>SSL__c</name>
+    </fields>
+    <fields>
+        <label><!-- STATE --></label>
+        <name>STATE__c</name>
+    </fields>
+    <fields>
+        <label><!-- STATUS --></label>
+        <name>STATUS__c</name>
+    </fields>
+    <fields>
+        <label><!-- STNAME --></label>
+        <name>STNAME__c</name>
+    </fields>
+    <fields>
+        <label><!-- STREETVIEWURL --></label>
+        <name>STREETVIEWURL__c</name>
+    </fields>
+    <fields>
+        <label><!-- STREET_TYPE --></label>
+        <name>STREET_TYPE__c</name>
+    </fields>
+    <fields>
+        <label><!-- VOTE_PRCNCT --></label>
+        <name>VOTE_PRCNCT__c</name>
+    </fields>
+    <fields>
+        <label><!-- WARD_2002 --></label>
+        <name>WARD_2002__c</name>
+    </fields>
+    <fields>
+        <label><!-- WARD_2012 --></label>
+        <name>WARD_2012__c</name>
+    </fields>
+    <fields>
+        <label><!-- WARD --></label>
+        <name>WARD__c</name>
+    </fields>
+    <fields>
+        <label><!-- XCOORD --></label>
+        <name>XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- YCOORD --></label>
+        <name>YCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- ZIPCODE --></label>
+        <name>ZIPCODE__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

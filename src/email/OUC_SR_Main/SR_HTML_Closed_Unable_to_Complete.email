@@ -1,0 +1,50 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Dear resident,<o:p></o:p></span></p><p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Your request for </span><span style="font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">{!Case.Subject} </span><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">at
+</span><span style="font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">{!Case.Address__c} </span><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">has
+been closed by {!Case.Servicing_Agency_Expanded__c}. The agency was unable to
+complete your request because of the following: <o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">&lt;&lt;Agency
+Comments&gt;&gt; <i>This will be a drop down
+box, with room for individual comments. *<o:p></o:p></i></span></p><p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><i><br></i></span></p>
+
+<p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">If you would like to
+resubmit this request or to check any notes on your request, please go to
+311.dc.gov or call 311 and reference service request number </span><span style="font-size: 12pt; line-height: 115%; font-family: &quot;Times New Roman&quot;, serif;">{!Case.CaseNumber}</span><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">.
+An agent will be happy to answer your questions, concerns or connect you with
+the correct department. <o:p></o:p></span></p><p class="MsoNormal" style="margin-left:.25in"><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Thanks again for contacting
+the Mayor’s 311 Hotline. <o:p></o:p></span></p><p class="MsoNormal" style="text-indent:.25in"><span style="font-size:12.0pt;
+line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;"><br></span></p>
+
+<p class="MsoNormal"><i><span style="font-size:12.0pt;line-height:115%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">*Agency
+comments can include: <o:p></o:p></span></i></p>
+
+<p class="MsoListParagraphCxSpFirst" style="text-indent:-.25in;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:12.0pt;line-height:115%;font-family:Symbol;mso-fareast-font-family:
+Symbol;mso-bidi-font-family:Symbol">·<span style="font-variant-numeric: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:12.0pt;line-height:115%;
+font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Insufficient address information <o:p></o:p></span></p>
+
+<p class="MsoListParagraphCxSpMiddle" style="text-indent:-.25in;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:12.0pt;line-height:115%;font-family:Symbol;mso-fareast-font-family:
+Symbol;mso-bidi-font-family:Symbol">·<span style="font-variant-numeric: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:12.0pt;line-height:115%;
+font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Bulk pickup materials weren’t outside <o:p></o:p></span></p>
+
+<p class="MsoListParagraphCxSpLast" style="text-indent:-.25in;mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:12.0pt;line-height:115%;font-family:Symbol;mso-fareast-font-family:
+Symbol;mso-bidi-font-family:Symbol">·<span style="font-variant-numeric: normal; font-stretch: normal; font-size: 7pt; line-height: normal; font-family: &quot;Times New Roman&quot;;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:12.0pt;line-height:115%;
+font-family:&quot;Times New Roman&quot;,&quot;serif&quot;">Area inspected and no problem was found&nbsp;<o:p></o:p></span></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Portal xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <admin>yasmin.brown.311@dc.gov</admin>
+    <description>Citizen Portal</description>
+    <emailSenderAddress>311info@dc.gov</emailSenderAddress>
+    <emailSenderName>DC 311 Info</emailSenderName>
+    <enableSelfCloseCase>false</enableSelfCloseCase>
+    <forgotPassTemplate>unfiled$public/CustomerPortalChangePwdEmail</forgotPassTemplate>
+    <isSelfRegistrationActivated>true</isSelfRegistrationActivated>
+    <logoDocument>SharedDocuments/OUC_Logo1.jpg</logoDocument>
+    <newPassTemplate>unfiled$public/CustomerPortalChangePwdEmail</newPassTemplate>
+    <newUserTemplate>unfiled$public/CustomerPortalNewUserEmail</newUserTemplate>
+    <selfRegUserDefaultProfile>customer community portal login</selfRegUserDefaultProfile>
+    <selfRegUserTemplate>unfiled$public/CustomerPortalSelfRegUserEmail</selfRegUserTemplate>
+    <showActionConfirmation>false</showActionConfirmation>
+    <type>CustomerSuccess</type>
+</Portal>

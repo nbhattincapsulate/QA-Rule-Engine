@@ -1,0 +1,87 @@
+<apex:page standardcontroller="Open311ApiKeyConfig__c" extensions="Open311_SecurityDetailsExtension">
+  <apex:outputText value="{!Open311ApiKeyConfig__c.Available_SR_Types_For_GET__c}" rendered="false"/>
+  <apex:outputText value="{!Open311ApiKeyConfig__c.Available_SR_Types_For_PUT__c}" rendered="false"/>
+  <apex:outputText value="{!Open311ApiKeyConfig__c.Available_SR_Types_For_POST__c}" rendered="false"/>
+    
+  <!-- Lightning Styles -->
+  <apex:stylesheet value="{!URLFOR($Resource.Lightning_Design_V1, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+  
+  <style>
+    .picklist-container {
+      margin-top: 10px;  
+    }
+      
+    .method-container {
+      margin-bottom: 10px;
+      float: left;
+      width: 50%;
+      margin-top: 10px;  
+    }
+
+    @media (max-width: 750px) {
+      .method-container {
+        width: 100%;
+      }   
+    }
+  </style>
+    
+    
+  <div class="slds">
+    <div class="slds-spinner_container loading-container" style="display: none; height: 100%;">
+      <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+  </div>
+  <apex:form >
+    <apex:actionfunction name="picklistChanged" action="{!picklistChanged}" rerender="picklist-container" oncomplete="stopProcessing();">
+      <apex:param name="httpType" assignTo="{!requestedHttpType}" value="" />
+    </apex:actionfunction>
+
+    <apex:outputpanel id="picklist-container" styleClass="picklist-container" layout="block">
+      <h3>Service Request Types Restrictions by HTTP Type</h3><hr/>
+      <apex:variable value="{!1}" var="counter"/>
+      <apex:repeat value="{!httpMethodsAvailable}" var="httpMethod">
+        <div class="picklist-container-{!httpMethod} method-container" style="margin-bottom: 10px;">
+          <h4>{!UPPER(httpMethod)}</h4>
+          <c:MultiselectPicklist leftlabel="Available Service Types"
+                             leftoption="{!SRTypeOptionsByHttpMethodMap[httpMethod]['availableTypes'].options}"
+                             rightlabel="Selected Service Types"
+                             rightoption="{!SRTypeOptionsByHttpMethodMap[httpMethod]['selectedTypes'].options}"
+                             size="7"
+                             width="150px"
+                             loadingjsfunctionname="startProcessing"
+                             addremoveonclickjsfunctionname="picklistChanged"
+                             strparam="{!httpMethod}" 
+                             componentIndex="{!counter}"/>  
+        </div>
+        <apex:variable value="{!counter + 1}" var="counter"/>
+      </apex:repeat>
+    </apex:outputpanel>
+
+    <apex:outputPanel id="refreshContainer"></apex:outputPanel>
+
+    <apex:actionfunction name="updateSavedMethodLists" action="{!updateConfigReference}" rerender="refreshContainer" />
+
+  </apex:form>
+  <apex:includescript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/jquery-1-8-2.js')}" />
+  <script>
+    var j$ = jQuery.noConflict();
+
+    j$(document).ready(function() {
+      if ({!objNeedsUpdating}) {
+        updateSavedMethodLists();
+      }
+    });
+
+    var startProcessing = window.startProcessing = function startProcessing() {
+      j$('body').scrollTop(0);
+      j$(".loading-container").show();
+    }
+
+    var stopProcessing = window.stopProcessing = function stopProcessing() {
+      j$(".loading-container").hide();
+    }
+  </script>
+</apex:page>

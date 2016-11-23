@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Contact.Cases$Service_Request_Number__c</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases$Status</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases$Address__c</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases$Ward__c</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases.FlexNotes__r$Questions__c</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases.FlexNotes__r$Answer__c</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>Contact.Cases$ClosedDate</field>
+    </columns>
+    <description>Alley Cleanig (S0011) list service address,  flex note (PEWYW01), Ward, and Status</description>
+    <filter>
+        <criteriaItems>
+            <column>Contact.Cases$SRType__c</column>
+            <operator>equals</operator>
+            <value>S0011</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Contact.Cases.FlexNotes__r$FlexNote_Question__c</column>
+            <operator>equals</operator>
+            <value>PEWYW01</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>DPW (WKLY) QA Check List: Alley Cleaning</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Contacts_SRs_and_Flex_Notes__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Contact.Cases$Ward__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Contact.Cases$CreatedDate</dateColumn>
+        <endDate>2015-10-18</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2015-10-11</startDate>
+    </timeFrameFilter>
+</Report>

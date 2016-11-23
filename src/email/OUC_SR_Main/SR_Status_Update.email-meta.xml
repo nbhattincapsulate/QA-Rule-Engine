@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>As specified by Mary for Updates (SR Activity Completion)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SR Status Update</name>
+    <style>none</style>
+    <subject>DC 311 Service Request {!Case.CaseNumber} Update</subject>
+    <type>text</type>
+</EmailTemplate>

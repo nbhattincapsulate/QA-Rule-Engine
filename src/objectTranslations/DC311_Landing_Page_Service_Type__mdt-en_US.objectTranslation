@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>DC311 Landing Page Service Type</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>DC311 Landing Page Service Types</value>
+    </caseValues>
+    <fields>
+        <label><!-- agency --></label>
+        <name>agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- description --></label>
+        <name>description__c</name>
+    </fields>
+    <fields>
+        <label><!-- external_name --></label>
+        <name>external_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- group --></label>
+        <name>group__c</name>
+    </fields>
+    <fields>
+        <label><!-- keywords --></label>
+        <name>keywords__c</name>
+    </fields>
+    <fields>
+        <label><!-- long_external_description --></label>
+        <name>long_external_description__c</name>
+    </fields>
+    <fields>
+        <label><!-- metadata --></label>
+        <name>metadata__c</name>
+    </fields>
+    <fields>
+        <label><!-- service_code --></label>
+        <name>service_code__c</name>
+        <picklistValues>
+            <masterLabel>S0031</masterLabel>
+            <translation><!-- S0031 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S0276</masterLabel>
+            <translation><!-- S0276 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S0441</masterLabel>
+            <translation><!-- S0441 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- service_location_required --></label>
+        <name>service_location_required__c</name>
+    </fields>
+    <fields>
+        <label><!-- service_name --></label>
+        <name>service_name__c</name>
+    </fields>
+    <fields>
+        <label><!-- sla --></label>
+        <name>sla__c</name>
+    </fields>
+    <fields>
+        <label><!-- sla_type --></label>
+        <name>sla_type__c</name>
+        <picklistValues>
+            <masterLabel>Business days</masterLabel>
+            <translation><!-- Business days --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

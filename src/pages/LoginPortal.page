@@ -1,0 +1,94 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SiteLoginController">
+    <apex:form id="statusCheck" styleClass="statusCheck form-horizontal" forceSSL="true">
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <title>OUC 311 | Portal</title>
+            <!-- include all css and js file -->
+            <c:OUC311_Assets />
+        </head>
+        <body>
+          <!-- header -->
+          <c:OUC311_Header tab=""/>
+          <!-- end  of header -->
+          
+          <!-- Features Section -->
+          <span class="breakPoint" id="s1"></span>          
+                      <div class="section p-no-top bg-grey ">
+                          <div class="well container">
+                          <div class="space-sm"></div>
+                            <h2 class="lg-title lg-title-border">Login</h2>
+                            <div class="row">
+                              <div class="col-md-12 col-sm-12">
+                              <div id="form-messages"></div>
+                              <div class="form-result" id="form-result" style="margin-left:290px; width:550px"></div>
+                              <div class="form-group icon">
+                                   <label for="email" class="col-sm-offset-2 col-sm-1 control-label" style="width:211px; margin-left:80px;"></label>
+                                    <div class="col-sm-6 ">
+                                        <div class="control">
+                                           
+                                              <apex:pageMessages id="error_msg"/>
+                                          
+                                        </div>
+                                    </div>  
+                               </div>
+                                  
+                                  <form role="form" class="contactForm" id="contactus" name="contactus" forceSSl="true">
+                                      <div class="form-group icon">
+                                          <label for="email" class="col-sm-offset-3 col-sm-1 control-label">Email</label>
+                                          <div class="col-sm-6 ">
+                                              <div class="control">
+                                                  <apex:inputText value="{!username}" id="Email" styleClass="form-control input" maxlength="40" html-placeholder="Enter Email Address"></apex:inputText>
+                                                  <i class="fa fa-envelope"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="space-sm"></div>
+                                      <div class="form-group icon">
+                                          <label for="email" class="col-sm-offset-3 col-sm-1 control-label">Password</label>
+                                          <div class="col-sm-6 ">
+                                              <div class="control">
+                                                  <apex:inputSecret value="{!password}" id="password" styleClass="form-control input" maxlength="25"  html-placeholder="Enter Password"></apex:inputSecret>
+                                                  <i class="fa fa-asterisk"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="space-sm"></div>
+                                      
+                                      <div class="row">
+                                      	<div class="col-sm-offset-6 col-sm-6 text-center">
+                                      		<a href="../portal/ForgotPasswordPortal">Forgot Password?</a>
+                                      	</div>
+                                      </div>
+                                      
+                                      <div class="form-group icon">
+                                        <div class="col-sm-offset-3 col-sm-6 text-center">
+                                          <apex:actionFunction name="login" action="{!login}" reRender="login"> 
+                                          <apex:param value="" assignTo="{!username}" name="Email"/>
+                                          <apex:param value="" assignTo="{!password}" name="password"/>
+                                          </apex:actionFunction>
+                                          <apex:commandButton styleClass="btn btn-primary btn-xlg scroll" action="{!login}" onclick="javascript:loginSubmit(); return false;" value="Login" id="submit"/>
+                                          <!--<a class="btn btn-primary btn-xlg scroll" href="javascript:loginSubmit();">Login</a>-->
+                                          <a class="btn btn-primary btn-xlg scroll" href="../portal/ServiceHomePortal">Cancel</a>                                         
+                                          <div class="clear"></div>
+                                        </div>
+                                      </div>
+                                  </form>
+              
+                                  <div class="space visible-xs"></div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                 
+          <!-- footer -->
+          <c:OUC311_Footer />
+          <!-- end of footer -->
+
+        <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/ajax/ajax_default.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/ajax/email_conf.js')}"/>     
+      </body>
+    </html>
+  </apex:form>
+</apex:page>

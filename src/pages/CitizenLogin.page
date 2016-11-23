@@ -1,0 +1,150 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SiteLoginController">
+ <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <title>DC 311 | OUC</title>
+            <c:OUC311_Portal_Styles />
+            <style>
+            .form-signin
+                {
+                    max-width: 330px;
+                    padding: 15px;
+                    margin: 0 auto;
+                }
+                .form-signin .form-signin-heading, .form-signin .checkbox
+                {
+                    margin-bottom: 10px;
+                }
+                .form-signin .checkbox
+                {
+                    font-weight: normal;
+                }
+                .form-signin .form-control
+                {
+                    position: relative;
+                    font-size: 16px;
+                    height: auto;
+                    padding: 10px;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+                .form-signin .form-control:focus
+                {
+                    z-index: 2;
+                }
+                .form-signin input[type="text"]
+                {
+                    margin-bottom: -1px;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                .form-signin input[type="password"]
+                {
+                    margin-bottom: 10px;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+                .account-wall
+                {
+                    margin-top: 20px;
+                    padding: 40px 0px 20px 0px;
+                    background-color: #f7f7f7;
+                    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                }
+                .login-title
+                {
+                    display: block;
+                }
+                .login-logo-image
+                {
+                    margin: 0 auto 10px;
+                    display: block;
+                    -moz-border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                    border-radius: 50%;
+                }
+                .login{
+                    padding-bottom:50px;;
+                }
+                .need-help
+                {
+                    margin-top: 10px;
+                }
+                .new-account
+                {
+                    display: block;
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+        <body>
+          <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="" loggedInUserFullName=""/>
+            <!-- end  of header -->
+          
+          <!-- Features Section -->
+        <form role="form"></form>
+            <div class="login container">
+            <br/>
+                <div class="row">
+                            <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+
+                                    <apex:image id="logo-image" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/logo/logo_medium.png')}" styleClass="login-logo-image text-center"/>
+                                    <div class="row text-center">
+                                        <div class= "col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                            <apex:outputPanel rendered="{!isLoginFailed}">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <apex:outputText value="Your login attempt has failed. Make sure the username and password are correct."></apex:outputText>
+                                                </div>                      
+                                            </apex:outputPanel>
+                                          <div id="form-messages"></div>
+                                          <div class="form-result" id="form-result"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                            <apex:form id="loginForm" forceSSL="true">
+                                                <div class="form-group icon">
+                                                              <apex:outputLabel value="{!$Label.site.email}" for="username" styleClass="control-label"/>
+                                                              <div class="control">
+                                                                <apex:inputText value="{!username}" id="email" styleClass="form-control"></apex:inputText>
+                                                              </div>
+                                                        </div>
+                                                        <div class="form-group icon">
+                                                              <apex:outputLabel value="{!$Label.site.password}" for="password" styleClass="control-label"/>
+                                                              <div class="control">
+                                                                <apex:inputSecret value="{!password}" id="password" styleClass="form-control"></apex:inputSecret>
+                                                              </div>
+                                                        </div>
+                                                        <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton" onclick="javascript:loginSubmit(); return false;" styleClass="btn btn-lg btn-primary btn-block" />
+                                                        <br/>
+                                                        <apex:outputLink value="{!$Page.ServiceRequestForgotPassword}" styleClass="pull-left need-help">{!$Label.site.forgot_your_password_q}</apex:outputLink>
+                                                        <apex:outputLink value="{!$Page.ServiceRequestRegister}" rendered="{!$Site.RegistrationEnabled}" styleClass="pull-right new-account">{!$Label.site.new_user_q}</apex:outputLink>
+                                                        
+                                            </apex:form>
+                                        </div>
+                                    </div>
+                            </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+    
+      </body>
+    </html>
+  
+</apex:page>

@@ -1,0 +1,67 @@
+<apex:component >
+ <div class="footer style-2">
+    <div class="background">
+        <div class="stitch"></div>
+    </div>
+    <div class="foot-nav-bg"></div>
+    <div class="content">
+        <div class="patch"></div>
+        <div class="blur"></div>
+        <div class="pattern">
+            <div class="container">
+                <div class="stitch"></div>
+                <div class="sixteen columns">
+                    <div class="first column alpha">                                    
+                        <div class="left">
+                            <div class="logo-caption"></div>
+                            <h5>OUC</h5>
+                            <p>
+                               Description here
+                            </p>
+                            <p class="extra">
+                               
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column ct">
+                        <h5>Recent Tweets:</h5>
+                        <ul class="twitter" id="twitter_update_list"><li>Twitter is loading</li></ul>
+                    </div>
+                    <div class="last column omega">                                   
+                        <h5>Stay in Touch</h5>
+                        <ul class="sm foot">
+                            <li class="facebook"><a href="#facebook">Facebook</a></li>
+                            <li class="twitter"><a href="#twitter">LinkedIn</a></li>
+                            <li class="linkedin"><a href="#linkedin">Pinterest</a></li>
+                            <li class="pinterest"><a href="#pinterest">Pinterest</a></li>
+                            <li class="dribbble"><a href="#dribbble">Pinterest</a></li>
+                            <li class="flickr"><a href="#flickr">Pinterest</a></li>
+                            <li class="flavors"><a href="#flavors">Pinterest</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="sixteen columns alpha omega">
+                <div class="foot-nav-bg"></div>
+                <div class="foot-nav">
+                    <div class="copy">
+                        Coptyright © 2014-2015 OUC. By Koncero Software Solutions.
+                    </div>
+                    <div class="nav">
+                        <a href="../apex/ServiceHome">Service Home</a>
+                        <a href="../apex/ServiceRequest">Request Service</a>
+                        <a href="../apex/ServiceRequestStatus">Status Check</a>
+                        <a href="#">City Faq</a>
+                        <a href="#">Search</a>
+                        <a href="../apex/Login">Login</a>
+                        <a href="../apex/Register">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+</apex:component>

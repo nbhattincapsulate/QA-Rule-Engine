@@ -1,0 +1,709 @@
+<apex:page Controller="ServiceRequestAdminCntrl">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+ 
+    <script>
+        function confirmDelete() {
+          return confirm('Are you sure you want to delete?');
+        }
+    </script>
+   
+   <style>
+        .popupWindow {
+            background-color: white;
+            border-radius: 1px;
+            border-style: solid;
+            border-width: 1px;
+            left: 50%;
+            margin-left: -400px;
+            padding: 4px;
+            position: absolute;
+            top: 180px;
+            width: 828px;
+            z-index: 9999;
+        }
+        
+        .relationPopupWindow {
+            background-color: white;
+            border-radius: 1px;
+            border-style: solid;
+            border-width: 1px;
+            left: 50%;
+            margin-left: -401px;
+            padding: 4px;
+            position: absolute;
+            top: 500px;
+            width: 828px;
+            z-index: 9999;
+        }
+        
+        .datePicker{
+            z-index:10000;
+        }
+        
+         [id*=AvailFlexNotesUlId]{
+            list-style-type: none; margin: 0; padding: 0; width:393px;min-height:150px;
+            /*width: 250%;*/
+         }
+         
+         [id*=SelectedFlexNotesUlId]{
+            list-style-type: none; margin: 0; padding: 0; width: 378px;min-height:150px;
+         }
+         [id*=AvailFlexNotesUlId] li{ margin: 3px; padding: 0.4em; font-size: 1.0em; overflow:auto; }
+         [id*=SelectedFlexNotesUlId] li{ margin: 3px; padding: 0.4em; font-size: 1.0em; overflow:auto; }
+         
+         [id*=AvailFlexNotesUlId] li.selected {
+             background: #F39814; color: white;
+          }
+          
+          [id*=SelectedFlexNotesUlId] li.selected {
+             background: #F39814; color: white;
+          }
+          
+          
+          .scrollit {
+              height: 300px;
+              overflow: scroll;
+              width: 90%;
+              position: fixed static;
+            }
+            
+            
+            .alpha-link {
+               font-weight: normal;
+               font-size: 91%;
+               padding: 0 4px;
+               color: #015BA7 !important;
+            }
+            
+            .alpha-select {
+               font-weight: bold;
+               text-decoration: none;
+               background-color: #C6E1FF;
+               color: #000000 !important;
+            }
+            
+          .popupBackground {
+    		   background-color: black;
+    		   height: 200%;
+    		   left: 50%;
+    		   opacity: 0.2;
+    		   position: absolute;
+    		   top: 180px;
+    		   width: 828px;
+    		   z-index: 9999;
+    		   margin-left: -400px;
+    		   padding: 4px;
+         }
+         
+        .popupPanel {
+            border: solid 1px;
+            background-color: white;
+            left: 50%;
+            width: 200px;
+            margin-left: -100px;
+            top: 50%;
+            height: 50px;
+            margin-top: -25px;
+            z-index: 10001;
+            position:fixed;
+        }  
+        
+        
+         .questionPopupWindow {
+            background-color: white;
+            border-radius: 1px;
+            border-style: solid;
+            border-width: 1px;
+            left: 50%;
+            margin-left: -400px; 
+            padding: 4px;
+            position: absolute;
+            top: 180px;
+            width: 828px;
+            z-index: 9999;
+        }
+        
+        
+        
+        
+   </style>
+   
+
+    <script type="text/javascript">
+
+        $ = jQuery.noConflict(); 
+        
+        $(document).ready(function() {
+        //initialize our interface
+            console.log('readyfunctioncall-->');
+            // do drag and sort function call
+            doDragSortableFnCall();
+        });
+    
+        
+        function doDragSortableFnCall(){
+           /* $("ul").on('click', 'li', function (e) {
+                if (e.ctrlKey || e.metaKey) {
+                    $(this).toggleClass("selected");
+                } else {
+                    $(this).addClass("selected").siblings().removeClass('selected');
+                }
+            })*/
+            $( "#AvailFlexNotesUlId, #SelectedFlexNotesUlId" ).sortable({
+            connectWith: "ul",
+            dropOnEmpty:true,
+            update :function(e,ui){
+                    var result = $('#SelectedFlexNotesUlId').sortable('toArray'); 
+                    $('[id$=selQuestionIds]').attr('value',result); 
+                    addQuestionFn();
+                   // document.getElementById('#selQuestionIds').value=result;
+                   console.log('result--'+result);
+                }
+              
+            }).disableSelection(); 
+        }
+        
+   </script>
+   
+    <apex:form >
+       
+        <apex:pageblock id="pbId">
+        
+        <!--<apex:pageMessages />  --> 
+        <apex:outputPanel id="tableOPId">
+            <span><br></br></span>
+                <apex:commandbutton action="{!doNewSRType}" value="New ServiceRequest Type" oncomplete="doDragSortableFnCall();" reRender="popUpPanelId" ></apex:commandbutton>
+            <span><br></br><br></br></span>
+            
+            <span style="float: right; margin: 5px 5px 5px 5px;">
+                <apex:repeat var="a" value="{!alphaList}">
+                    <apex:commandlink action="{!doSearchByAlphabet}" reRender="tableOPId" value="{!a}" styleClass="alpha-link{!if(filterStr=a,' alpha-select','')}">
+                        <apex:param value="{!a}" name="filterName" assignTo="{!filterStr}"></apex:param>
+                    </apex:commandlink>
+                </apex:repeat>
+            </span>
+            
+            <span><br></br><br></br></span>
+            
+            
+            
+             
+            <apex:variable value="{!0}" var="SRindex"/>
+            <apex:pageBlockTable value="{!SRTypesList}" var="SRFL">
+                
+                <apex:column width="10px">
+                  <apex:facet name="header" ><b>SlNo</b></apex:facet>
+                  <apex:outputlabel value="{!SRindex+1}"/>
+                </apex:column>          
+                
+                <apex:column width="20px">
+                     <apex:facet name="header" ><b>Action</b></apex:facet>
+                     <apex:outputPanel >
+                     
+                        <apex:commandlink value="Edit" action="{!doEditSRType}" oncomplete="doDragSortableFnCall();"  rerender="popUpPanelId"  >
+                            <apex:param value="{!SRFL.Id}" name="SRType" assignTo="{!selectedSRTypeId}"/><span>&nbsp;||&nbsp;</span>
+                        </apex:commandlink>
+                              
+                        <apex:commandlink value="Del" action="{!doDeleteServiceRequestType}" onClick="if (!confirmDelete()) return false;"  rerender="tableOPId"  >    
+                            <apex:param value="{!SRFL.Id}" name="SRType" assignTo="{!serviceRequestToDeleteId}"/>
+                        </apex:commandlink>
+                           
+                                
+                     </apex:outputPanel> 
+                </apex:column>
+                         
+                <apex:column >
+                    <apex:facet name="header" ><b>Service Code</b></apex:facet>
+                     <a href="/{!SRFL.Id}" target="_blank"><apex:outputText value="{!SRFL.Name}"/></a>
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header" ><b>Service Request Type</b></apex:facet>
+                    <apex:outputText value="{!SRFL.Service_Name__c}"/>
+                </apex:column>
+                
+                <!-- incremmenter will have to remove this -->
+                <apex:column > 
+                    <apex:outputlabel > 
+                      <apex:variable value="{!SRindex+1}" var="SRindex"/>
+                    </apex:outputlabel> 
+                </apex:column>
+            </apex:pageBlockTable> 
+           
+           
+            <apex:outPutPanel >
+            <span><br></br></span>
+                <apex:panelGrid columns="7">
+                    <apex:commandLink action="{!firstPage}" rendered="{!hasPreviousPage}">First</apex:commandlink>
+                    <apex:commandLink action="{!previousPage}" rendered="{!hasPreviousPage}">Previous</apex:commandlink>
+                    <apex:outputText value="Page:{!PageNum} of {!TotalPageSize}"></apex:outputText>
+                    <apex:outputText value="Total Records:{!TotalNumber}"></apex:outputText>
+                    <!--<apex:inputText value="{!noOfRowsToDisplay}"> No of Rows In Page : 
+                        <apex:actionSupport event="onchange" action="{!setNoRowsDisplay}" reRender="pbId,tableOPId">
+                        
+                        </apex:actionSupport>  
+                    </apex:inputText>  -->    
+                    <apex:commandLink action="{!nextPage}" rendered="{!hasNextPage}">Next</apex:commandlink> 
+                    <apex:commandLink action="{!lastPage}" rendered="{!hasNextPage}">Last</apex:commandlink>
+                </apex:panelGrid>
+               
+            </apex:outPutPanel>
+         </apex:outputPanel>   
+            
+            
+            <apex:outputPanel id="popUpPanelId">
+            	
+                 <apex:outputPanel styleClass="popupWindow" layout="block" rendered="{!showPopUp}">
+                    <apex:pageBlock >
+                           <apex:sectionHeader title="Service Request Type" subtitle="New" rendered="{!if(isEditMode==false,true,false)}"/>
+                           <apex:sectionHeader title="Service Request Type" subtitle="Edit" rendered="{!isEditMode}"/>
+                            <apex:pageblockButtons >
+                                <!--<apex:commandbutton value="Update" action="{!doUpdateSRType}" rendered="{!isEditMode}"></apex:commandbutton>doUpdateServiceRequestType
+                                <apex:commandbutton value="Save" action="{!doSaveSRType}" rendered="{!if(isEditMode==false,true,false)}"></apex:commandbutton>-->
+                                
+                                <apex:commandbutton value="Update" action="{!doUpdateServiceRequestType}" rendered="{!isEditMode}"></apex:commandbutton>
+                                <apex:commandbutton value="Save" action="{!doSaveServiceRequestType}" rendered="{!if(isEditMode==false,true,false)}"></apex:commandbutton>
+                                <apex:commandbutton value="Cancel" action="{!doCancel}"></apex:commandbutton>
+                            </apex:pageblockButtons>
+                                
+                                <apex:pageMessages />
+                                
+                                <table width="100%" >
+                                  <tr>
+                                    <td><apex:outputLabel >Object</apex:outputLabel></td>
+                                    <td>
+                                        <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                          <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                            <apex:inputField value="{!sRTFlexNoteRelation.sRType.Object__c}">
+                                                <apex:actionSupport event="onchange" action="{!retriveObjectName}" reRender="popUpPanelId" oncomplete="doDragSortableFnCall();">
+                                                </apex:actionSupport>
+                                            </apex:inputField>
+                                        </apex:outputPanel>
+                                    </td>        
+                                    <td><apex:outputLabel >Service Code:</apex:outputLabel></td>            
+                                    <td>
+                                        <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                          <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                            <apex:inputField value="{!sRTFlexNoteRelation.sRType.Name}"/>
+                                        </apex:outputPanel>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td> <apex:outputLabel >Service Request Type</apex:outputLabel></td>  
+                                    <td colspan="2">
+                                         <apex:inputTextarea value="{!sRTFlexNoteRelation.sRType.Service_Name__c}" style="width:300px;height:15px;"/>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td> <apex:outputLabel >External Name:</apex:outputLabel></td>
+                                    <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.External_Name__c}"/></td>
+                                    <td >Default Status:</td>
+                                    <td ><apex:inputField value="{!sRTFlexNoteRelation.sRType.Default_Status__c}" /></td>
+                                  </tr>
+                                      <tr>
+                                        <td >Start Date:</td>
+                                        <td ><apex:inputField value="{!sRTFlexNoteRelation.sRType.Start_Date__c}" /></td>
+                                        <td>Default Method Received:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Default_Method__c}" /></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Stop Date:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Stop_Date__c}" /></td>
+                                        <td>Default Priority:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Default_Priority__c}" /></td>
+                                      </tr>
+                                      <tr>
+                                        
+                                        <td>Send Email On SR Closed</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SendEmailOnSRClosed__c}" /> </td>
+                                        <td>SR Alert Message:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SR_Alert_Message__c}" /></td>
+                                      </tr>
+                                      <tr>
+                                        
+                                        <td>Send Email On SR Creation:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SendEmailOnSRCreation__c}" /> </td>
+                                        <td>Contact Status:</td>
+                                        <!--<td><apex:inputField value="{!sRTFlexNoteRelation.sRType.ContactRequired__c}" /></td>  -->                                        
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.ContactStatus__c}" /></td>
+                                      </tr>
+                                      <tr>
+                                        
+                                        <!--<td>Service Location Status:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.ServiceLocationStatus__c}" /></td>   -->
+                                        <td>Service Location Required:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.ServiceLocationRequired__c}" /></td>
+                                        <td>Keep  SR Open:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Keep_SR_Open__c}" /></td>
+                                      </tr>
+                                      <!--<tr>
+                                        <td>Flex Notes Link Indicator:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Flex_Notes_Link_Indicator__c}" /></td>
+                                        <td>Activities Link Indicator:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Activities_Link_Indicator__c}" /></td>
+                                      </tr>
+                                      <tr>
+                                        <td>Participant Link Indicator:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Participant_Link_Indicator__c}" /></td>
+                                        <td>Attachment Link Indicator:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Attachment_Link_Indicator__c}" /></td>
+                                      </tr>  -->
+                                      <tr>
+                                        <td>Remarks:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Remarks__c}" /></td>
+                                        <td>Allow Citizen Web Intake:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Allow_Citizen_Web_Intake__c}" /></td>
+                                      </tr>
+                                     
+                                     <tr>
+                                        <td>SLA:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SLA__c}" /></td>
+                                        <!--<td>Jurisdiction:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Jurisdiction__c}" /></td>  -->
+                                        
+                                        <td>SLA Type:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SLAType__c}" /></td>
+                                        
+                                      </tr>
+                                    
+                                     <tr>
+                                        <td>Agency:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Agency__c}" /></td>
+                                      	
+                                      	<td>Agency Dept Code:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Jurisdiction__c}" /></td>
+                                        
+                                      	
+                                      </tr> 
+                                      
+                                      <tr>
+                                        <td>Duplicate Radius (feet):</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.DuplicateRadius__c}" /></td>
+                                        <!--<td>SLA Type:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.SLAType__c}" /></td>  -->
+                                        
+                                        <td>Duplicate Detection:</td>
+                                        <td><apex:inputField value="{!sRTFlexNoteRelation.sRType.DuplicateDetectionMethod__c}" /></td>
+                                        
+                                      </tr>
+                                      
+                                      <tr>
+                                      		<td>Duplicate Threshold Period</td>
+                                      		<td><apex:inputField value="{!sRTFlexNoteRelation.sRType.Duplicate_Threshold_Period__c}" /></td>
+                                      		
+	                                      	<td>Servicing Agency Department:</td>
+	                                        <td><apex:outputField value="{!sRTFlexNoteRelation.sRType.Jurisdiction__r.Department__c}" /></td>
+                                      </tr>
+
+                                    </table>
+                                    
+                                    <table>
+                                        
+                                          <tr>
+                                            <td> <apex:outputLabel >External Description:</apex:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <!--<td>
+                                                 <apex:inputTextarea value="{!sRTFlexNoteRelation.sRType.External_Description__c}" style="width:598px;height:30px;"/>
+                                            </td>-->
+                                            <td>
+                                                 <apex:inputTextarea value="{!sRTFlexNoteRelation.sRType.LongExternalDescription__c}" style="width:598px;height:30px;"/>
+                                            </td>
+                                            
+                                       </tr> 
+                                    </table>
+                                  
+                        <br/>
+                       <apex:inputHidden value="{!selQuestionIds}" id="selQuestionIds"/>
+                       <table>          
+                            <tr>
+                                <td>
+                                    <apex:outputPanel rendered="{!isClone}">
+                                        <apex:outputLabel >Clone From Existing ServiceRequest Type:</apex:outputLabel>                                  
+                                        <apex:selectList value="{!sRTypeId}" size="1">
+                                            <apex:selectOptions value="{!SRTypesOptions}"/>
+                                        </apex:selectList>
+                                        <apex:commandButton value="Clone" action="{!doCloneSRType}" oncomplete="doDragSortableFnCall();" reRender="popUpPanelId"/>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>    
+                            <tr>
+                            	<td>
+	                            	<apex:outputPanel >
+		                            	<apex:outputLabel >Filter FlexNotes:</apex:outputLabel> 
+		                            		<apex:selectList value="{!selectedFilter}" size="1">
+		                            			<apex:selectOptions value="{!FilterOptions}"></apex:selectOptions>
+		                            			<apex:actionSupport action="{!doRetrieveFlexNotesBasedFilter}" event="onchange" oncomplete="doDragSortableFnCall();" status="processingStatus" reRender="selFlexNotePanelId"/>
+		                            		</apex:selectList> &nbsp;&nbsp;&nbsp;&nbsp;
+		                                <apex:commandbutton value="Add FlexNoteQuestion" action="{!doCreateFlexNoteQuestion}" ></apex:commandbutton>
+	                            	</apex:outputPanel>
+                            	</td>
+                            </tr>
+                       </table>
+                       
+                        <apex:outputPanel id="selFlexNotePanelId">
+                                <div id="maindivId" >
+                                
+                                <table>
+                                    <tr><td>
+                                        <div style="height: 323px;width:103%;">
+                                            <!--<apex:outputLabel >  --><strong>Available FlexNotes Questions</strong><!--</apex:outputLabel>  {!questions.Questions__c}-->
+                                            <apex:outputPanel id="AvailOPPanelId" layout="block" style="overflow:auto;height:300px;width:393px;border:1px  solid black;">
+                                                <!--<table >
+                                                        <tr>
+                                                            <td>   -->
+                                                                <ul id="AvailFlexNotesUlId" class="connectedSortable">                              
+                                                                    <apex:repeat value="{!FlexNoteQuestions}" var="questions" id="availableQuestionsRepeatId">
+                                                                       <li id="{!questions.Id}" class="ui-widget-content">{!'['+questions.Name+']'} {!questions.Questions__c}
+                                                                         
+                                                                            <!--<apex:commandlink action="{!showPopUpRelation}" value="{!questions.flexNoteQuestion.Questions__c}" reRender="relationOPid">
+                                                                                <apex:param value="{!questions.flexNoteQuestion.Id}" name="questionId" assignTo="{!flexNoteQuestionId}"></apex:param>
+                                                                            </apex:commandlink>  -->
+                                                                       </li>
+                                                                    </apex:repeat>
+                                                                </ul>
+                                                            <!--</td>
+                                                        </tr>
+                                                </table>  -->
+                                            </apex:outputPanel>
+                                        </div>
+                                        <apex:outputPanel id="flexnote-nav-buttons" styleClass="nav-buttons">
+                                          <div style="float: left;">
+                                            <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="selFlexNotePanelId" oncomplete="doDragSortableFnCall()"/>
+                                            <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="selFlexNotePanelId" oncomplete="doDragSortableFnCall()"/>        
+                                          </div>
+                                          <p style="text-align: center;width: 80%;margin: 0;padding: 0;float: left;margin-top: 5px;">Showing Page # {!pageNumber} of {!totalPages}</p>
+                                          <div style="float: right;">
+                                            <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="selFlexNotePanelId" oncomplete="doDragSortableFnCall()"/>
+                                            <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="selFlexNotePanelId" oncomplete="doDragSortableFnCall()"/>        
+                                          </div>
+                                        </apex:outputPanel>
+                                    </td><td style="vertical-align:center ;width:10%">
+                                    <span><br></br></span><span><br></br></span><span><br></br></span><span><br></br></span>
+                                     
+                                   </td><td>
+                                    <div style="width: 372px;">
+                                         <!--<apex:outputLabel >  --><strong>Selected FlexNotes Questions</strong><!--</apex:outputLabel>  -->  
+                                        <apex:outputPanel id="SelOPid" layout="block" style="overflow:auto;height:300px;width:378px;border:1px  solid black;">
+                                            <ul id="SelectedFlexNotesUlId" class="connectedSortable">
+	                                             <apex:repeat value="{!sRTFlexNoteRelation.flexNoteRelationList}" var="questions" id="selectedQuestionRepeatId">
+                                                      <li id="{!questions.flexNoteQuestion.Id}:{!questions.sRFlexNoteRelation}" class="ui-widget-content" >
+                                                         <apex:commandlink action="{!showPopUpRelation}" value="{!'['+questions.flexNoteQuestion.Name+']'} {!questions.flexNoteQuestion.Questions__c}" reRender="relationOPid">
+                                                             <apex:param value="{!questions.flexNoteQuestion.Id}" name="questionId" assignTo="{!flexNoteQuestionId}"></apex:param>
+                                                         </apex:commandlink>
+                                                     </li>
+	                                             </apex:repeat>
+                                            </ul>
+                                        </apex:outputPanel>
+                                    </div>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                </div>
+                            </apex:outputPanel>  
+                            <!--<apex:outputpanel >
+                                <apex:outputLabel >*Click "CTRL-Enter' to unselect.</apex:outputLabel>
+                            </apex:outputPanel>  -->
+                    </apex:pageBlock>
+                 </apex:outputPanel> 
+            </apex:outputPanel>
+            
+            
+            
+            <apex:outputPanel id="relationOPid">
+                <apex:outputPanel styleClass="relationPopupWindow" layout="block" rendered="{!isShowPopUpRelation}">
+                    <apex:pageblock title="SR Specific Attributes:">
+                            <div>    
+                                <apex:pageBlockButtons >
+                                    <apex:commandbutton value="Save" action="{!doRelationSave}"  >
+                                    </apex:commandbutton>
+                                    <apex:commandbutton value="Cancel" action="{!doRelationPopCancel}"   />
+                                </apex:pageBlockButtons>
+                            </div> 
+                    
+                            <div style="padding-left:95%">
+                                <p  style="color:black;position:absolute; left: 02%;"><b>Flex Note:</b> {!relationQuestion}</p>
+                                 
+                            </div><br/><br/>
+                                     
+                             <div>   
+                                <span><br/><br/></span>
+                                <strong></strong>    
+                                <table width="100%" >  
+                                  <tr>
+                                    
+                                    <td>ServiceType Name</td>
+                                    <td><apex:OutputText value="{!serviceTypeName}"></apex:OutputText></td>
+                                    <td>FlexNote Question DataType:</td>
+                                    <td><apex:OutputText value="{!flexNoteDataType}"></apex:OutputText></td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td>Order:</td>
+                                    <td><apex:outputField value="{!relation.Order__c}"/></td>
+                                    <td>Lower Limit:</td>
+                                    <td><apex:inputField value="{!relation.Lower_Limit__c}"/></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Auto Create:</td>
+                                    <td><apex:inputField value="{!relation.Auto_Create__c}"/></td>
+                                    <td>Upper Limit:</td>
+                                    <td><apex:inputField value="{!relation.Upper_Limit__c}"/></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Upper Force:</td>
+                                    <td><apex:inputField value="{!relation.Force_Upper__c}"/></td>
+                                    <td>Used By Interface Only:</td>
+                                    <td><apex:inputField value="{!relation.Used_By_Interface_Only__c}"/></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Start Date:</td>
+                                    <td><apex:inputField value="{!relation.Start_Date__c}"/></td>
+                                    <td>Stop Date:</td>
+                                    <td><apex:inputField value="{!relation.Stop_Date__c}"/></td>
+                                  </tr>
+                                  <tr>
+                                    <td>IsRequired:</td>
+                                    <td><apex:inputField value="{!relation.isRequired__c}"/></td>
+                                    <td>IsReadOnly:</td>
+                                    <td><apex:inputField value="{!relation.IsReadOnly__c}"/>         
+                                    </td>
+                                  </tr>  
+                                </table>
+                            </div> 
+                            
+                    </apex:pageblock>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:actionFunction name="addQuestionFn" action="{!addSelectedQuestions}" reRender="selFlexNotePanelId" oncomplete="doDragSortableFnCall()" status="processingStatus">
+                <!--<apex:param value="" name="selectedQuestionsId" assignTo="{!selQuestionIds}"></apex:param>  -->
+            </apex:actionFunction>
+                 
+        
+                
+            <apex:outputPanel id="questionPopUpPanelId">
+                <apex:outputPanel layout="block" rendered="{!showQuestionPopUp}" styleClass="questionPopupWindow">
+                    <apex:pageblock >
+                        <apex:sectionHeader title="FlexNoteQuestion" subtitle="New" />
+                        <apex:pageBlockButtons >
+                            <apex:commandbutton value="Save" action="{!doSaveFlexNoteQuestion}" reRender="" />
+                            <apex:commandbutton value="Cancel" action="{!doCancelFlexNoteQuestion}" reRender=""/>
+                        </apex:pageBlockButtons>
+                         <apex:pageMessages />
+                                    <div>
+                                       <table>
+                                            <tr>  
+                                                <td  ><strong>Object:</strong></td>
+                                                <td >
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                            <apex:inputField value="{!flexNoteQuestion.Object_Name__c}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                                 
+                                                <td  ><strong>Code:</strong></td>
+                                                <td >
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                            <apex:inputField value="{!flexNoteQuestion.Name}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table >
+                                            <tr>
+                                                <td> <strong>Question</strong></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                <td><strong> Data Type</strong></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <td><strong>Answer Value</strong></td>&nbsp;&nbsp;
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                        <apex:inputTextArea value="{!flexNoteQuestion.Questions__c}" style="height: 125px; width: 413px;"/>
+                                                    </apex:outputPanel>
+                                                </td>
+
+                                                <td>
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                        <apex:inputField value="{!flexNoteQuestion.Answer_Type__c}">
+                                                            <apex:actionSupport action="{!doConditionalRequiredRender}" event="onchange" reRender="popUpPanelId">
+                                                                <apex:param value="{!flexNoteQuestion.Answer_Type__c}" name="DataType" assignTo="{!dataTypeName}"/>
+                                                            </apex:actionSupport>
+                                                        </apex:inputField>
+                                                    </apex:outputPanel>
+                                                </td>
+
+                                                <td >
+                                                    <apex:outputPanel id="dataTypeOPId" >
+                                                        <apex:inputTextarea value="{!flexNoteQuestion.AnswerValues__c}"  style="width:281px;height:55px;"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <table  >
+                                          <tr>
+                                            <td colspan="4"><strong >Flex Notes Attributes:</strong></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="4"></td>
+                                          </tr>
+                                          
+                                          <tr>
+                                            <td width="110"><strong>Hint Text:</strong></td>
+                                            <td width="313"><apex:inputField value="{!flexNoteQuestion.Hint_Text__c}"/></td>
+                                            <td width="251"><strong>List:</strong></td>
+                                            <td width="210"><apex:inputField value="{!flexNoteQuestion.List__c}"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><strong>Access Classification</strong></td>
+                                            <td><apex:inputField value="{!flexNoteQuestion.Access_Classification__c}"/></td>
+                                            <td><strong>Start Date:</strong></td>
+                                            <td><apex:inputField value="{!flexNoteQuestion.Start_Date__c}"/></td>
+                                          </tr>
+                                          <tr>
+                                            
+                                            <td ><strong>Stop Date:</strong></td>
+                                            <td ><apex:inputField value="{!flexNoteQuestion.Stop_Date__c}"/></td>
+                                            <td></td>
+                                            <td></td>
+                                          </tr>
+                                        </table>
+                                    </div>
+                      </apex:pageblock>
+                  </apex:outputPanel>
+              </apex:outputPanel>
+        
+        
+        </apex:pageblock>
+    </apex:form>
+    
+    
+        <!-- "Loading" or "Processing" popup -->
+    <apex:actionStatus id="processingStatus" stopText="" >
+        <apex:facet name="start">
+            <div>
+                <div class="popupBackground" />
+                <div class="popupPanel">
+                    <table border="0" width="100%" height="100%">
+                        <tr>
+                            <td align="center" style="font-family: Calibri; font-size: 13px; font-weight: normal;"><b>Processing... Please Wait</b></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><img src="/img/loading.gif"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    
+    
+    
+    
+</apex:page>

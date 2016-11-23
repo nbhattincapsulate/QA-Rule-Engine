@@ -1,0 +1,40 @@
+<apex:page controller="SRBulkCloseCtrl" sidebar="false">
+  <!-- Lightning Styles -->
+  <apex:stylesheet value="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+  <apex:pagemessages />
+  <apex:form styleclass="slds">
+    <apex:outputpanel styleclass="file-container">
+      <apex:inputfile value="{!csvFileBody}" filename="{!csvAsString}" />
+      <apex:commandbutton value="Import CSV" action="{!importCSVFile}" styleclass="slds-button slds-button--brand" />
+    </apex:outputpanel>
+    <apex:outputpanel id="csvResults" layout="block" style="margin-top: 25px;">
+      <apex:outputpanel rendered="{!resultCaseWrapper != null && resultCaseWrapper.size > 0}">
+
+        <table class="slds-table slds-table--bordered">
+          <thead>
+            <tr class="slds-text-heading--label">
+              <th scope="col">
+                <span class="slds-truncate">Case Id</span>
+              </th>
+              <th scope="col">
+                <span class="slds-truncate">Case Closure Comments</span>
+              </th>
+              <th scope="col">
+                <span class="slds-truncate">Update Status</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <apex:repeat value="{!resultCaseWrapper}" var="caseWrapper">
+              <tr class="slds-hint-parent">
+                <td data-label="id"><span class="slds-truncate">{!caseWrapper.srNumber}</span></td>
+                <td data-label="comments"><span class="slds-truncate">{!caseWrapper.comments}</span></td>
+                <td data-label="status"><span class="slds-truncate">{!caseWrapper.saveStatus}</span></td>
+              </tr>
+            </apex:repeat>
+          </tbody>
+        </table>
+      </apex:outputpanel>
+    </apex:outputpanel>
+  </apex:form>
+</apex:page>

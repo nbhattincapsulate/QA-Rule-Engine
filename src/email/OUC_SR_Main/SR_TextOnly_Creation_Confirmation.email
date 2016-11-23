@@ -1,0 +1,13 @@
+Automated Response E-mail Notification: Receipt of Service Request - DO NOT REPLY 
+
+DC 311 Service Request {!Case.CaseNumber} Received 
+
+Thank you for submitting your request using DC311! We welcome the opportunity to serve you. 
+
+Your confirmation number for this service request is {!Case.CaseNumber}. This request has been added to the Service Request Tracking System for review and resolution. Please retain this number for your records. It can be used in conjunction with your email address to obtain status of your Service Request on-line 24 hours a day. You may also click on the following link to check that status of the request. 
+
+Check Your Service Request Status: https://dc311.secure.force.com/portal/
+
+The servicing agency for your request is {!Case.Servicing_Agency_Expanded__c} and resolution is expected within {!Case.SLA__c} days. You may also visit (agency website pending) for more information regarding your request. 
+
+DC 311

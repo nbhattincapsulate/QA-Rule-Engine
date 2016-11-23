@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SR Activity History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SR Activity Histories</value>
+    </caseValues>
+    <fields>
+        <label><!-- ActivityOwnerName --></label>
+        <name>ActivityOwnerName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Date --></label>
+        <name>Activity_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Id --></label>
+        <name>Activity_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Duration --></label>
+        <name>Call_Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Object Identifier --></label>
+        <name>Call_Object_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Result --></label>
+        <name>Call_Result__c</name>
+    </fields>
+    <fields>
+        <label><!-- Call Type --></label>
+        <name>Call_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+    </fields>
+    <fields>
+        <label><!-- Citizen Email On Complete --></label>
+        <name>Citizen_Email_On_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Date --></label>
+        <name>Completion_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deleted --></label>
+        <name>Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Comments (deprecated) --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Sort Order --></label>
+        <name>Display_Sort_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Comments --></label>
+        <name>External_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>Last_Modified_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modified Date --></label>
+        <name>Modified_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- OutCome --></label>
+        <name>OutCome__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Public --></label>
+        <name>Public__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recurrence Interval --></label>
+        <name>Recurrence_Interval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repeat This Task --></label>
+        <name>Repeat_This_Task__c</name>
+    </fields>
+    <fields>
+        <label><!-- Responsible Party --></label>
+        <name>Responsible_Party__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request History --></label>
+        <name>Service_Request_History__c</name>
+        <relationshipLabel><!-- SR Activity Histories --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task Code --></label>
+        <name>Task_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task Short Name --></label>
+        <name>Task_Short_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text --></label>
+        <name>Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+    </fields>
+    <layouts>
+        <layout>OUC Activity History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

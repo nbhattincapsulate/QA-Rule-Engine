@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <aggregates>
+        <calculatedFormula>Service_Request_History__c.SLA_Met__c:SUM / RowCount</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA1</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>SLA Met Percent</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Service_Request_History__c.SLA_Missed__c:SUM / RowCount</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA2</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>SLA Missed Percent</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Service_Request_History__c.SLA_Open__c:SUM / RowCount</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA3</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>SLA Open Percent</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Service_Request_History__c.SLA_Overdue__c:SUM / RowCount</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>FORMULA4</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <masterLabel>SLA Overdue</masterLabel>
+        <scale>2</scale>
+    </aggregates>
+    <columns>
+        <field>Service_Request_History__c$Name</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Address__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Status__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$DateTimeOpened__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Expected_Resolution_Date__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$DateTimeClosed__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$LastUpdateDateTime__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Service_Type_Code__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Service_Request_History__c$SLA_Met__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Service_Request_History__c$SLA_Missed__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Service_Request_History__c$SLA_Open__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Service_Request_History__c$SLA_Overdue__c</field>
+    </columns>
+    <description>DPW Open Cases as of RUN DATE.  &quot;&quot;SR date opened&quot;&quot;</description>
+    <filter>
+        <criteriaItems>
+            <column>Service_Request_History__c$Servicing_Agency__c</column>
+            <operator>equals</operator>
+            <value>DPW</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Service_Request_History__c$Status__c</column>
+            <operator>equals</operator>
+            <value>Duplicate (Opened),In Progress,Open</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Service_Request_History__c$Servicing_Agency__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Service_Request_History__c$SRType__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>DPW Open Cases as of RUN DATE</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Service_Request_Master_Report_Type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>Service_Request_History__c$DateTimeOpened__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Service_Request_History__c$DateTimeOpened__c</dateColumn>
+        <endDate>2016-01-11</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2012-01-01</startDate>
+    </timeFrameFilter>
+</Report>

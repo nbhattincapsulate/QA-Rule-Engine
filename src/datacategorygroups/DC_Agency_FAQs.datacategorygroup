@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Servicing Agency Trainings</label>
+            <name>Servicing_Agency_Trainings</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Agency Training</label>
+            <name>Agency_Training</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Frequently asked Questions</label>
+                <name>Frequently_asked_Questions</name>
+            </dataCategory>
+            <label>FAQs</label>
+            <name>FAQs</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>DOH FAQ</label>
+                <name>DOH_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DPW FAQ</label>
+                <name>DPW_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DDOT FAQ</label>
+                <name>DDOT_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DMV FAQ</label>
+                <name>DMV_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>LIHEAP UDP</label>
+                <name>LIHEAP_UDP</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DCRA FAQ</label>
+                <name>DCRA_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TRU</label>
+                <name>TRU</name>
+            </dataCategory>
+            <label>DC Agency FAQ</label>
+            <name>DC_Agency_FAQ</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Contains folders of DC Agency FAQs</description>
+    <label>DC Agency FAQ</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

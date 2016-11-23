@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>ServiceRequest BulkSchedule</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>ServiceRequest BulkSchedule</value>
+    </caseValues>
+    <fields>
+        <label><!-- Bulk Schedule --></label>
+        <name>BulkSchedule__c</name>
+        <relationshipLabel><!-- ServiceRequest BulkSchedule --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SRBulkScheduleExtId --></label>
+        <name>SRBulkScheduleExtId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Schedule Date --></label>
+        <name>ScheduleDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Location --></label>
+        <name>ServiceLocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request --></label>
+        <name>ServiceRequest__c</name>
+        <relationshipLabel><!-- ServiceRequest BulkSchedule --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Request Count --></label>
+        <name>Service_Request_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>Service_Request_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voided</masterLabel>
+            <translation><!-- Voided --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>Ward__c</name>
+    </fields>
+    <layouts>
+        <layout>ServiceRequest BulkSchedule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

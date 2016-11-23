@@ -1,0 +1,17 @@
+<apex:component >
+    <!-- Back to top -->
+    <a href="#" class="back-to-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-12">
+                    <div class="text">Only the latest browser versions are supported © 2014 Office of Unified Communications (OUC).</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</apex:component>

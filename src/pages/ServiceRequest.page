@@ -1,0 +1,2078 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ServiceRequestController">
+  <apex:form id="statusCheck" styleClass="statusCheck">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+
+        <meta charset="utf-8" />
+        <title>OUC | Service Request</title>
+            
+        <!-- include all css and files -->
+        <c:OUC_Assests />
+       
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.maskedinput.min.js')}"/> 
+        <script type="text/javascript">
+            $(function() {
+                $.mask.definitions['~'] = "[+-]";             
+               
+                $("[id*='Participants_0__PhoneNumber']").mask("(999) 999-9999? x99999");  
+                $("[id*='Participants_0__PhoneExtension']").mask("(999) 999-9999? x99999");          
+            });          
+        </script>
+            
+        <script>
+          $(document).ready(function() {
+              var displayMap = $('#useMap').length > 0 ? true : false;
+         
+              if (displayMap) {
+                  $('#trMap').show();
+                  $('#trMapNextButton').show();
+                
+                  var lat = 51.03;
+                  var lng = -114.05;
+                  var zoom = 12;
+                  var city = 'Washington, D.C.';
+                  var isConstraintEnabled = false;
+                  
+                  init(lat,lng,zoom,city,isConstraintEnabled);
+              }
+          });
+        </script>
+             
+        <style> 
+            #mapcontainer {
+              position: relative;
+              width: 620px;
+              height: 270;
+              margin-top: 10px;
+              float: left;
+             
+            }
+             
+            #map {
+              width: 100%;
+              height: 100%;
+              border: 1px solid black;
+              position: absolute;
+            }
+         
+            #boundsLegend,#viewportLegend {
+              position: absolute;
+              background-color: white;
+              right: 1px;
+              font-family: sans-serif;
+              font-size: small;
+              padding: 2px;
+              color: #222222;
+              display: none;
+            }
+                 
+            #boundsLegend {
+              border: 1px solid red;
+              bottom: 40px;
+            }
+             
+            #viewportLegend {
+              border: 1px solid blue;
+              bottom: 15px;
+            }
+         
+            #responseStatus {
+              display: none;
+            }
+             
+            #responseCount {
+              display: none;
+            }
+             
+            #responseInfo {
+              margin-top: 10px;
+              background-color: #eeeeee;
+              border: 1px solid #999999;
+              padding: 10px;
+              width: 600px;
+              display: none;
+            }
+         
+            .info {
+              border-top: 1px solid #666666;
+              padding: 4px;
+              padding-left: 8px;
+              font: 10pt sans-serif;
+              margin-left: 4px;
+              margin-right: 4px;
+              cursor: pointer;
+              background-color: white;
+            }
+                 
+            .infoWindowContent {
+              width: 272px;
+              height: 50px;
+              overflow: auto;
+            }
+            
+            .infoWindowContent2 {
+              width: 272px;
+              height: 100px;
+              overflow: auto;
+            }
+         
+            .tabContent {
+              font: 10pt sans-serif;
+              border-collapse: collapse;
+              table-layout: auto;
+            }
+             
+            #matches {
+              margin-top: 10px;
+              width: 320px;
+              height: 490px;
+              float: left;
+              border: 1px solid #666666;
+              display: none;
+              overflow: auto;
+            }
+             
+            h1 {
+              border-bottom: 1px solid #999999;
+              font-family: sans-serif;
+              padding-bottom: 12px;
+              width: 650px;
+              margin-bottom: 0px;
+            }
+             
+            #inputForm {
+              width: 650px;
+              margin: 10px;
+            }
+                 
+            #footer {
+              padding-top: 4px;
+              font-family: sans-serif;
+              font-size: 8pt;
+              clear: both;
+              width: 650px;
+              border-top: 1px solid #999999;
+            }
+         
+            #instructions {
+              padding-bottom: 8px;
+            }
+             
+            .key {
+              /*text-align: right;*/
+              font-weight: bold;
+              vertical-align: top;
+              white-space: nowrap 
+            }
+             
+            .value {
+              vertical-align: top;  
+            }
+             
+            #options {
+              margin-top: 5px;
+            }
+             
+            #biasViewport,#country {
+              margin-right: 16px;
+            }
+             
+            #newFeatures {
+              position: absolute;
+              top: 1px;
+              right: -2px;
+              background-color: #ffffd0;
+              border: 1px solid black;
+              font-family: sans-serif;
+              font-size: 8pt;
+              padding: 2px;
+            }
+            
+            .body span.hr.lip-quote {
+                margin-bottom: 8px;
+                margin-top: 8px;
+            }
+            .body span.hr, .body span.empty-hr {
+                background: url("../images/design/diag-hr.png") repeat-x scroll 0 0 transparent;
+                display: block;
+                left: 0;
+                margin: 0 0 40px;
+                padding: 0;
+                top: 0;
+                width: 99%;
+            }
+            p.note, p.note.success {
+                background: url("../images/icons/check_32.png") no-repeat scroll 10px 15px #f2ffe8;
+                border: 1px solid #97ff4c;
+                border-radius: 5px;
+                margin-bottom: 2px;
+                padding: 20px 25px 19px 53px;
+                width: 38%;
+            }
+            
+            .body .standard-form p.note {
+                font-size: 12px;
+                margin-left: -18px;
+                width: 225px;
+             }
+             
+             .detailList{
+                 width:800px;           
+             
+             }
+        </style> 
+            
+        <script language="javascript" type="text/javascript">
+            // 1/24/12 MJB CR4101
+            // Trap Enter key events in text input fields
+            $(':text').keypress(function(e) {
+                var loKey;
+        
+                if (window.event) {
+                    loKey = window.event.keyCode;
+                }
+                else {
+                    loKey = e.which;
+                }
+        
+                if (loKey == 13) {
+                    document.getElementById("EnterKeyPressedInTextbox").value = true;
+                }
+            });
+        </script>       
+      </head>
+
+      <body>
+        <div class="page-wrapper">
+          <div class="slug-pattern">
+            <div class="overlay">
+              <div class="slug-cut"></div>
+            </div>
+          </div>
+                
+          <!-- header --> 
+          <c:OUC_Header tab="Service Request"/>
+          <!-- end of header -->
+
+          <div class="body">
+            <div class="body-round"></div>
+              <div class="body-wrapper">
+                <div class="side-shadows"></div>                  
+                
+                <div class="content">               
+                  <apex:outputpanel id="service_type">
+                    <apex:pageBlock >
+                      <apex:pageBlockSection > 
+                        <apex:outputPanel rendered="{!service_type}">
+                        
+                          <div class="container callout">
+                            <apex:outputPanel rendered="{!title}">    
+                              <div class="twelve columns">
+                                <h4><span>{!step1}</span></h4>                           
+                              </div>
+                            </apex:outputPanel>                     
+                                          
+                          </div>
+                          <div class="callout-hr"></div>                        
+                        
+                          <div class="container">
+                            <!-- Map inputs -->
+                              <input id="lsGuid" name="lsGuid" type="hidden" value="95bf24666fa04cd491af375dd99feda4" />
+                              <input id="lsId" name="lsId" type="hidden" value="S0003" />
+                              <input id="useMap" name="useMap" type="hidden" value="Y" />
+                              <input id="EnterKeyPressedInTextbox" name="EnterKeyPressedInTextbox" type="hidden" value="False" />
+                            <!-- end Map inputs -->
+                          
+                            <form>
+                              <tr>
+                                <td>
+                                  <table width="100%">                                                       
+                                    <!-- service_type-->
+                                    <tr>
+                                        <td valign="top">
+                                            <img alt="Hint Image" src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/info_button_16.png')}" />&nbsp;
+                                            <label for="lblHintText">
+                                                <span>Please select a Service Request type from the list and click Go to search for the type of service you require.</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr><br />                                                                                            
+                              <tr>
+                                <td>
+                                  <table width="65%" style="margin-left:15px;">
+                                    <tr>
+                                      <td>
+                                          <span>Service Type</span>
+                                      </td>
+                                      <td>
+                                        <div class="ui-widget">                                                                               
+                                            <apex:selectList value="{!serviceType}" multiselect="false" size="1" id="combobox">
+                                              <apex:selectOptions value="{!ServiceRequestItems}"/>
+                                              <!--<apex:actionsupport event="onchange" action="{!performAction}" rerender="service_location" status="counterStatus"/>-->
+                                            </apex:selectList>                                                                  
+                                                  
+                                            <apex:commandButton value="Go" action="{!performAction}"  status="counterStatus" style="margin-left:50px;"/>
+                                         </div>
+                                      </td>
+                                    </tr><br />                                                                                 
+                                  </table>
+                                </td>
+                              </tr>                                              
+                              <tr>
+                                <td>
+                                  <table>
+                                    <tr>
+                                      <td colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>                                                                                
+                                  <table>
+                                    <tr>
+                                      <td align="left"></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left">
+                                        <span class="hr lip-quote"></span>                                                                                                                          
+                                      </td>
+                                    </tr>
+                                                           
+                                </table>                                                                            
+                              </td>
+                            </tr>
+                          </form> 
+                        </div>                                                                                                                                                     
+                    </apex:outputPanel>
+                  </apex:pageBlockSection>
+                </apex:pageBlock>
+              </apex:outputPanel>
+            </div>
+            <!-- end service_type-->
+
+            <div class="content">
+              <apex:outputPanel id="service_location">                                
+                <apex:pageBlock >
+                  <apex:pageBlockSection > 
+                    <apex:outputPanel rendered="{!service_location}"> 
+                        
+                        <div class="container callout">
+                          <apex:outputPanel rendered="{!title}">    
+                            <div class="twelve columns">
+                              <h4><span>{!step2}</span></h4>                           
+                            </div>
+                          </apex:outputPanel>                    
+                                          
+                        </div>
+                        <div class="callout-hr"></div>                        
+                        
+                        <div class="container">                
+                          <tr>
+                            <td>
+                              <table width="100%">
+                                <tr>
+                                  <td>
+                                    <table>
+                                      <tr>
+                                        <td style="vertical-align:top">
+                                          <img alt="Hint Image" src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/info_button_16.png')}" />&nbsp;
+                                        </td>
+                                        <td valign="top">
+                                          <span style="margin-left:5px;">Please enter the incident location or property address as applicable.  A location is optional unless the fields are marked with a *.<br /><br />   To report a concern at or near an intersection, enter both street names (separated by an @) in the Street Address field.  The system will suggest valid locations to select from.  For example:  Macleod Tr@45 Ave would be a valid entry.  Numbered streets and avenues must be entered as a number (i.e. 45) not as text (i.e. Forty Five).<br /></span>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="hr lip-quote"></span></td>
+                                </tr>                                                                                       
+                                <tr>
+                                  <td>
+                                    <table width="95%" style="margin-left:15px;">
+                                      <tr>
+                                        <td width="10%">
+                                          <span>Service Type:</span>
+                                        </td>
+                                        <td>
+                                          <label>{!selSelectedRequestTypeName}</label>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td><span class="hr lip-quote"></span></td>
+                                </tr>                                
+                                <tr>
+                                  <td  style="padding: 0px 0px 0px 0px;" width="100%">
+                                    <table  style="height: 6px" width="100%">
+                                      <tr>
+                                        <td colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>                                                           
+                                <tr>
+                                  <td align="left">
+                                    <table>
+                                      <tr>
+                                        <td >
+                                          <input id="hdnError" name="hdnError" type="hidden" value="" />
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>                                                            
+                                <tr>
+                                  <td>
+                                    <span  style="color:red; font-size:1.2em; display:inline-block; margin-left:15px;margin-bottom:5px;">
+                                      
+                                      <div class="form-result" id="form-result" style="margin-left:62px;width:280%;"></div>
+                                    </span >
+                                    <apex:outputPanel rendered="{!error_msg}" style="color:red; font-size:1.2em; display:inline-block; margin-left:-62px;margin-bottom:5px;">
+                                        <apex:pageMessages id="error_msg"/>
+                                    </apex:outputPanel>
+                                    <table>                              
+                                          
+                                      <tr>
+                                        <td>                                      
+                                                                    
+                                          <input id="Address_SuggestPrefix" name="Address.SuggestPrefix" type="hidden" value="Address" />
+                                          <input id="Address_DisplayAddress" name="Address.DisplayAddress" type="hidden" value="" />
+                                          <input id="Address_Details" name="Address.Details" type="hidden" value="" />
+                                          <input id="Address_RelatedTableCode" name="Address.RelatedTableCode" type="hidden" value="PRCINST" />
+                                          <input id="Address_SuggestServiceMethod" name="Address.SuggestServiceMethod" type="hidden" value="GetLocationListWithCommonLocs" />
+                                          <input id="Address_StreetAddressLength" name="Address.StreetAddressLength" type="hidden" value="" />
+                                          <input id="Address_LocationRequiredIND" name="Address.LocationRequiredIND" type="hidden" value="Y" />
+                                                                                
+                                          <table style="margin-left:-35px;" height="300">    
+                                            <tr style="display:none;">
+                                              <td colspan="2">
+                                            <!--<input id="btnNext" class="uiButton" value="Next Step" type="submit" name="btnNext"/>-->
+                                                <apex:commandButton value="Next Step" action="{!service_location}"  status="counterStatus" onclick=" return address();"/> 
+                                              </td>
+                                            </tr>                                                                                                  
+
+                                            <tr style="padding-bottom: 10px; padding-top: 10px" valign="top">
+                                              <td align="right" nowrap="nowrap" width="104px" style="vertical-align: top;
+                                                    padding-top: 5px; padding-right: 4px">
+                                                <span style="display:inline-block;width:100px;padding-top: 17px">* Address</span>                                                    
+                                              </td>
+                                              <td>
+                                                <table id="addressTable">                                                  
+                                                  <tr id="addressRow">
+                                                    <td id="tdAddress">
+                                                      <span id="8_lblStreetAddress" style="display:inline-block;width:100px;margin-left:10px;">Street Address</span>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="3">                                                          
+                                                      <input id="Address_StreetAddress" name="Address.StreetAddress"  maxlength="40" onChange="javascript:submitQuery();" type="text" value="" style="float: left; margin: 0 30px 11px 5px;width: 620px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;"/>
+                                                      <apex:inputHidden Value="{!street}" id="StreetAddress">
+                                                        <apex:actionSupport event="onchange">
+                                                          <apex:param value="{!street}" assignTo="{!street}" />                                                                                                                                
+                                                        </apex:actionsupport>
+                                                      </apex:inputHidden>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <table style="border-collapse: separate">
+                                                        <tbody>
+                                                          <tr>
+                                                            <td>
+                                                              <div>
+                                                                <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">City</span>
+                                                                <div>
+                                                                  <input id="Address_City" name="Address.City" type="text" value="WASHINGTON" style="float: left; margin: 0 30px 11px 5px;width: 150px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;"  readonly="readonly"/>
+                                                                  <apex:inputHidden id="City" value="{!city}"></apex:inputHidden>
+                                                                </div>
+                                                              </div>
+                                                            </td>
+                                                            <td>
+                                                              <div>
+                                                                <span id="8_lblCounty" style="display:inline-block;width:50px;margin-left:10px;">State</span>
+                                                                <div>
+                                                                  <input id="Address_State" maxlength="2" name="Address.State" type="text" value="DC" style="float: left; margin: 0 30px 11px 5px;width: 40px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;" readonly="readonly"/>
+                                                                  <apex:inputHidden value="{!state}" id="State"></apex:inputHidden>
+                                                                </div>
+                                                              </div>
+                                                            </td>
+                                                            <td style="text-align: left" valign="top">
+                                                              <div>
+                                                                <span id="8_lblZipCode" style="display:inline-block;width:100px;margin-left:10px;">Zip Code</span>
+                                                              </div>
+                                                              <input id="Address_Zip" name="Address.Zip" type="text" value="" style="float: left; margin: 0 30px 11px 5px;width: 100px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;"  maxlength="5" onKeyPress="return numbersonly(this, event)"/>
+                                                              <apex:inputHidden Value="{!zipCode}" id="Zip">
+                                                                <apex:actionSupport event="onchange">
+                                                                  <apex:param value="{!zipCode}" assignTo="{!zipCode}" />                                      
+                                                                </apex:actionsupport>
+                                                              </apex:inputHidden>                                                              
+                                                            </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                           <SCRIPT TYPE="text/javascript">
+
+                                            // copyright 1999 Idocs, Inc. http://www.idocs.com
+                                            // Distribute this script freely but keep this notice in place
+                                            function numbersonly(myfield, e, dec)
+                                            {
+                                            var key;
+                                            var keychar;
+                                            
+                                            if (window.event)
+                                               key = window.event.keyCode;
+                                            else if (e)
+                                               key = e.which;
+                                            else
+                                               return true;
+                                            keychar = String.fromCharCode(key);
+                                            
+                                            // control keys
+                                            if ((key==null) || (key==0) || (key==8) || 
+                                                (key==9) || (key==13) || (key==27) )
+                                               return true;
+                                            
+                                            // numbers
+                                            else if ((("0123456789").indexOf(keychar) > -1))
+                                               return true;
+                                            
+                                            // decimal point jump
+                                            else if (dec && (keychar == "."))
+                                               {
+                                               myfield.form.elements[dec].focus();
+                                               return false;
+                                               }
+                                            else
+                                               return false;
+                                            }
+
+                                           
+                                          </SCRIPT>                                                     
+                                          <script type="text/javascript">
+                                           function address(){
+                                                var address= document.getElementById('Address_StreetAddress').value;
+                                                var city= document.getElementById('Address_City').value;
+                                                var state= document.getElementById('Address_State').value;
+                                                var zip= document.getElementById('Address_Zip').value;
+                                                
+                                                if(address != null || address != ''){
+                                                     var add= $("[id*='StreetAddress']").val(address);                                                                                                                              
+                                                 }
+                                                 
+                                                 /*if(city != null || city != ''){
+                                                   
+                                                      $("[id*='City']").val(city.toString().toUpperCase()); 
+                                                 }
+                                                 
+                                                 if(state != null || state != ''){
+                                                    $("[id*='State']").val(state.toString().toUpperCase());
+                                                 }*/
+                                                 
+                                                 if(zip != null || zip != ''){
+                                                   $("[id*='Zip']").val(zip); 
+                                                 }
+                                           }                                         
+                                                                                                                                                     
+                                          </script>
+
+
+
+                                          <tr id="LET_let_row4">
+                                            <td>
+                                              <table style="border-collapse: separate">
+                                                <tbody>
+                                                  <tr>
+                                                    <td>
+                                                      <div>
+                                                        <span id="8_lblBuilding" style="display:inline-block;width:160px;margin-left:10px;">Building</span>
+                                                        <div>
+                                                          <input class="input" id="Address_Building" name="Address.Building"  maxlength="20" type="text" value="" style="float: left; margin: 0 30px 11px 5px;width: 150px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;"/>
+                                                                
+                                                        </div>
+                                                      </div>
+                                                    </td>
+                                                    <td>
+                                                      <div>
+                                                        <span id="8_lblFloor" style="display:inline-block;width:50px;margin-left:10px;">Floor</span>
+                                                        <div>
+                                                          <input class="input" id="Address_Floor" name="Address.Floor"  maxlength="5" type="text" value="" style="float: left; margin: 0 30px 11px 5px;width: 40px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;" onKeyPress="return numbersonly(this, event)"/> 
+                                                                
+                                                        </div>
+                                                      </div>
+                                                    </td>
+                                                    <td>
+                                                      <div>
+                                                        <span id="8_lblUnit" style="display:inline-block;width:100px;margin-left:10px;">Unit</span>
+                                                        <div>
+                                                          <input class="input" id="Address_Unit" name="Address.Unit"  maxlength="5" type="text" value="" style="float: left; margin: 0 30px 11px 5px;width: 80px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px;" onKeyPress="return numbersonly(this, event)"/>
+                                                                
+                                                        </div>
+                                                      </div>
+                                                    </td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>                                                                                    
+                                    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+                                    <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/map.js')}"/> 
+                                    <tr id="trMap" height="250">
+                                      <td></td>
+                                      <td> 
+                                        <div id="responseInfo"> 
+                                          <div id="responseStatus"> 
+                                            <div> 
+                                              <span style="font-weight: bold">Location Selected:  </span> 
+                                              <span id="statusValue"></span> <span id="statusDescription" style="color:Red;"></span>
+                                            </div> 
+                                          </div> 
+                                          <div id="responseCount"> 
+                                            <span style="font-weight: bold;">Matches returned: </span> 
+                                            <span id="matchCount"></span> 
+                                          </div> 
+                                        </div> 
+                                        <div id="mapcontainer"> 
+                                          <div id="map" style="width:100%; height:260px; border: 1px solid #d8d7d7;"></div>
+
+                                          <div id="boundsLegend">Bounds</div> 
+                                          <div id="viewportLegend">Viewport</div> 
+                                        </div> 
+                                        <div id="matches"></div>                           
+                                      </td>
+                                    </tr>                                                                                             
+                                                                                          
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><span class="hr lip-quote"></span></td>
+                        </tr>                        
+                        <tr>
+                          <td>
+                            <div>
+                              <table width="100%">
+                                <tr>
+                                  <td  style="text-align: left;float:left">
+                                    <table >
+                                      <tr>
+                                        <td>                                                            
+                                            <!--<input id="btnNext" name="btnNext" type="submit" class="uiButton" value="Next Step" />-->
+                                            <apex:commandButton value="Next Step" action="{!service_location}" onclick=" return address();" style=" margin-left:25px; margin-top:20px;"> 
+                                                <apex:param value="{!street}" assignTo="{!street}" />  
+                                                <apex:param value="{!city}" assignTo="{!city}" />  
+                                                <apex:param value="{!zipCode}" assignTo="{!zipCode}" /> 
+                                                <!--<apex:actionSupport event="onclick" reRender="service_location"/>-->                                                                                                             
+                                            </apex:commandButton>
+                                            
+                                          
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </div>
+                </apex:outputPanel>            
+                
+                                        
+                <apex:outputPanel rendered="{!ServiceLocAddressDetails}">
+                  <div class="container callout">
+                    <apex:outputPanel rendered="{!title}">    
+                      <div class="twelve columns">
+                        <h4><span>{!step2}</span></h4>                           
+                      </div>
+                    </apex:outputPanel>                    
+                                          
+                  </div>
+                  <div class="callout-hr"></div>                        
+                        
+                  <div class="container">           
+                  <tr>
+                    <td>
+                      <table width="100%">
+                        <tr>
+                          <td>
+                            <table>
+                              <tr>
+                                <td style="vertical-align:top">
+                                  <img alt="Hint Image" src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/info_button_16.png')}" />
+                                </td>
+                                <td valign="top">
+                                  <span style="margin-left:5px;">Please enter the incident location or property address as applicable.  A location is optional unless the fields are marked with a *.<br /><br />   To report a concern at or near an intersection, enter both street names (separated by an @) in the Street Address field.  The system will suggest valid locations to select from.  For example:  Macleod Tr@45 Ave would be a valid entry.  Numbered streets and avenues must be entered as a number (i.e. 45) not as text (i.e. Forty Five).</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hr lip-quote"></span></td>
+                        </tr> 
+                        <tr>
+                          <td>
+                            <table width="95%" style="margin-left:15px;">
+                              <tr>
+                                <td width="13%">
+                                  <span><strong>Service Type:</strong></span>
+                                </td>
+                                <td>
+                                  <label for="CurrentServiceRequest_currentSRDef_Cwi_short_description">{!selSelectedRequestTypeName}</label>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td><span class="hr lip-quote"></span></td>
+                        </tr> 
+                        <tr>
+                          <td style="padding: 0px 0px 0px 0px;" width="100%">
+                            <table style="height: 6px" width="100%">
+                              <tr>
+                                <td colspan="6" align="top" height="2px" style="width: 100%"></td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>          
+                        <tr>
+                          <td align="left">
+                            <table width="50%" style="margin-left:15px;">
+                              <tr>
+                                <td>
+                                  <input id="hdnError" name="hdnError" type="hidden" value="" />
+                                  <span  style="color:red; font-size:1.2em; display:inline-block; margin-left:15px;margin-bottom:5px;">
+                                      <apex:pageMessages id="errormsg"/>
+                                   </span ><br/><br/>
+                                  <span style="color:red;">Similar locations were found. Please select one of the following:<br/></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>                                                       
+                        <tr>
+                          <td>
+                            <apex:pageblock id="allcons">
+                              <apex:pageblocktable id="allcons" value="{!result}" var="con" style="margin-left:15px;">                                                                                         
+                                <apex:column >                                                                                                                
+                                  <apex:actionsupport action="{!selectedlocationlist}" event="onclick" rerender="ServiceLocAddressDetails" immediate="true"  status="counterStatus">  
+                                    <input type="radio" name="radiobtn">                                                                                                                   
+                                      <apex:param name="conid" value="{!con}" assignTo="{!seladressloc}"></apex:param>                                                                                                  
+                                    </input>                                   
+                                  </apex:actionsupport>                                                                                                                                                        
+                                </apex:column>    
+                                <apex:column >
+                                  <span class="VSBaseFont fsLabel">
+                                    <apex:outputLabel value="{!con}"></apex:outputlabel>                                                             
+                                  </span>
+                                </apex:column>                                                                                            
+                              </apex:pageblocktable>                              
+                            </apex:pageblock>                 
+                                
+                          </td>                         
+                        </tr>                       
+                        <tr>
+                            <td>
+                                <apex:actionStatus startText="(Processing...Please Wait)" stopText="" id="counterStatus" style="margin-left:25px; margin-top:20px;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td><span class="hr lip-quote"></span></td>
+                        </tr> 
+                        <tr>
+                          <td>
+                            <div>
+                              <table width="100%">
+                                <tr>
+                                  <td style="text-align: left;float:left">
+                                    <table >
+                                      <tr>
+                                        <td>                                                                                                              
+                                            <!--<input id="btnNext" name="btnNext" type="submit" class="uiButton" value="Next Step" />-->
+                                            <apex:commandButton value="Next Step" action="{!service_info}" id="btn" style="margin-left:20px; margin-top:20px;">
+                                                                                                                                                      
+                                        </apex:commandButton> 
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr> 
+                </div>              
+               </apex:outputPanel>                                                                                                                         
+              </apex:pageBlockSection> 
+          </apex:pageBlock>    
+        </apex:outputPanel> 
+        <!-- end service_location-->
+      </div>
+      
+      <apex:outputPanel id="information" >                             
+          <apex:outputPanel rendered="{!information}">
+          <!-- service_information-->
+          <div class="content">
+            <apex:outputPanel id="service_information" >                                
+              <apex:pageBlock >                                        
+                <apex:pageBlockSection > 
+                  <apex:outputPanel rendered="{!service_information}"> 
+                    <div class="container callout">
+                        <apex:outputPanel rendered="{!title}">    
+                          <div class="twelve columns">
+                            <h4><span>{!step3}</span></h4>                           
+                          </div>
+                        </apex:outputPanel>                    
+                                              
+                      </div>
+                      <div class="callout-hr"></div>                        
+                            
+                      <div class="container">
+                        <tr>
+                          <td>
+                            <table width="95%" style="margin-left:15px;">
+                              <tr>
+                                <td>
+                                  <table width="100%">
+                                    <tr>
+                                      <td class="tdFormFieldWrap" valign="top">
+                                        <img alt="Hint Image" src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/info_button_16.png')}" />&nbsp;
+                                        <label for="lblHintText">
+                                          <span style="margin-left:5px;">Please provide as much information as possible then click the Next Step button or you may Start Over.<br/><b><i>&nbsp;&nbsp;All fields marked with a * are mandatory</i></b></span>
+                                        </label>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td><span class="hr lip-quote"></span></td>
+                            </tr> 
+                            <tr>
+                              <td>
+                                <table width="100%">
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                      <tr>
+                                        <td class="tdFormLabel" width="10%">
+                                          <span id="ctl00_MainContent_lblSRType">Service Type:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="CurrentServiceRequest_currentSRDef_Cwi_short_description" id="lblSRTypeValue" style="margin-left:-25px;">&nbsp;{!selSelectedRequestTypeName}<br/></label>
+                                        </td>
+                                      </tr>                                     
+                                     
+                                  </apex:pageBlock>
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = false,true,false)}">
+                                      <tr>
+                                        <td class="tdFormLabel" width="10%">
+                                          <span id="ctl00_MainContent_lblSRType">Service Type:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="CurrentServiceRequest_currentSRDef_Cwi_short_description" id="lblSRTypeValue">&nbsp;{!selSelectedRequestTypeName}<br/></label>
+                                        </td>
+                                      </tr>                                    
+                                      
+                                  </apex:pageBlock>
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                      <tr>                                      
+                                        <td class="tdFormLabel" width="13%">
+                                          <span id="ctl00_MainContent_lblSRLocation">Service Location:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="Display_address" id="lblSRLocation">&nbsp;{!fulladdress}</label>
+                                        </td>                                     
+                                      </tr>
+                                  </apex:pageBlock>                                         
+                                </table>
+                              </td>
+                            </tr>
+                                                               
+                            <tr>
+                              <td id="Td4" style="padding: 0px 0px 0px 0px;" width="100%">
+                                <table id="Table2" style="height: 6px" width="100%">
+                                  <tr>
+                                    <td id='Td5' colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                           
+                            <tr>
+                              <td align="left">
+                                <table>
+                                  <tr>
+                                    <td>
+                                      <input id="hdnError" name="hdnError" type="hidden" value="" />
+                                      <span  style="color:red; font-size:1.2em; display:inline-block; margin-left:15px;margin-bottom:5px;">
+                                          <apex:pageMessages id="errormsg"/>
+                                       </span >                                      
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><span class="hr lip-quote"></span></td>
+                            </tr>
+                      
+                            <tr>
+                              <td>
+                            
+                                <!--Start Component tags -->
+                                        <style>
+                                            span {
+                                                font-size: 15px;
+                                                line-height: 22px;
+                                                vertical-align: top;
+                                            }
+                                        
+                                        </style>                                                                                                                                
+                                        <apex:pageblock >
+                                             
+                                            <table>
+                                                <apex:repeat value="{!serviceRequestQuestionWrapList}" var="items">
+                                                    <apex:variable var="IndexValue" value="{!0}"/> 
+                                                    <apex:repeat value="{!items.questionAnswerList}" var="SQ">
+                                                        <tr>
+                                                        <!-- question -->
+                                                        <td>
+                                                            <apex:panelGrid columns="1">
+                                                                <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==true}" style="vertical-align:top;">
+                                                                    <apex:outputLabel ><b>*
+                                                                    <apex:outputText value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputText>
+                                                                    </b></apex:outputLabel>
+                                                                </apex:outputPanel> 
+                                                            </apex:panelGrid> 
+                                                            
+                                                            <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==false}" style="vertical-align:top;">
+                                                            <apex:outputLabel >
+                                                                <apex:outputText value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputText>
+                                                                </apex:outputLabel>
+                                                            </apex:outputPanel>
+                                                        </td>
+                                                        
+                                                        <!-- input fields -->
+                                                        <td>
+                                                            <apex:outputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Picklist'}" id="picklistOPTPanelid" >
+                                                                <apex:selectList value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" >
+                                                                    <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                                </apex:selectList>
+                                                                
+                                                                <apex:OutputPanel rendered="{!SQ.isRenderText==true}" >
+                                                                    <apex:inputField value="{!SQ.answer.Answer__c}"/><tr><td></td><td>
+                                                                    <span>(Please select a value from the list or enter one .)</span>
+                                                                    </td></tr>
+                                                            
+                                                                </apex:OutputPanel>
+                                                        
+                                                            </apex:outputPanel> 
+                                                        <apex:outputPanel rendered="{!IF(SQ.flexNoteQuestion.Questions__c != 'Contact Number',true,false)}">
+                                                            <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}" >
+                                                                <apex:inputField value="{!SQ.answer.Answer__c}"/> 
+                                                            </apex:OutputPanel>
+                                                        </apex:OutputPanel> 
+                                                            
+                                                        
+                                                        <apex:outputPanel rendered="{!IF(SQ.flexNoteQuestion.Questions__c=='Contact Number',true,false)}">                                                        
+                                                            <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}" >
+                                                                <apex:inputtEXT value="{!SQ.answer.Answer__c}" onKeyPress="return numbersonly(this, event)" maxlength="10"/>
+                                                            </apex:OutputPanel>  
+                                                        </apex:outputPanel> 
+                                                        
+                                                        <!--<apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                                            <apex:inputField value="{!SQ.answer.Answer__c}"/> 
+                                                        </apex:OutputPanel>-->
+                                                        
+                                                        <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                                           <apex:inputText id="dateTimeAnswerFieldId" value="{!SQ.answer.Answer__c}" />
+                                                            <span>
+                                                                [&nbsp;
+                                                            <apex:outputLink value="javascript:DatePicker.insertDate('{!NOW()}', '{!$Component.dateTimeAnswerFieldId}', true);">{!NOW()}
+                                                            </apex:outputLink>
+                                                             &nbsp;]</span>
+                                                        </apex:OutputPanel>
+                                                        
+                                                        <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date'}">
+                                                           <apex:inputText id="dateAnswerFieldId" value="{!SQ.answer.Answer__c}"/>
+                                                            <span>
+                                                                [&nbsp;
+                                                            <apex:outputLink value="javascript:DatePicker.insertDate('{!TODAY()}', '{!$Component.dateAnswerFieldId}', true);">{!TODAY()}
+                                                            </apex:outputLink>
+                                                             &nbsp;]</span>
+                                                       </apex:OutputPanel>
+                                                        
+                                                        <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='TextArea'}">
+                                                            <apex:inputTextArea value="{!SQ.answer.Answer__c}" style="height:100px;width:200px"/> 
+                                                        </apex:OutputPanel>
+                                                        
+                                                        <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='MultiPicklist'}">
+                                                            <apex:repeat value="{!SQ.questionMultiPicklistValueList}" var="MPL">
+                                                                <ul>
+                                                                    <li>
+                                                                        <apex:inputCheckbox value="{!MPL.isSelectedQuestion}"/>
+                                                                        <apex:outputText value="{!MPL.questionMultiPicklistItem}"/>
+                                                                    </li>
+                                                                </ul>
+                                                            </apex:repeat> 
+                                                        </apex:OutputPanel>
+                                                        
+                                                        </td>
+                                                        </tr>
+                                                        <apex:variable var="IndexValue" value="{!IndexValue+1}"/> 
+                                                    </apex:repeat>
+                                                 
+                                                </apex:repeat>
+                                                
+                                                <tr>
+                                                    <td>
+                                                        <apex:outputPanel layout="block" rendered="{!if(AND(selectedServiceRequestType!=null,NOT(serviceRequestQuestionWrapList.size == 0)),true,false)}">
+                                                            <!--<apex:commandbutton action="{!doSubmit}" value="Submit"/>-->
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <!--<td>
+                                                       
+                                                        <apex:outputPanel layout="block" rendered="{!if(AND (serviceRequestQuestionWrapList.size == 0,selectedServiceRequestType!=null),true,false)}">
+                                                            No records to display
+                                                        </apex:outputPanel>
+                                                    </td>-->
+                                                </tr>
+                                                <!-- </apex:pageblocksection> -->
+                                                <!--called from onchange of picklist datatype-->
+                                               
+                                                <apex:actionfunction name="doFunctionCall" action="{!doRenderInputText}" rerender="picklistOPTPanelid,pageblockID">
+                                                    <apex:param name="answer" value="" assignTo="{!selAnswerValue}"/>
+                                                    <apex:param value="" name="selIndex" assignTo="{!selIndex}"></apex:param>
+                                                </apex:actionfunction>
+                                                
+                                                
+                                            </table>
+                                           </apex:pageblock>  
+                                  
+                                    
+                                    <!-- End component tags -->
+                                  </td> 
+                                </tr>                                                            
+                                <tr>
+                                  <td id="Td3" style="padding: 0px 0px 0px 0px;" width="100%">
+                                    <table id="Table3" style="height: 6px" width="100%">
+                                      <tr>
+                                        <td id='Td6' colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td><span class="hr lip-quote"></span></td>
+                                </tr> 
+                                <!--<tr>
+                                  <div>
+                                    <table width="100%" >
+                                      <tr>
+                                        <td style="text-align: left;float:left">
+                                          <table>
+                                            <tr>
+                                              <td>      
+                                                <apex:commandButton value="Previous Step" action="{!Previous_service_location}"  />             
+                                                <apex:commandButton value="Next Step" action="{!contact_info}"  />                                                       
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                       </tr>
+                                    </table>
+                                  </div>                            
+                                </tr>-->
+                              </table>
+                            </td>
+                          </tr>                        
+                        </div>
+                      </apex:outputPanel>                                                                                                                    
+                    </apex:pageBlockSection> 
+                  </apex:pageBlock>    
+                </apex:outputPanel>
+              <!-- end service_information-->     
+              
+    
+             <!-- contact_information-->         
+                <apex:outputPanel id="contact_information"  >
+                  <apex:pageBlock >
+                    <apex:pageBlockSection > 
+                      <apex:outputPanel rendered="{!contact_information}">
+                        <div class="container callout">
+                            <apex:outputPanel rendered="{!title}">    
+                              <div class="twelve columns">
+                                <h4><span>{!step4}</span></h4>                           
+                              </div>
+                            </apex:outputPanel>                    
+                                                  
+                          </div>
+                          <div class="callout-hr"></div>                        
+                                
+                          <div class="container">
+                            <tr id="trStep4" >
+                              <td>
+                                <div class="form-result" id="form-result" style="margin-left:25px;"></div>
+                                <table width="95%" style="margin-left:-7px; margin-top:10px;">                                                
+                                  <tr>
+                                    <td class="tdHeader">
+                                      <input id="Participants_0__ParticipantDefID" name="Participants[0].ParticipantDefID" type="hidden" value="897793" />
+                                      <input id="Participants_0___primaryEmailCode" name="Participants[0]._primaryEmailCode" type="hidden" value="PRIMARY" />
+                                      <input id="Participants_0___primaryLocationCode" name="Participants[0]._primaryLocationCode" type="hidden" value="HOME" />
+                                      <input id="Participants_0___primaryNameCode" name="Participants[0]._primaryNameCode" type="hidden" value="LEGALNAM" />
+                                      <input id="Participants_0___primaryPhoneCode" name="Participants[0]._primaryPhoneCode" type="hidden" value="HOME" />
+                                      <input id="Participants_0___resourceCode" name="Participants[0]._resourceCode" type="hidden" value="CONTACT" />
+                                      <input id="Participants_0___ownerGroupCode" name="Participants[0]._ownerGroupCode" type="hidden" value="DEPATRAN" />
+                                      <input id="Participants_0__RequiredInd" name="Participants[0].RequiredInd" type="hidden" value="N" />
+                                      <input id="Participants_0__NameReqInd" name="Participants[0].NameReqInd" type="hidden" value="N" />
+                                      <input id="Participants_0__AddressReqInd" name="Participants[0].AddressReqInd" type="hidden" value="N" />
+                                      <input id="Participants_0__PhoneReqInd" name="Participants[0].PhoneReqInd" type="hidden" value="N" />
+                                      <input id="Participants_0__EmailReqInd" name="Participants[0].EmailReqInd" type="hidden" value="N" />
+                                      <input id="Participants_0__ParticipantDescription" name="Participants[0].ParticipantDescription" type="hidden" value="Contact" />
+                                      <input id="Participants_0__ResourceTypeCode" name="Participants[0].ResourceTypeCode" type="hidden" value="CONTACT" />
+                                      <input id="Participants_0__PersonNameInd" name="Participants[0].PersonNameInd" type="hidden" value="Y" />
+                                      
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" nowrap="nowrap" colspan="7" style="padding-left: 25px; padding-top: 5px">
+                                      <table id="Table1" width="70%">                                  
+                                        
+                                       <tr>                                          
+                                            <td>
+                                               <div>
+                                                  <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">First Name</span> 
+                                                  <div>
+                                                    <apex:inputText styleClass="input" value="{!selContact.FirstName}" id="Participants_0__FirstName" maxlength="30" style="float: left; margin: 0 30px 11px 5px;width: 200px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;" onkeydown="return IsAlphaNumeric(event);"/>
+                                                  </div>
+                                               </div>                                                                                                         
+                                            </td>
+                                        
+                                            <td>
+                                               <div>
+                                                  <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Last Name</span> 
+                                                  <div>
+                                                     <apex:inputText styleClass="input" Value="{!selContact.LastName}"  id="Participants_0__LastName"  maxlength="30" style="float: left; margin: 0 200px 11px 5px;width: 200px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;" onkeydown="return IsAlphaNumeric(event);"/>
+                                                  </div>
+                                               </div>                                                                                                         
+                                            </td>                          
+                                           
+                                         </tr>
+                                       <script>
+                                           <!--function alphaOnly(event) {
+                                                  var key = event.keyCode;                                                 
+                                                  return ((key >= 65 && key <= 90) || key == 8 || key == 32 || key == 46);
+                                            };-->
+                                            
+                                            var specialKeys = new Array();
+                                            specialKeys.push(8); //Backspace
+                                            specialKeys.push(9); //Tab
+                                            specialKeys.push(46); //Delete
+                                            specialKeys.push(36); //Home
+                                            specialKeys.push(35); //End
+                                            specialKeys.push(37); //Left
+                                            specialKeys.push(39); //Right
+                                            specialKeys.push(32); //space                                            
+                                            function IsAlphaNumeric(e) {
+                                                var keyCode = e.keyCode == 0 ? e.charCode : e.keyCode;
+                                                var ret = ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (specialKeys.indexOf(e.keyCode) != -1 && e.charCode != e.keyCode));
+                                                document.getElementById("error").style.display = ret ? "none" : "inline";
+                                                return ret;
+                                            }                                          
+                                        
+                                       </script>
+                                        <tr>                                          
+                                          <td class="VSControlSpace" colspan="5" width="170px">
+                                              <div>
+                                                <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Email Address</span> 
+                                                <div>
+                                                   <apex:inputText styleClass="input" Value="{!selContact.Email}" id="Participants_0__EmailAddress" maxlength="30" style="float: left; margin: 0 30px 11px 5px;width: 440px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"></apex:inputText>
+                                                </div>
+                                              </div>  
+                                            </td>                                         
+                                        </tr>
+                                      </table>
+                                    </td> 
+                                  </tr>
+                                  <!-- LEC Information Panel-->
+                                  <tr>
+                                    <td align="left" nowrap="nowrap" colspan="6" style="padding-left: 25px">
+                                      <table id="tblLEC" width="70%" border="0">
+                                        <tr>
+                                          <td colspan="2">                                       
+    
+                                            <input id="Participants_0__Address_SuggestPrefix" name="Participants[0].Address.SuggestPrefix" type="hidden" value="Participants_0__Address" />
+                                            <input id="Participants_0__Address_DisplayAddress" name="Participants[0].Address.DisplayAddress" type="hidden" value="" />
+                                            <input id="Participants_0__Address_Details" name="Participants[0].Address.Details" type="hidden" value="" />
+                                            <input id="Participants_0__Address_RelatedTableCode" name="Participants[0].Address.RelatedTableCode" type="hidden" value="RESINST" />
+                                            <input id="Participants_0__Address_SuggestServiceMethod" name="Participants[0].Address.SuggestServiceMethod" type="hidden" value="GetLocationList" />
+                                            <input id="Participants_0__Address_StreetAddressLength" name="Participants[0].Address.StreetAddressLength" type="hidden" value="200" />
+                                            <input id="Participants_0__Address_LocationRequiredIND" name="Participants[0].Address.LocationRequiredIND" type="hidden" value="N" />
+                                                      
+                                            <table>                                                                     
+                                              <tr style="padding-bottom: 10px; padding-top: 10px" valign="top">
+                                                
+                                                <td>
+                                                  <table id="addressTable">                                                    
+                                                    <tr>
+                                                      <td colspan="3">                                                       
+                                                          <div>
+                                                            <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Street Address</span> 
+                                                            <div>
+                                                               <apex:inputText styleClass="input" value="{!selContact.MailingStreet}" id="Participants_0__Address_StreetAddress" maxlength="40" style="float: left; margin: 0 30px 11px 5px;width: 440px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"/>
+                                                            </div>
+                                                          </div> 
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>
+                                                        <table style="border-collapse: separate">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td>
+                                                                  <div>
+                                                                    <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">City</span> 
+                                                                    <div>
+                                                                       <apex:inputtext styleClass="input" value="{!selContact.MailingCity}" maxlength="20" id="Participants_0__Address_City" style="float: left; margin: 0 30px 11px 5px;width: 200px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"/>
+                                                                    </div>
+                                                                  </div> 
+                                                                </td>
+                                                                <td>
+                                                                  <div>
+                                                                    <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">State</span> 
+                                                                    <div>
+                                                                       <apex:inputtext styleClass="input" Value="{!selContact.MailingState}" maxlength="3" id="Participants_0__Address_State" style="float: left; margin: 0 30px 11px 5px;width: 80px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"/>
+                                                                    </div>
+                                                                  </div> 
+                                                                </td>
+                                                                <td style="text-align: left" valign="top">                                                                   
+                                                                  <div>
+                                                                    <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Zip Code</span> 
+                                                                    <div>
+                                                                       <apex:inputText styleClass="input" Value="{!selContact.MailingPostalCode}" id="Participants_0__Address_Zip" maxlength="5" style="float: left; margin: 0 30px 11px -14px;width: 100px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;" onKeyPress="return numbersonly(this, event)"/>
+                                                                    </div>
+                                                                  </div> 
+                                                                </td>
+                                                              </tr>
+                                                                <script>
+                                                                
+                                                                    function numbersonly(myfield, e, dec)
+                                                                    {
+                                                                      var key;
+                                                                      var keychar;
+                                                                      
+                                                                      if (window.event)
+                                                                         key = window.event.keyCode;
+                                                                      else if (e)
+                                                                         key = e.which;
+                                                                      else
+                                                                         return true;
+                                                                      keychar = String.fromCharCode(key);
+                                                                      
+                                                                      // control keys
+                                                                      if ((key==null) || (key==0) || (key==8) || 
+                                                                          (key==9) || (key==13) || (key==27) )
+                                                                         return true;
+                                                                      
+                                                                      // numbers
+                                                                      else if ((("0123456789").indexOf(keychar) > -1))
+                                                                         return true;
+                                                                      
+                                                                      // decimal point jump
+                                                                      else if (dec && (keychar == "."))
+                                                                         {
+                                                                         myfield.form.elements[dec].focus();
+                                                                         return false;
+                                                                         }
+                                                                      else
+                                                                         return false;
+                                                                    }
+                                                                       
+    
+                                                                </script>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>    
+                                                                                              
+                                                </table>
+    
+                                              </td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                                       
+                                      <tr>
+                                        <td align="left" nowrap="nowrap" colspan="6" style="padding-left: 25px;">
+                                          <table id="Table4" width="70%" border="0">
+                                            <tr>                                              
+                                                <td  width="180px">
+                                                  <div>
+                                                    <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Phone Number</span> 
+                                                    <div>
+                                                       <apex:inputText styleClass="input" id="Participants_0__PhoneNumber" value="{!selContact.Phone}" maxlength="14" style="float: left; margin: 0 30px 11px 5px;width: 200px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"/>
+                                                    </div>
+                                                  </div>                                                                       
+                                                </td>
+                                                <td width="85%">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>                                                              
+                                            <tr>
+                                             
+                                              <td width="180px">
+                                                  <div>
+                                                    <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Phone Number Ext</span> 
+                                                    <div>
+                                                      <apex:inputText styleClass="input" Value="{!selContact.OtherPhone}" id="Participants_0__PhoneExtension"  maxlength="14"  style="float: left; margin: 0px 30px 11px 5px;width:200px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;"/>
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                              <td width="85%"> &nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td><apex:inputHidden id="contact_required" value="{!ContactRequired}" /></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                      </tr>                                                   
+                                    
+                                      <tr>
+                                        <td id="Td3" style="padding: 0px 0px 0px 0px;" width="100%">
+                                          <table id="Table3" style="height: 6px" width="100%">
+                                            <tr>
+                                              <td id='Td6' colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>                                                   
+                                      <!--<tr>
+                                        <td>
+                                          <div>
+                                            <table width="100%">
+                                              <tr>
+                                                <td style="text-align: left; float: left">
+                                                  <table>
+                                                    <tr>
+                                                      <td>                                                                    
+                                                        <apex:commandButton value="Previous Step" action="{!service_info}"  status="counterStatus"/>                                                                   
+                                                        <apex:commandButton value="Next Step" action="{!comment_attachement}"  status="counterStatus" onclick="return validateFields();"/>
+                                                      </td>
+                                                    </tr>
+                                                  </table>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </div>
+                                        </td>
+                                      </tr>-->
+                                  </table>
+                                </td>
+                              </tr>
+                          </div>                   
+                      </apex:outputPanel>                                                                                                                    
+                    </apex:pageBlockSection> 
+                  </apex:pageBlock>    
+                </apex:outputPanel>
+                <!-- end contact_information-->
+              
+    
+                <!-- comments_attachments-->   
+                <apex:outputPanel id="comments_attachments"  >
+                  <apex:pageBlock >
+                    <apex:pageBlockSection > 
+                      <apex:outputPanel rendered="{!comments_attachments}"> 
+                        <div class="container callout">
+                          <apex:outputPanel rendered="{!title}">    
+                            <div class="twelve columns">
+                              <h4><span>{!step5}</span></h4>                           
+                            </div>
+                          </apex:outputPanel>                    
+                                                    
+                        </div>
+                        <div class="callout-hr"></div>                        
+                                  
+                        <div class="container">
+                          <tr id="trStep5" style="margin-left:15px;">
+                            <td>
+                              <table width="100%">                           
+                                
+                                <tr>
+                                  <td align="left">
+                                    <table>
+                                      <tr>
+                                        <td class="fsLabel VSHintTextItalic">
+                                          <input id="hdnError" name="hdnError" type="hidden" value="" />                                                
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                               
+                                <tr>
+                                  <td>
+                                    <table>
+                                      <tr>                                    
+                                       <td valign="top" align="left" style="padding-left: 5px" class="VSControlSpace">                                       
+                                          <div>
+                                            <span id="8_lblCity" style="display:inline-block;width:135px;margin-left:10px;">Comments</span> 
+                                            <div>
+                                              <apex:inputTextarea styleClass="fsTextArea uiTextArea" id="tbxComments" rows="8" cols="40" value="{!comments}" style="font-size:14px;float: left; margin: 0 30px 11px 5px;width: 326px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 95px;margin-bottom: 12px; text-indent: 5px; vertical-align: top;" />     
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>                               
+                                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.jqEasyCharCounter.min.js')}"/> 
+                                <script>
+                                    /* using id and custom settings*/
+                                    $(document).ready(function(){
+                                        $("[id*='tbxComments']").jqEasyCounter({
+                                            'maxChars': 60,
+                                            'maxCharsWarning': 60,
+                                            'msgFontSize': '14px',
+                                            'msgFontColor': '#000',
+                                            'msgFontFamily': 'Arial',
+                                            'msgTextAlign': 'Right',
+                                            'msgWarningColor': '#F00',
+                                            'msgAppendMethod': 'insertBefore'             
+                                        });
+                                    }); 
+                                </script>                         
+                                <tr>
+                                  <td id="Td3" style="padding: 0px 0px 0px 0px;" width="100%">
+                                    <table id="Table3" style="height: 6px" width="100%">
+                                      <tr>
+                                        <td id='Td6' class="tdHead" colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td><span class="hr lip-quote"></span></td>
+                                </tr> 
+                                <tr>
+                                  <td>
+                                    <div>
+                                      <table width="100%" class="WeightLessTable">
+                                        <tr>
+                                          <td class="tdFrameButtons" style="text-align: left;float:left;margin-left: 10px;">
+                                            <table class="WeightLessTable">
+                                              <tr>                                                            
+                                                <td>
+                                             
+                                                   <!--<input id="btnPrev" name="btnPrev" type="submit" class="uiButton" value="Previous Step" />-->
+                                                  <apex:commandButton value="Previous Step" action="{!Previous_service_location1}"  status="counterStatus"/>
+                                                <!--<input id="btnNext" name="btnNext" type="submit" class="uiButton" value="Next Step" /> -->
+                                                  <apex:commandButton value="Next Step" action="{!review_submit}"  status="counterStatus" onclick="contactinfoSubmit(); return  false;"> 
+                                                    <apex:param assignTo="{!commentvalue}" value="{!comments}"/>                                                                                                                 
+                                                  </apex:commandButton>
+                                                                                                          
+                                                </td>                                                           
+                                                                
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>                                                                   
+                        </div>                      
+                      </apex:outputPanel>                                                                                                                   
+                    </apex:pageBlockSection> 
+                  </apex:pageBlock>    
+                </apex:outputPanel>
+               <!-- end comments_attachments-->  
+              </div>
+            </apex:outputPanel>
+          </apex:outputPanel>
+
+          <div class="content">
+            <!-- review_submit-->
+            <apex:outputPanel id="review_submit">
+              <apex:pageBlock >
+                <apex:pageBlockSection > 
+                  <apex:outputPanel rendered="{!review_submit}">
+                    <div class="container callout">
+                      <apex:outputPanel rendered="{!title}" style="width:700px;">    
+                        <div class="twelve columns">
+                          <h4><span>{!step6}</span></h4>                           
+                        </div>
+                      </apex:outputPanel>                   
+                                                  
+                    </div>
+                    <div class="callout-hr"></div>                        
+                                
+                    <div class="container">
+                      <tr id="trStep6">
+                        <td>
+                          <table width="100%" style="margin-left:15px;">
+                           
+                            <tr>
+                              <td>
+                                <table width="95%">
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                      <tr>
+                                        <td class="tdFormLabel" width="10%">
+                                          <span id="ctl00_MainContent_lblSRType">Service Type:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="CurrentServiceRequest_currentSRDef_Cwi_short_description" id="lblSRTypeValue" style="margin-left:-25px;">&nbsp;{!selSelectedRequestTypeName}<br/></label>
+                                        </td>
+                                      </tr>                                     
+                                     
+                                  </apex:pageBlock>
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = false,true,false)}">
+                                      <tr>
+                                        <td class="tdFormLabel" width="10%">
+                                          <span id="ctl00_MainContent_lblSRType">Service Type:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="CurrentServiceRequest_currentSRDef_Cwi_short_description" id="lblSRTypeValue">&nbsp;{!selSelectedRequestTypeName}<br/></label>
+                                        </td>
+                                      </tr>                                    
+                                      
+                                  </apex:pageBlock>
+                                  <apex:pageBlock rendered="{!IF(ServiceLocationRequired = true,true,false)}">
+                                      <tr>                                      
+                                        <td class="tdFormLabel" width="13%">
+                                          <span id="ctl00_MainContent_lblSRLocation">Service Location:</span>
+                                        </td>
+                                        <td class="tdFormField">
+                                          <label for="Display_address" id="lblSRLocation">&nbsp;{!fulladdress}</label>
+                                        </td>                                     
+                                      </tr>
+                                  </apex:pageBlock>                                
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><span class="hr lip-quote"></span></td>
+                            </tr>                            
+                            <apex:pageBlock rendered="{!IF(tempFlexNotesList != null,true,false)}">                                                                            
+                                <tr>
+                                  <td class="tdSubHeaderExpanded">
+                                    <span><h5><strong>Service Information</strong></h5></span>
+                                  </td>
+                                </tr>                           
+                                <tr>
+                                  <td>
+                                    <!-- flexNotes question To Review -->
+                                    <table>
+                                      <apex:repeat value="{!serviceRequestQuestionWrapList}" var="sRl">                                           
+                                        <apex:repeat value="{!sRl.questionAnswerList}" var="SQ">
+                                          <tr>
+                                            <!-- question -->
+                                            <td  width="70%">
+                                              <apex:outPutField label="" value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outPutField>&nbsp;&nbsp;
+                                            </td>                                                  
+                                            <td  width="30%">
+                                              <apex:outputField value="{!SQ.answer.Answer__c}"/> 
+                                            </td>
+                                          </tr>                               
+                                        </apex:repeat>                                      
+                                      </apex:repeat>
+                                    </table>
+                                    <!-- flex note question to review -->
+                                  </td>
+                                </tr> 
+                            </apex:pageBlock>                           
+                            <tr>
+                              <td><span class="hr lip-quote"></span></td>
+                            </tr>
+                            <apex:pageBlock rendered="{!IF(selContact.firstname != null,true,false)}"> 
+                           <!-- <apex:pageBlock rendered="{!IF(ContactRequired = true,true,false)}"> --> 
+                            <tr>
+                              <td class="tdSubHeaderExpanded">                                
+                                    <span id="ctl00_MainContent_lblContactInformation" class="fsSubHeader"><h5><strong>Contact Information</strong></h5></span>                               
+                              </td>
+                            </tr>                            
+                            <tr>
+                              <td>
+                                <table>
+                                 
+                                  <tr>
+                                    <td class="tdFormField uiFormViewLabel fsLabel">Name:&nbsp;&nbsp;</td>
+                                    <td class="tdFormBasicHSpace tdFormField uiFormEditableLabel fsLabel">  {!selContact.FirstName}  {!selContact.LastName}</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tdFormField uiFormViewLabel fsLabel">Address:&nbsp;&nbsp;</td>
+                                    <td class="tdFormBasicHSpace tdFormField uiFormEditableLabel fsLabel">
+                                        {!selContact.MailingStreet},{!selContact.MailingCity},{!selContact.MailingState},{!selContact.MailingPostalCode}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tdFormField uiFormViewLabel fsLabel">Phone:&nbsp;&nbsp;</td>
+                                    <td class="tdFormBasicHSpace tdFormField uiFormEditableLabel fsLabel">  {!selContact.Phone}</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="tdFormField uiFormViewLabel fsLabel">Email:&nbsp;&nbsp;</td>
+                                    <td class="tdFormBasicHSpace tdFormField uiFormEditableLabel fsLabel">  {!selContact.Email}</td>
+                                  </tr>                                 
+                                </table>
+                              </td>
+                          </tr> 
+                          </apex:pageBlock>
+                                                 
+                          <tr>
+                            <td id="Td1" style="padding: 0px 0px 0px 0px;" width="100%">
+                              <table id="Table1" style="height: 6px" width="100%">
+                                <tr>
+                                  <td id='Td2' class="tdHead" colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                             <td><span class="hr lip-quote"></span></td>
+                          </tr>                       
+                          <tr>
+                            <td class="tdSubHeaderExpanded" width="1%">
+                              <span id="ctl00_MainContent_lblCommentsHeaderNoAttachments"><h5><strong>Comments</strong></h5></span>
+                            </td>
+                          </tr>                         
+                          <tr>                                                                                    
+                            <td>
+                              <table width="100%">
+                                <tr>
+                                  <td class="tdFormLabel" nowrap="nowrap" valign="top" width="1%">
+                                    <span id="ctl00_MainContent_lblCommentsStep4" tabindex="-1" class="fsLabel uiFormViewLabel">Additional Comments:&nbsp;&nbsp;</span>
+                                  </td>
+                                  <td class="tdFormFieldWrap" valign="top" align="left" width="70%">
+                                    <label class="fsLabel" for="CurrentServiceRequest_currentSRInstance_Details" id="lblCommentsValue" style="width:75px;"> {!comments}</label>
+                                  </td>
+                                </tr>                            
+                                <tr class="trLabelVSpace"></tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr class="tr_VerticalSpacing"></tr>
+                          <tr>
+                            <td id="Td7" style="padding: 0px 0px 0px 0px;" width="100%">
+                              <table id="Table4" style="height: 6px" width="100%">
+                                <tr>
+                                  <td id='Td8' class="tdHead" colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>                  
+                                                        
+                          <tr class="tr_VerticalSpacing"></tr>
+                          <tr>
+                            <td>
+                              <div>
+                                <table width="100%" class="WeightLessTable">
+                                  <tr>
+                                    <td class="tdFrameButtons" style="text-align: left;float:left">
+                                      <table class="WeightLessTable">
+                                        <tr>
+                                          <td>
+                                        <!--<input id="btnPrev" name="btnPrev" type="submit" class="uiButton" value="Previous Step" />-->
+                                           <apex:commandButton value="Previous Step" action="{!Previous_service_location}"  status="counterStatus"/>
+                                        <!--<input id="btnSubmit" name="btnSubmit" type="submit" class="uiButton" value="Submit" onclick="disableSubmitButton();" />-->
+                                             <apex:commandbutton action="{!doSubmit}" value="Submit" id="btnSubmit"></apex:commandbutton>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>                                                                       
+                      </td>
+                    </tr>
+                  </div>                      
+                  </apex:outputPanel>                                                                                                                    
+                </apex:pageBlockSection> 
+              </apex:pageBlock>    
+            </apex:outputPanel>
+            <!-- end review_result-->   
+          </div>
+
+          <div class="content">
+              <!-- review_result-->      
+              <apex:outputPanel id="review_result">                                                    
+                <apex:pageBlock >                                                            
+                  <apex:pageBlockSection > 
+                    <apex:outputPanel rendered="{!review_result}"> 
+                      <div class="container callout">
+                        <apex:outputPanel rendered="{!title}">    
+                          <div class="twelve columns">
+                            <h4><span>{!step6}</span></h4>                           
+                          </div>
+                        </apex:outputPanel>                  
+                                                      
+                      </div>
+                      <div class="callout-hr"></div>                        
+                                    
+                      <div class="container">
+                        <table class="MainTable">
+                          <tr>
+                            <td>
+                              <table class="InnerTable">
+                                <tr>
+                                  <td class="tdOuterHeader">
+                                    <table class="WeightLessTable">
+                                      <tr>
+                                        <td class="tdHeader">
+                                            <span id="ctl00_MainContent_lblTitle" class="fsHeader">Thank you.</span>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <td><span class="hr lip-quote"></span></td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <table width="100%">
+                                      <tr>
+                                        <td class="tdFormField VSBaseFont fsLabel">                                                                                                       
+                                          <h5>&nbsp;&nbsp;&nbsp;The service request has been successfully submitted. The tracking number is <apex:outputLabel value="{!casenumber.CaseNumber}"></apex:outputLabel>.</h5>                                                                                                       
+                                        </td>
+                                      </tr>                                                  
+                                      <tr>
+                                          <td><span class="hr lip-quote"></span></td>
+                                      </tr>
+                                      <tr id="trHide1">
+                                        <td>
+                                          <span id="ctl00_MainContent_lblSelectOption" class="fsLabel">Select an option below if you would like to create another service request.</span>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <td><span class="hr lip-quote"></span></td>
+                                      </tr>
+                                      <tr id="trHide3">
+                                        <td class="tdFormField fsLabel">
+                                          <input checked="checked" id="rbtnlCreateNewSROptions1" name="rbtnlCreateNewSROptions" type="radio" value="rbtnThisLocation" onclick="myFunction()"/> Create a new service request at this location.
+                                          <!--<apex:inputHidden Value="{!radiobtn1}" id="rbtnlCreateNewSROptions1">
+                                            <apex:actionSupport event="onchange">
+                                              <apex:param value="{!radiobtn1}" assignTo="{!radiobtn1}" />                                                                                                                                 
+                                            </apex:actionsupport>
+                                          </apex:inputHidden>-->
+                                        </td>
+                                      </tr>
+                                      <tr id="trHide4">
+                                        <td class="tdFormField fsLabel">
+                                          <input id="rbtnlCreateNewSROptions2" name="rbtnlCreateNewSROptions" type="radio" value="rbtnDifferentLocation" onclick="myFunction()"/> Create a new service request at a different location.
+                                          <!--<apex:inputHidden Value="{!radiobtn2}" id="rbtnlCreateNewSROptions2">
+                                            <apex:actionSupport event="onchange">
+                                              <apex:param value="{!radiobtn2}" assignTo="{!radiobtn2}" />                                                                                                                                 
+                                            </apex:actionsupport>
+                                          </apex:inputHidden>-->
+                                        </td>
+                                      </tr>
+                                      
+                                      <script>
+                                        /*function myFunction() {
+                                            var x = document.getElementById("rbtnlCreateNewSROptions1").checked;                                                                                                   
+                                            //alert('x--------------->'+x);
+                                            var check_radiobtn1= $("[id*='rbtnlCreateNewSROptions1']").val(x);  
+                                        
+                                            var y = document.getElementById("rbtnlCreateNewSROptions2").checked;
+                                            //alert('y--------------->'+y);
+                                            var check_radiobtn2= $("[id*='rbtnlCreateNewSROptions2']").val(y);  
+                                        }*/
+                                      </script>                                
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr id="trThankYou">
+                            <td>
+                              <table width="100%">
+                                <tr class="tr_VerticalSpacing"></tr>
+                                  <tr>
+                                    <td id="Td3" style="padding: 0px 0px 0px 0px;" width="100%">
+                                      <table id="Table3" style="height: 6px" width="100%">
+                                        <tr>
+                                          <td id='Td6' class="tdHead" colspan="6" align="top" height="2px" style="width: 100%"></td>
+                                        </tr>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                 <tr>
+                                      <td><span class="hr lip-quote"></span></td>
+                                 </tr>
+                                  <tr>
+                                    <td>
+                                      <div>
+                                        <table width="100%" class="WeightLessTable">
+                                          <tr>
+                                            <td class="tdFrameButtons" style="text-align: left">
+                                              <table class="WeightLessTable">
+                                                <tr>
+                                                  <td>                                                                                                                    
+                                                    <apex:commandButton value="Next" action="{!review_action_next}" onclick="myFunction();"/>
+                                                    <apex:commandbutton action="{!review_action_finish}" value="Finish" id="btnSubmit" />
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                      </div>                      
+                    </apex:outputPanel>                                                                                                                     
+                  </apex:pageBlockSection> 
+                </apex:pageBlock>    
+              </apex:outputPanel>
+              <!-- end review_result-->   
+            </div>
+
+          </div><!-- body-wrapper -->
+        </div><!-- body -->
+
+        <!-- footer -->
+        <c:OUC_Footer />
+        <!-- end of footer -->
+        
+        <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/jquery.datetimepicker.css')}"/>
+        <style type="text/css">
+            .custom-date-style {
+                background-color: red !important;
+            }        
+        </style>
+        
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.datetimepicker.js')}"/>
+        <script>
+            $("[id*='dateTimeAnswerFieldId']").datetimepicker({value:'',step:10});             
+            
+            $("[id*='dateAnswerFieldId']").datetimepicker({
+                yearOffset:0,
+                lang:'en',
+                timepicker:false,
+                format:'d/m/Y',
+                formatDate:'d/m/Y'
+              
+            });
+        </script>
+        <!--<script>                   
+            $("[id*='Participants_0__PhoneExtension']").usphone();
+            $("[id*='Participants_0__PhoneNumber']").usphone();
+        </script>-->
+         <apex:stylesheet value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/css/all.css')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/core.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/widget.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/button.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/position.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/menu.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/autocomplete.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/tooltip.js')}"/>
+        <!--<apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.usphone.js')}"/>-->   
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.color.animation.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/ajax_default.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/email_conf.js')}"/>
+       
+
+        <style>
+              .custom-combobox {
+                position: relative;
+                display: inline-block;
+              }
+              .custom-combobox-toggle {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin-left: -1px;
+                padding: 0;
+              }
+              .custom-combobox-input {
+                margin: 0;
+                padding: 5px 10px;
+              }
+      </style>
+      
+      <script>
+          (function( $ ) {
+            $.widget( "custom.combobox", {
+              _create: function() {
+                this.wrapper = $( "<span>" )
+                  .addClass( "custom-combobox" )
+                  .insertAfter( this.element );
+         
+                this.element.hide();
+                this._createAutocomplete();
+                this._createShowAllButton();
+              },
+         
+              _createAutocomplete: function() {
+                var selected = this.element.children( ":selected" ),
+                  value = selected.val() ? selected.text() : "";
+         
+                this.input = $( "<input>" )
+                  .appendTo( this.wrapper )
+                  .val( value )
+                  .attr( "title", "" )
+                  .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                  .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy( this, "_source" )
+                  })
+                  .tooltip({
+                    tooltipClass: "ui-state-highlight"
+                  });
+         
+                this._on( this.input, {
+                  autocompleteselect: function( event, ui ) {
+                    ui.item.option.selected = true;
+                    this._trigger( "select", event, {
+                      item: ui.item.option
+                    });
+                  },
+         
+                  autocompletechange: "_removeIfInvalid"
+                });
+              },
+         
+              _createShowAllButton: function() {
+                var input = this.input,
+                  wasOpen = false;
+         
+                $( "<a>" )
+                  .attr( "tabIndex", -1 )
+                  .attr( "title", "Show All Items" )
+                  .tooltip()
+                  .appendTo( this.wrapper )
+                  .button({
+                    icons: {
+                      primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                  })
+                  .removeClass( "ui-corner-all" )
+                  .addClass( "custom-combobox-toggle ui-corner-right" )
+                  .mousedown(function() {
+                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                  })
+                  .click(function() {
+                    input.focus();
+         
+                    // Close if already visible
+                    if ( wasOpen ) {
+                      return;
+                    }
+         
+                    // Pass empty string as value to search for, displaying all results
+                    input.autocomplete( "search", "" );
+                  });
+              },
+         
+              _source: function( request, response ) {
+                var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+                response( this.element.children( "option" ).map(function() {
+                  var text = $( this ).text();
+                  if ( this.value && ( !request.term || matcher.test(text) ) )
+                    return {
+                      label: text,
+                      value: text,
+                      option: this
+                    };
+                }) );
+              },
+         
+              _removeIfInvalid: function( event, ui ) {
+         
+                // Selected an item, nothing to do
+                if ( ui.item ) {
+                  return;
+                }
+         
+                // Search for a match (case-insensitive)
+                var value = this.input.val(),
+                  valueLowerCase = value.toLowerCase(),
+                  valid = false;
+                this.element.children( "option" ).each(function() {
+                  if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                    this.selected = valid = true;
+                    return false;
+                  }
+                });
+         
+                // Found a match, nothing to do
+                if ( valid ) {
+                  return;
+                }
+         
+                // Remove invalid value
+                this.input
+                  .val( "" )
+                  .attr( "title", value + " didn't match any item" )
+                  .tooltip( "open" );
+                this.element.val( "" );
+                this._delay(function() {
+                  this.input.tooltip( "close" ).attr( "title", "" );
+                }, 2500 );
+                this.input.autocomplete( "instance" ).term = "";
+              },
+         
+              _destroy: function() {
+                this.wrapper.remove();
+                this.element.show();
+              }
+            });
+          })( jQuery );
+         
+          $(function() {
+            $("[id*='combobox']").combobox();      
+                  
+          });
+      </script>
+       
+
+      </div><!-- page-wrapper -->
+    </body>
+  </html>
+</apex:form>
+</apex:page>

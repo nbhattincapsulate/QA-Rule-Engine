@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+endpointApiVersion=37.0
+endpointEnvironment=Other (Specify)
+endpointServer=dc311--qa.cs33.my.salesforce.com
+httpsProtocol=true
+ideVersion=37.0
+keependpoint=false
+metadataFormatVersion=37.0
+namespacePrefix=
+packageName=unpackaged
+preferToolingDeployment=true
+projectIdentifier=IDE-7260698365579082283
+readTimeout=400
+username=vsheth.ouc@incapsulate.com.qa

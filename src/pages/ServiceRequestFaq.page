@@ -1,0 +1,73 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalController">
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+    <title>DC 311 | OUC</title>
+    <c:OUC311_Portal_Styles />
+</head> 
+
+<body>
+                  <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="{!loggedInUsername}" loggedInUserFullName="{!loggedInUserFullName}"/>
+            <!-- end  of header -->
+    <!-- ******FAQ****** -->
+    <section id="faq" class="faq section">
+        <div class="container">
+            <div class="row">
+                <h2 class="title text-center">Frequently Asked Questions</h2>
+                <div class="faq-col col-md-6 col-sm-6 col-xs-12">
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>What is 311?</h3>
+                        <p class="answer">311 is a toll-free number that allows people in the District to Columbia to request assistance with city services and information. Because it is easy to use and easy to remember, 311 can help improve service delivery to residents, workers and visitors in our nation's capital. The Office of Unified Communications (OUC) oversees the designated call center for all 311 calls and for all District 911 calls.</p>
+                        <p class="answer">The call center is open 24 hours a day, 365 days a year. Residents can also use this number to report a missed scheduled service, inquire about city agency phone numbers and hours of operation, and pursue other customer service-related items.</p>
+                        <p class="answer">Because 311 is a toll-free number, you can now use a pay phone, free of charge, to request both emergency services (911) and city services (311). This is especially important for visitors and residents who do not have residential phone services.</p>
+                    </div><!--//item-->
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>When should I call 311?</h3>
+                        <p class="answer">You should call 311 to request city services and information.</p>
+                        <p class="answer">Examples of typical 311 calls include: Broken meters,Trash collection problems or to schedule a bulk pick-up, Potholes, Abandoned autos, Parking enforcement, Tree services, Illegal dumping, Street light repair, District agency phone numbers, addresses and hours of operations.
+                        </p>
+                    </div><!--//item-->
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>Who answers 311 calls?</h3>
+                        <p class="answer">Highly trained customer service representatives answer all 311 calls. The goal is to answer all calls for service quickly and effectively and to provide the appropriate response in all instances.</p>
+                    </div><!--//item-->
+                </div><!--//faq-col-->
+                <div class="faq-col col-md-6 col-sm-6 col-xs-12">
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>What if I dial the wrong number?</h3>
+                        <p class="answer">If you call 311 but need police, fire or emergency medical services, you will have the immediate option of being routed to 911.  The professionals who answer 311 calls will ensure that you receive the assistance you need no matter which number you dial.</p>
+                    </div><!--//item-->
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>What if I can't get through?</h3>
+                        <p class="answer">Most government, business, cellular, and pay phones have been connected with 311.  However, if you are calling from outside the District or if your cellular carrier will not connect you to 311, dial (202) 737-4404 to reach the Citywide Call Center.</p>
+                    </div><!--//item-->
+                    <div class="item">
+                        <h3 class="question"><i class="fa fa-question-circle"></i>How do I track confirmation numbers provided? </h3>
+                        <p class="answer">You can track your service request by registering for an account online or by calling 311.</p>
+                    </div><!--//item-->
+                </div><!--//faq-col-->
+            </div><!--//row-->
+<!--             <div class="more text-center">
+                <h4 class="title">More questions?</h4>
+                <a class="btn btn-lg btn-theme scrollto" href="#contact">Get in touch</a>
+            </div> -->
+        </div><!--//container-->
+    </section><!--//faq-->
+
+
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+      
+</body>
+</html> 
+
+  
+</apex:page>

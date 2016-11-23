@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>HTML notification to Citizen upon Activity completion that closes SR</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Activity SR Closure Notice to Citizen</name>
+    <style>freeForm</style>
+    <subject>DC 311 Service Request {!OUC_Activity__c.Case__c} Status Update</subject>
+    <textOnly>Automated Response E-mail Notification:  Service Request Status Update - DO NOT REPLY
+
+Your Service Request has been Updated
+
+Service Request Number: {!OUC_Activity__c.Case__c}
+Service Request Type: {!OUC_Activity__c.Case_Subject__c}
+Service Request Status: {!OUC_Activity__c.SR_Status__c}
+Activity Name: {!OUC_Activity__c.Final_Task_Short_Name__c}
+Activity Status: {!OUC_Activity__c.Status__c}
+Comments: {!OUC_Activity__c.External_Comments__c}
+
+If you require additional information or the issue has not been resolved, please refer to the agency website 311.dc.gov for more information. If this is an urgent matter or hazardous condition, please call 311.
+
+DC 311</textOnly>
+    <type>html</type>
+</EmailTemplate>

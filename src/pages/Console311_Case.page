@@ -1,0 +1,1410 @@
+<apex:page standardstylesheets="false" applyhtmltag="false" doctype="html-5.0" showheader="false" controller="Console311_CaseController">
+  <!-- Lightning Design -->
+  <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <head>
+    <c:Console311_Header />
+    <style>
+      .side-panel-default {
+        background: rgb(244, 246, 249);
+        padding: 10px;
+        border-radius: 0 0px 5px 5px;
+        border: 1px solid #eee;
+      }
+
+      .parsley-error {
+        border: 2px solid #c00;
+      }
+
+      .errorMsg {
+        color: #d74c3b;
+      }
+
+      .slds-form-element__label {
+        font-size: 1rem;
+      }
+
+      .slds {
+        padding: 30px;
+      }
+
+      .slds-dropdown {
+        max-height: 340px;
+        overflow-y: scroll;
+      }
+
+      .slds-picklist__label {
+        max-width: 100%;
+      }
+
+      .master-view, .details-view {
+        float: left;
+      }
+
+      .details-view-form {
+        visibility: hidden;
+        margin-top: 20px;
+      }
+
+      .master-view {
+        display: none;
+        border-right: 1px solid #eee;
+        padding-right: 20px;
+      }
+
+      .slds-container {
+        padding-bottom: 30px;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+
+      .tree-description {
+        margin-left: 35px;
+        padding-top: 5px;
+        word-break: break-word;
+      }
+
+      .tree-description hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .tree-hidden {
+        display: none;
+      }
+
+      .slds-tree__item a {
+        line-height: 20px;
+      }
+
+      .slds-tree-container {
+        max-width: initial;
+      }
+
+      .text-muted {
+        font-size: 12px;
+      }
+
+      .slds-picklist__label--full {
+        width: 100%;
+      }
+
+      #case-parent {
+        width: 75%;
+      }
+
+      #contact-contact-id {
+        width: 93%;
+      }
+
+      .details-contact-container .slds-form-element__control, .question-container .slds-form-element__control {
+        padding-right: 10px;
+      }
+
+      .service-type-description {
+        display: none;
+      }
+
+      .service-type-description.active, .master-view.active, .details-view-form.active {
+        display: block;
+        visibility: visible;
+      }
+
+      .detail-view {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .map-view-container {
+        padding: 10px;
+      }
+
+      #flexnotes-loading {
+        text-align: center;
+        margin: 15px auto;
+      }
+
+      .service-type-description p {
+        word-wrap: break-word;
+      }
+
+      .svg-dropdown path {
+        fill: #54698d;
+      }
+
+      .slds-notify h2 {
+        font-size: 1em;
+      }
+
+      .hiddenInput {
+        display: none;
+      }
+
+      .slds-row-select .parsley-errors-list {
+        display: none;
+      }
+
+      .loading-spinner {
+        display: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+        background: rgba(22, 50, 92, 0.6);
+        z-index: 9000;
+      }
+
+      .loading-spinner img {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+
+      .svg path {
+        fill: #54698d;
+      }
+
+      .svg {
+        cursor: pointer;
+      }
+
+      .knowledge-item {
+        font-family: 'SalesforceSans-Regular',Helvetica,Arial,sans-serif;
+        font-size: 12.5px;
+        color: #16325c;
+        font-weight: normal;
+      }
+
+        .knowledge-item a {
+          word-wrap: break-word;
+        }
+
+      .knowledge-item-info {
+        border-bottom: 1px solid #eee;
+      }
+
+        .knowledge-item-info:last-child {
+          border-bottom: none;
+        }
+
+      .knowledge-list {
+        /*max-width: 215px;*/
+        border-left: 1px solid #eee;
+        padding: 10px 20px;
+      }
+
+      .knowledge-info-summary {
+        color: #16325c;
+      }
+
+      .knowledge-info-basic-label {
+        color: #727272;
+      }
+
+      .knowledge-info-summary, .knowledge-info-basic-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .knowledge-article-list-container-scroll {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-height: 400px;
+      }
+
+      .slds-text-heading--label {
+        background: #e7edf4;
+        padding: 10px;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Form for action functions -->
+    <apex:form >
+      <apex:actionfunction action="{!rerenderMap}" name="rerenderMap" rerender="map-container,duplicateRequests,save-button-refresh, duplicateScriptId" oncomplete="updateMapContent();convertSVGtoInlineSVG();" />
+      <apex:actionfunction action="{!retrieveFlexNoteQuestions}" name="getFlexnotes" rerender="flexNoteContainer" oncomplete=" $('#flexnotes-loading').hide();convertSVGtoInlineSVG();">
+        <apex:param assignto="{!serviceType}" name="serviceType" value="" />
+      </apex:actionfunction>
+      <apex:actionfunction action="{!retrieveFlexNoteQuestions}" name="reloadFlexnotes" rerender="flexNoteContainer" oncomplete=" $('#flexnotes-loading').hide();convertSVGtoInlineSVG();" />
+      <apex:actionfunction action="{!getAddressAutocompleteActionFunc}" name="getAddress" rerender="bulkScheduleScripts" oncomplete="verifyRequestType();rerenderMap();convertSVGtoInlineSVG();">
+        <apex:param assignto="{!addressQueryStr}" name="addressQueryStr" value="" />
+      </apex:actionfunction>
+      <apex:actionfunction action="{!storeJson}" name="storeJson" rerender="refresh" oncomplete="saveServiceRequest();">
+        <apex:param name="caseObjJson" value="" />
+        <apex:param name="blockName" value="" />
+        <apex:param name="fullBlock" value="" />
+      </apex:actionfunction>
+      <apex:actionfunction action="{!save}" name="saveServiceRequest" rerender="onSaveScripts" oncomplete="verifyResultOfSave();" />
+
+      <apex:actionfunction action="{!rerenderKnowledgePanel}" name="rerenderKnowledgePanel" rerender="knowledge-panel-container" oncomplete="convertSVGtoInlineSVG();">
+        <apex:param assignto="{!knowledgeKeyword}" name="knowledgeKeyword" value="" />
+      </apex:actionfunction>
+    </apex:form>
+
+    <apex:outputpanel id="refresh"></apex:outputpanel>
+
+    <form id="newcaseform" class="slds" data-parsley-validate="true">
+      <div class="slds-text-heading--medium">Service Request Creation</div>
+      <hr />
+      <div class="case-record-types slds-grid">
+        <div class="master-view slds-col slds-size--1-of-3 {!IF(caseToClone != null, 'active', '')}">
+          <!-- Searchable Types -->
+          <h4 class="slds-text-heading--label" id="treeheading">Service Type Information</h4>
+          <div class="slds-tree-container side-panel-default" role="application">
+            <apex:variable value="{!0}" var="counter" />
+            <!-- TODO: Write comment about the repeat. -->
+            <apex:repeat value="{!ServiceRequestItems}" var="type">
+              <div class="service-type-description {!IF(caseToClone != null && caseToClone.SRType__c == type.Id, 'active', '')}" data-type-description-name="{!IF(type.External_Name__c != null, type.External_Name__c, type.Service_Name__c)}" data-agency="{!type.Agency__c}" data-sla="{!type.SLA__c}" data-id="{!type.Id}" data-contactstatus="{!type.ContactStatus__c}" data-addressRequired="{!type.ServiceLocationRequired__c }">
+                <div class="col-xs-12">
+                  <p class="m0 text-muted">Service Type</p>
+                  <h4 class="m0">{!IF(type.External_Name__c != null, type.External_Name__c, type.Service_Name__c)}</h4>
+                </div>
+                <div class="col-xs-12">
+                  <p class="m0 text-muted">Servicing Agency</p>
+                  <h4 class="m0">{!type.Agency__c}</h4>
+                </div>
+                <div class="col-xs-12">
+                  <p class="m0 text-muted">Service Resolution Estimate</p>
+                  <h4 class="m0">{!type.SLA__c} {!type.SLAType__c}</h4>
+                </div>
+                <apex:outputtext value="{!IF(type.LongExternalDescription__c != null, type.LongExternalDescription__c, type.Description__c)}" escape="false" />
+              </div>
+              <apex:variable value="{!counter + 1}" var="counter" />
+            </apex:repeat>
+          </div>
+        </div><!-- /End Master-View -->
+
+        <!-- Type Details -->
+        <div class="detail-view slds-col slds-size--2-of-3">
+          <div class="slds-container">
+            <!-- Search Text Field -->
+            <div class="slds-text-heading--small">Service Type</div>
+            <hr />
+            <div class="slds-form-element">
+              <div class="slds-form-element__control">
+                <input id="search-input" class="slds-input" type="text" placeholder="Search Services.." value="{!IF(caseToClone != null && caseToClone.Service_Request_Name__c != null, caseToClone.Service_Request_Name__c, '')}" />
+                <input id="case-Agency__c" type="text" class="slds-input hiddenInput" name="c-Agency__c" value="{!IF(caseToClone != null, caseToClone.AgencyCode__c, '')}" />
+                <input id="case-SLA__c" type="text" class="slds-input hiddenInput" name="c-SLA__c" value="{!IF(caseToClone != null, caseToClone.SLA__c, '')}" />
+              </div>
+            </div>
+          </div>
+          <!-- Form Information -->
+          <div class="details-view-form {!IF(caseToClone != null, 'active', '')}">
+            <div class="details-location-container slds-container">
+              <div class="slds-text-heading--small">Location</div>
+              <hr />
+              <div class="slds-grid slds-wrap">
+                <div class="slds-form-element slds-col slds-size--1-of-1" style="margin-bottom: 10px;">
+                  <label class="slds-form-element__label" for="case-address-street"><span class="case-address-street-label" style="color: red; display: none;">*</span> Street</label>
+                  <div class="slds-form-element__control">
+                    <input id="case-address-street" type="text" class="slds-input" placeholder="Enter a street..." name="c-address-street" data-parsley-required="true" value="{!IF(caseToClone != null, ShortAddress, '')}" />
+                  </div>
+                </div>
+                <div class="slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-city">City</label>
+                  <p id="case-address-city">Washington</p>
+                  <input type="text" class="slds-input hiddenInput" name="c-address-city" value="Washington" />
+                </div>
+                <div class="slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-state">State</label>
+                  <p id="case-address-state">DC</p>
+                  <input type="text" class="slds-input hiddenInput" name="c-address-state" value="DC" />
+                </div>
+                <div class="slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-country">Country</label>
+                  <p id="case-address-country">USA</p>
+                  <input type="text" class="slds-input hiddenInput" name="c-address-country" value="USA" />
+                </div>
+                <div class="slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-zipcode">Zipcode</label>
+                  <p id="case-address-zipcode">{!IF(caseToClone != null, caseToClone.Zipcode__c, '')}</p>
+                  <input id="case-address-zipcode-input" type="text" class="slds-input hiddenInput" name="c-address-zipcode" value="{!IF(caseToClone != null, caseToClone.Zipcode__c, '')}" />
+                </div>
+              </div>
+            </div>
+            <div class="details-information-container slds-container">
+              <div class="slds-text-heading--small">Information</div>
+              <hr />
+              <div>
+                <div class="details-info-editable slds-grid slds-wrap">
+                  <!-- Status -->
+                  <div class="slds-form-element picklist picklist-status slds-col slds-size--1-of-2">
+                    <div aria-expanded="true" class="slds-picklist">
+                      <label class="slds-form-element__label slds-picklist__label--full" for="case-status">Status</label>
+                      <button id="case-status" class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" type="button">
+                        <span class="slds-truncate">{!if(caseToClone !=null, caseToClone.Status, 'Open' )}</span>
+                        <svg aria-hidden="true" class="slds-icon">
+                          <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                      </button>
+                      <div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide">
+                        <ul class="slds-dropdown__list picklist-status-list" role="menu">
+                          <apex:repeat value="{!StatusOptions}" var="option">
+                            <li href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" data-value="{!option.Value}" role="menuitemradio">{!option.Label}</a></li>
+                          </apex:repeat>
+                        </ul>
+                      </div>
+                      <input class="hiddenInput picklist-input picklist-input-status" name="c-Status" type="text" value="{!if(caseToClone !=null, caseToClone.Status, 'Open' )}" />
+                    </div>
+                  </div>
+                  <!-- Service Request Origin -->
+                  <div class="slds-form-element picklist picklist-origin slds-col slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <div aria-expanded="true" class="slds-picklist">
+                      <label class="slds-form-element__label slds-picklist__label--full" for="case-origin">Service Request Origin</label>
+                      <button id="case-origin" class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" type="button">
+                        <span class="slds-truncate">{!IF(caseToClone != null, caseToClone.Origin, 'Phone')}</span>
+                        <svg aria-hidden="true" class="slds-icon">
+                          <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                      </button>
+                      <div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide">
+                        <ul class="slds-dropdown__list" role="menu">
+                          <apex:repeat value="{!OriginOptions}" var="option">
+                            <li href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" data-value="{!option.Value}" role="menuitemradio">{!option.Label}</a></li>
+                          </apex:repeat>
+                        </ul>
+                      </div>
+                      <input class="hiddenInput picklist-input" name="c-Origin" type="text" value="{!IF(caseToClone != null, caseToClone.Origin, 'Phone')}" />
+                    </div>
+        
+                  </div>
+                  <!-- Parent -->
+                  <div class="slds-form-element slds-col slds-size--1-of-2">
+                    <label class="slds-form-element__label" for="case-status">Parent</label>
+                    <div class="slds-form-element__control slds-grid">
+                      <input id="case-parent" name="c-ParentId" class="slds-input slds-col slds-size--5-of-6" type="text" placeholder="Parent" readonly="true" value="{!IF(caseToClone != null, caseToClone.ParentId, '')}" />
+                      <button id="case-parent-lookup" style="margin-left: 5px; margin-right: 20px;" class="slds-button slds-button--icon-border lookup-button slds-col slds-size--1-of-6" type="button">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                          <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Search Parent</span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Ward -->
+                  <div class="slds-form-element picklist picklist-ward slds-col slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <div aria-expanded="true" class="slds-picklist">
+                      <label class="slds-form-element__label slds-picklist__label--full" for="case-ward">Ward</label>
+                      <button id="case-ward" class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" type="button">
+                        <span class="slds-truncate">{!IF(caseToClone != null, caseToClone.Ward__c, 'Select a Ward')}</span>
+                        <svg aria-hidden="true" class="slds-icon">
+                          <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                      </button>
+                      <div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide">
+                        <ul class="slds-dropdown__list ward-list" role="menu">
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 1"><a href="#" class="slds-truncate" role="menuitemradio">Ward 1</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 2"><a href="#" class="slds-truncate" role="menuitemradio">Ward 2</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 3"><a href="#" class="slds-truncate" role="menuitemradio">Ward 3</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 4"><a href="#" class="slds-truncate" role="menuitemradio">Ward 4</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 5"><a href="#" class="slds-truncate" role="menuitemradio">Ward 5</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 6"><a href="#" class="slds-truncate" role="menuitemradio">Ward 6</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 7"><a href="#" class="slds-truncate" role="menuitemradio">Ward 7</a></li>
+                          <li href="#" class="slds-dropdown__item slds-has-icon--left" data-ward-value="Ward 8"><a href="#" class="slds-truncate" role="menuitemradio">Ward 8</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <input id="case-Ward__c" class="hiddenInput picklist-input" name="c-Ward__c" type="text" value="{!IF(caseToClone != null, caseToClone.Ward__c, '')}" />
+                  </div>
+                  <!-- Description -->
+                  <div class="slds-form-element slds-col slds-size--1-of-1">
+                    <label class="slds-form-element__label" for="case-status">Description</label>
+                    <div class="slds-form-element__control">
+                      <textarea id="case-description" name="c-Description" class="slds-textarea" placeholder="Enter a description..." value="{!IF(caseToClone != null, caseToClone.Description, '')}">{!IF(caseToClone != null, caseToClone.Description, '')}</textarea>
+                    </div>
+                  </div>
+                  <!-- Flexnotes here. -->
+                  <apex:outputpanel id="flexNoteContainer" layout="block" styleclass="flex-note-container slds-col slds-size--1-of-1" style="margin-top: 30px; ">
+                    <apex:outputPanel styleclass="flexNoteBulkCollectionNoAddress slds-grid slds-wrap" rendered="{!serviceTypeQuestions.size == 0 && IsBulkCollectionType}" layout="block">
+                      <div class="slds-text-heading--small">Additional Information</div>
+                      <hr />
+                      <div class="slds-grid slds-wrap">
+                        <p class="slds-col slds-size--1-of-1 slds-text-body">Bulk Collection Detected</p>
+                        <p class="slds-col slds-size--1-of-1 slds-text-body">Please enter an address in order to retrieve the additional information required.</p>
+                      </div>
+                    </apex:outputPanel>  
+                     
+                    <apex:outputpanel layout="block" style="text-align: center; margin: 0 auto;">
+                      <div id="flexnotes-loading" class="slds-spinner--medium" style="display: none;">
+                        <img src="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+                      </div>
+                    </apex:outputpanel>
+              
+                    <apex:outputpanel styleclass="flexNoteQuestionContainer slds-grid slds-wrap" rendered="{!serviceTypeQuestions.size > 0}" layout="block">
+                      <div class="slds-text-heading--small">Additional Information</div>
+                      <hr />
+                      <apex:repeat value="{!serviceTypeQuestions}" var="questions">
+                        <apex:form styleclass="slds-grid slds-wrap">
+                          <apex:variable var="IndexValue" value="{!0}" />
+                          <apex:repeat value="{!questions.questionAnswerList}" var="SQ">
+                            <div class="question-container slds-col slds-size--1-of-1" style="order:{!IF(SQ.relationQuestion.IsRequiredQuestion__c==false && SQ.flexNoteQuestion.Answer_Type__c==null, '2', '1')}">
+                              <apex:outputpanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==true}">
+                                <label class="slds-form-element__label"><span style="color: red;">*</span> {!SQ.flexNoteQuestion.Questions__c}</label>
+                              </apex:outputpanel>
+                              <apex:outputpanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==false}">
+                                <apex:outputpanel layout="block" rendered="{!IF(SQ.flexNoteQuestion.Answer_Type__c==null == true,'true','false')}" style="color:#A3A3A3; font-weight: normal; margin-top: 5px;">
+                                  <div class="slds-notify slds-notify--alert slds-theme--alert-texture" role="alert">
+                                    <span class="slds-assistive-text">Info</span>
+                                    <h2>
+                                      {!SQ.flexNoteQuestion.Questions__c}
+                                    </h2>
+                                  </div>
+                                </apex:outputpanel>
+                                <apex:outputpanel rendered="{!IF(SQ.flexNoteQuestion.Answer_Type__c!=null == true,'true','false')}">
+                                  <label class="slds-form-element__label">{!SQ.flexNoteQuestion.Questions__c}</label>
+                                </apex:outputpanel>
+                              </apex:outputpanel>
+                              <div class="answer-container">
+                                <div class="{!IF(SQ.relationQuestion.IsRequiredQuestion__c==true,'requiredInput', '')}">
+                                  <div class="{!IF(SQ.relationQuestion.IsRequiredQuestion__c==true,'requiredBlock', '')}">
+                                    <!-- FlexNote: Picklist -->
+                                    <apex:outputpanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Picklist'}" id="picklistOPTPanelid">
+                                      <div class="slds-form-element picklist picklist-origin">
+                                        <div aria-expanded="true" class="slds-picklist">
+                                          <button class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" type="button">
+                                            <span class="slds-truncate">{!IF(SQ.answer.Answer__c != null && SQ.answer.Answer__c != '', SQ.answer.Answer__c, 'Select an Option')}</span>
+                                            <apex:image url="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility/down.svg')}" styleclass="svg svg-dropdown slds-icon" />
+                                          </button>
+                                          <div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide">
+                                            <ul class="slds-dropdown__list" role="menu">
+                                              <apex:repeat value="{!SQ.questionPicklistValues}" var="option">
+                                                <li href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" data-value="{!option.Value}" role="menuitemradio">{!option.Label}</a></li>
+                                              </apex:repeat>
+                                            </ul>
+                                          </div>
+                                          <input class="hiddenInput picklist-input" name="flexnotes-picklist-{!IndexValue}" value="{!SQ.answer.Answer__c}" type="text" data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </div>
+                                      </div>
+                                      <apex:outputpanel rendered="{!SQ.isRenderText==true}">
+                                        <apex:inputfield styleclass="slds-input" value="{!SQ.answer.Answer__c}" />
+                                        <span class="slds-form-element__label">(Please select a value from the list or enter one .)</span>
+                                      </apex:outputpanel>
+                                    </apex:outputpanel>
+                                    <!-- FlexNote: Text -->
+                                    <apex:outputpanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}">
+                                      <div class="slds-form-element">
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c == true}" styleclass="slds-form-element__control" layout="block">
+                                          <input type="text" name="flexnotes-text-{!IndexValue}" class="slds-input" value="{!SQ.answer.Answer__c}" disabled="true" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c != true}" styleclass="slds-form-element__control" layout="block">
+                                          <input type="text" name="flexnotes-text-{!IndexValue}" class="slds-input" value="{!SQ.answer.Answer__c}" data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                      </div>
+                                    </apex:outputpanel>
+                                    <!-- Flexnote: Date/Time -->
+                                    <apex:outputpanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                      <div class="slds-form-element">
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c == true}" styleclass="slds-form-element__control" layout="block">
+                                          <input type="text" name="flexnotes-datetime-{!IndexValue}" class="slds-input" value="{!SQ.answer.Answer__c}" disabled="true" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c != true}" styleclass="slds-form-element__control" layout="block">
+                                          <apex:inputtext html-name="flexnotes-datetime-{!IndexValue}" styleclass="slds-input dateTimeAnswerFieldId_{!IndexValue}" value="{!SQ.answer.Answer__c}" onfocus="DatePicker.pickDate(true, '{!$Component.dateTimeAnswerFieldId}', true);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}" html-data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" html-data-question="{!SQ.flexNoteQuestion.Questions__c}" html-data-order="{!SQ.relationQuestion.Order__c}" html-data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                      </div>
+                                      <span>
+                                        [&nbsp;
+                                        <a class="datetime-quick-insert" style="cursor: pointer;" onclick="$(this).parents().find('.dateTimeAnswerFieldId_{!IndexValue}').val(moment().tz('America/New_York').format('MM/DD/YYYY h:mm:ss a'));"></a>
+                                        &nbsp;]
+                                        <script>
+                                              $('.datetime-quick-insert').html(moment().tz('America/New_York').format('MM/DD/YYYY, h:mm:ss a'));
+                                        </script>
+                                      </span>
+                                    </apex:outputpanel>
+                                    <!-- Flexnote: Date -->
+                                    <apex:outputpanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date'}">
+                                      <div class="slds-form-element">
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c == true}" styleclass="slds-form-element__control" layout="block">
+                                          <input type="text" name="flexnotes-date-{!IndexValue}" class="slds-input" value="{!SQ.answer.Answer__c}" disabled="true" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c != true}" styleclass="slds-form-element__control" layout="block">
+                                          <apex:inputtext html-name="flexnotes-date-{!IndexValue}" styleclass="slds-input dateAnswerFieldId_{!IndexValue}" value="{!SQ.answer.Answer__c}" onfocus="DatePicker.pickDate(true, '{!$Component.dateTimeAnswerFieldId}', true);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}" html-data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" html-data-question="{!SQ.flexNoteQuestion.Questions__c}" html-data-order="{!SQ.relationQuestion.Order__c}" html-data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                        </apex:outputpanel>
+                                      </div>
+                                      <span>
+                                        [&nbsp;
+                                        <a class="date-quick-insert" style="cursor: pointer;" onclick="$(this).parents().find('.dateAnswerFieldId_{!IndexValue}').val(moment().tz('America/New_York').format('MM/DD/YYYY'));"></a>
+                                        &nbsp;]
+                                        <script>
+                                              $('.date-quick-insert').html(moment().tz('America/New_York').format('MM/DD/YYYY'));
+                                        </script>
+                                      </span>
+                                    </apex:outputpanel>
+                                    <!-- FlexNote: Text Area -->
+                                    <apex:outputpanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='TextArea'}">
+                                      <div class="slds-form-element">
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c == true}" styleclass="slds-form-element__control" layout="block">
+                                          <textarea name="flexnotes-textarea-{!IndexValue}" class="slds-textarea" value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" disabled="true" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}">{!SQ.answer.Answer__c}</textarea>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel rendered="{!SQ.relationQuestion.IsReadOnly__c != true}" styleclass="slds-form-element__control" layout="block">
+                                          <textarea name="flexnotes-textarea-{!IndexValue}" class="slds-textarea" value="{!SQ.answer.Answer__c}" data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}">{!SQ.answer.Answer__c}</textarea>
+                                        </apex:outputpanel>
+                                      </div>
+                                    </apex:outputpanel>
+                                    <!-- FlexNote: Multi Picklist/Checkboxes. -->
+                                    <apex:outputpanel styleclass="multi-picklist-container" rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='MultiPicklist'}">
+                                      <apex:variable var="checkCounter" value="{!0}" />
+                                      <ul style="list-style-type: none; padding: 0px;" data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}">
+                                        <apex:repeat value="{!SQ.questionMultiPicklistValueList}" var="MPL">
+                                          <li style="margin-left: -2px;padding:02px">
+                                            <apex:outputtext styleclass="input-value" value="{!MPL.questionMultiPicklistItem}" />
+                                            <div class="slds-row-select">
+                                              <label id="checkbox-label-{!checkCounter}" class="slds-checkbox" for="select-row-{!checkCounter}">
+                                                <input name="" type="checkbox" id="select-row-{!checkCounter}" value="{!MPL.flexNoteSelectItem.value}" data-parsley-excluded="true"/>
+                                                <span class="slds-checkbox--faux" data-value="{!MPL.flexNoteSelectItem.value}"></span>
+                                                <span class="slds-form-element__label slds-assistive-text">{!MPL.flexNoteSelectItem.label}</span>
+
+                                                <script>
+                                                  if ({!MPL.isSelectedQuestion}) {
+                                                    $('#select-row-{!checkCounter}').attr('checked','checked');
+                                                  }
+                                                </script>
+                                              </label>
+                                              <label class="slds-form-element__label" for="checkbox-label-{!checkCounter}">{!MPL.flexNoteSelectItem.label}</label>
+                                            </div>
+                                          </li>
+                                          <apex:variable var="checkCounter" value="{!checkCounter + 1}" />
+                                        </apex:repeat>
+                                      </ul>
+                                      <input class="hiddenInput multi-picklist flexnotes-multi-picklist-{!IndexValue}" value="{!IF(caseToClone != null, SQ.answer.Answer__c,'')}" name="flexnotes-multilist-{!IndexValue}" type="text" data-parsley-required="{!SQ.relationquestion.IsRequiredQuestion__c}" data-question="{!SQ.flexNoteQuestion.Questions__c}" data-order="{!SQ.relationQuestion.Order__c}" data-flexnote-question-id="{!SQ.flexNoteQuestion.Id}" />
+                                    </apex:outputpanel>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <apex:variable var="IndexValue" value="{!IndexValue+1}" />
+                          </apex:repeat>
+                        </apex:form>
+                        <!-- TODO: END -->
+                      </apex:repeat>
+                    </apex:outputpanel>
+                  </apex:outputpanel>
+                </div>
+              </div>
+            </div>
+            <div class="details-contact-container slds-container">
+              <div class="slds-text-heading--small">Participant Information</div>
+              <hr />
+              <div class="slds-grid slds-wrap">
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="contact-first-name">First Name</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-first-name" type="text" class="slds-input" name="contact-FirstName" value="{!IF(caseToClone != null, caseToClone.Contact.FirstName, '')}"/>
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-street">Last Name</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-last-name" type="text" class="slds-input" name="contact-LastName" value="{!IF(caseToClone != null, caseToClone.Contact.LastName, '')}" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-street">Phone</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-phone" type="text" class="slds-input" name="contact-Phone" value="{!IF(caseToClone != null, caseToClone.Contact.Phone, '')}" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-street">Email</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-email" type="text" class="slds-input" name="contact-Email" value="{!IF(caseToClone != null, caseToClone.Contact.Email, '')}" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-street">Contact</label>
+                  <div class="slds-form-element__control slds-grid">
+                    <p id="contact-contact-id-label" class="slds-input slds-col slds-size--5-of-6">{!IF(caseToClone != null, caseToClone.Contact.Name, '')}</p>
+                    <input id="contact-contact-id" type="text" class="hiddenInput slds-input slds-col slds-size--5-of-6" name="contact-ContactId" value="{!IF(caseToClone != null, caseToClone.ContactId, '')}" />
+                    <button id="contact-lookup" type="button" style="margin-left: 5px;" class="slds-button slds-button--icon-border lookup-button slds-col slds-size--1-of-6">
+                      <svg aria-hidden="true" class="slds-button__icon">
+                        <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                      </svg>
+                      <span class="slds-assistive-text">Search Contact</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="case-address-street">Street</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-street" type="text" class="slds-input" name="contact-MailingStreet" value="{!IF(caseToClone != null, caseToClone.Contact.MailingStreet, '')}" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="contact-city">City</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-city" type="text" class="slds-input" name="contact-MailingCity" value="{!IF(caseToClone != null, caseToClone.Contact.MailingCity, '')}" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <!--<label class="slds-form-element__label" for="contact-state">State</label>
+          <div class="slds-form-element__control">
+            <input id="contact-state" type="text" class="slds-input" name="contact-state" />  -->
+                  <div class="slds-form-element picklist picklist-state">
+                    <div aria-expanded="true" class="slds-picklist">
+                      <label class="slds-form-element__label slds-picklist__label--full" for="contact-state">State</label>
+                      <button id="contact-state" class="slds-button slds-button--neutral slds-picklist__label" aria-haspopup="true" style="width: 96%; min-height: 36px;" type="button">
+                        <span class="slds-truncate">{!IF(caseToClone != null, caseToClone.Contact.MailingState, 'Select a State')}</span>
+                        <svg aria-hidden="true" class="slds-icon">
+                          <use xlink:href="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                      </button>
+                      <div class="slds-dropdown slds-dropdown--left slds-dropdown--small slds-dropdown--menu slds-hide">
+                        <ul class="slds-dropdown__list" role="menu">
+                          <!--<apex:repeat value="{!StateOptions}" var="option">-->
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="AL">Alabama</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="AK">Alaska</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="AZ">Arizona</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="AR">Arkansas</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="CA">Calafornia</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="CO">Colorado</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="CT">Connecticut</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="DE">Delaware</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="DC">District Of Columbia</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="FL">Florida</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="GA">Georgia</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="HI">Hawaii</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="ID">Idaho</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="IL">Ilanois</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="IN">Indiana</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="IA">Iowa</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="KS">Kansas</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="KY">Kentucky</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="LA">Louisiana</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="ME">Maine</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MD">Maryland</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MA">Massachusetts</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MI">Michigan</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MN">Minnesota</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MS">Mississippi</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MO">Missouri</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="MT">Montana</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NE">Nebraska</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NV">Nevada</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NH">New Hampshire</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NJ">New Jersey</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NM">New Mexico</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NY">New York</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="NC">North Caroana</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="ND">North Dakota</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="OH">Ohio</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="OK">Oklahoma</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="OR">Oregon</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="PA">Pennsylvania</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="RI">Rhode Island</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="SC">South Caroana</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="SD">South Dakota</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="TN">Tennessee</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="TX">Texas</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="UT">Utah</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="VT">Vermont</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="VA">Virginia</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="WA">Washington</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="WV">West Virginia</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="WI">Wisconsin</a></li>
+                          <li data-state="true" href="#" class="slds-dropdown__item slds-has-icon--left"><a href="#" class="slds-truncate" role="menuitemradio" data-value="WY">Wyoming</a></li>
+                          <!--</apex:repeat>-->
+                        </ul>
+                      </div>
+                      <input id="contact-MailingState" class="hiddenInput picklist-input" name="contact-MailingState" type="text" value="{!IF(caseToClone != null, caseToClone.Contact.MailingState, '')}" />
+                    </div>
+                    <!--</div>-->
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="contact-country">Country</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-country" type="text" class="slds-input" name="contact-MailingCountryCode" value="US" disabled="true" />
+                  </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size--1-of-2">
+                  <label class="slds-form-element__label" for="contact-postal-code">Postal Code</label>
+                  <div class="slds-form-element__control">
+                    <input id="contact-postal-code" type="text" class="slds-input" name="contact-MailingPostalCode" value="{!IF(caseToClone != null, caseToClone.Contact.MailingPostalCode, '')}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Duplicates -->
+            <apex:outputpanel id="duplicateRequests" layout="block" styleclass="slds-container" style=" margin-bottom 15px;">
+              <apex:outputpanel rendered="true" layout="block" style="display:{!IF(duplicateServiceRequests.size > 0, 'block', 'none')};">
+                <div class="slds-text-heading--small">Duplicate Requests</div>
+                <hr />
+                <div class="duplicate-requests-container">
+                  <table id="duplicate-requests-table" class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+                    <thead>
+                      <tr class="slds-text-heading--label">
+                        <th scope="col slds-cell-wrap">Service Request Number</th>
+                        <th scope="col slds-cell-wrap">Service Name</th>
+                        <th scope="col slds-cell-wrap">Address</th>
+                        <th scope="col slds-cell-wrap">Created Date</th>
+                        <th scope="col slds-cell-wrap">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <apex:repeat value="{!duplicateServiceRequests}" var="request">
+                        <tr>
+                          <td class="slds-cell-wrap">{!request.Service_Request_Number__c}</td>
+                          <td class="slds-cell-wrap">{!request.SRType__r.Service_Name__c}</td>
+                          <td class="slds-cell-wrap">{!request.Address__c}</td>
+                          <td class="slds-cell-wrap"><c:FormatDateTime date_timevalue="{!request.CreatedDate}" /></td>
+                          <td class="slds-cell-wrap">{!request.Status}</td>
+                        </tr>
+                      </apex:repeat>
+                    </tbody>
+                  </table>
+                </div>
+              </apex:outputpanel>
+            </apex:outputpanel>
+            <!-- Buttons Container -->
+            <div class="details-button-container slds-container">
+              <div class="slds-button-group demo-space" role="group">
+                <button class="slds-button slds-button--neutral" type="button" onclick="sforce.console.refreshNavigationTab(null);">Cancel</button>
+                <apex:outputpanel id="save-button-refresh">
+                  <button class="slds-button slds-button--brand slds-button--last" onclick="if(confirmDuplicate()){validationAndProcessForm();}" type="button">Save</button>
+                </apex:outputpanel>
+                <!--<apex:commandbutton action="{!save}" styleclass="slds-button slds-button--brand slds-button--last" onclick="if(!form.validate()){return false;}" value="Save"/> -->
+              </div>
+            </div>
+          </div>
+        </div> <!-- /End Detail-View -->
+        <apex:outputpanel id="locationMapContainer" layout="block" styleclass="slds-col slds-size--1-of-3 {!IF(caseToClone != null, '', 'slds-hide')}">
+          <!-- Knowledge Panel -->
+          <apex:outputpanel id="knowledge-panel-container" layout="block" rendered="{!config.Value__c}">
+            <h4 class="slds-text-heading--label">Knowledge</h4>
+            <div class="knowledge-list side-panel-default">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+                  <apex:image url="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/icons/utility/search.svg')}" styleclass="svg slds-input__icon slds-icon-text-default" onclick="rerenderKnowledgePanel($('#knowledge-search-input').val());" />
+                  <input id="knowledge-search-input" class="slds-input" type="text" placeholder="Keyword..." value="{!knowledgeKeyword}" onkeypress="if(event.keyCode == 13){rerenderKnowledgePanel($('#knowledge-search-input').val());}" />
+                </div>
+              </div>
+              <small><strong style="background: initial !important;">Note:</strong> Articles found may not match your full search term. Results will be shown with partial keywords available.</small>
+              <h6 class="text-muted">Articles</h6>
+              <div class="knowledge-article-list-container-scroll">
+                <knowledge:articlelist articlevar="article" hasmorevar="false" pagesize="10" keyword="{!knowledgeKeyword}" rendered="{!knowledgeKeyword != null && knowledgeKeyword != ''}">
+                  <p class="knowledge-item"><a target="_blank" onclick="openSubtab_{!article.Id}();return false;//window.open('{!URLFOR($Action.KnowledgeArticle.View, article.id)}', 'newwindow', 'width=700, height=400'); return false;" href="#">{!article.title}</a></p>
+                  <div class="slds-grid slds-wrap knowledge-item-info" style="margin-bottom: 15px; padding-bottom: 10px;">
+                    <small class="knowledge-info-summary slds-col">{!article.summary}</small>
+                    <div class="slds-col slds-size--1-of-1" style="margin-top: 5px; margin-bottom: 5px;">
+                      <small class="knowledge-info-basic-label" style="float:left;">{!article.ArticleNumber}</small>
+                      <small class="knowledge-info-basic-label" style="float: left; margin-left: 5px; margin-right: 5px;">&bull;</small>
+                      <small class="knowledge-info-basic-label" style="float: left;">{!article.articleTypeLabel}</small>
+                    </div>
+                    <small class="slds-col knowledge-info-basic-label">
+                      Last Published &nbsp;
+                      <apex:outputtext value="{0,date,MM'/'dd'/'yyyy}">
+                        <apex:param value="{!article.lastPublishedDate}" />
+                      </apex:outputtext>
+                    </small>
+                  </div>
+                  <script>
+                  var openSubtab_{!article.Id} = function openSubtab_{!article.Id}() {
+                    sforce.console.openPrimaryTab(null,'{!URLFOR($Action.KnowledgeArticle.View, article.id)}',true,'{!article.Title}');
+                  }
+                  </script>
+                </knowledge:articlelist>
+              </div>
+              <apex:outputpanel rendered="knowledgeKeyword == null || knowledgeKeyword == ''">
+                <p class="knowledge-item ">No articles found for this service type.</p>
+              </apex:outputpanel>
+            </div>
+          </apex:outputpanel>
+
+          <apex:outputpanel id="map-container">
+            <apex:outputpanel rendered="{!isMapVisible}" layout="block">
+              <h4 class="slds-text-heading--label" style="margin-top: 10px;">Map</h4>
+              <div class="map-view-container side-panel-default">
+                <apex:map id="location-map" width="100%" height="700px" maptype="roadmap" center="{!requestMapCoords}" zoomlevel="15">
+                  <apex:mapmarker title="Case Location" position="{!requestMapCoords}" />
+                </apex:map>
+              </div>
+            </apex:outputpanel>
+          </apex:outputpanel>
+        </apex:outputpanel>
+      </div>
+      <apex:outputpanel id="testcontainer" rendered="true">
+      </apex:outputpanel>
+    </form>
+
+    <div class="slds-spinner--large loading-spinner">
+      <img src="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/images/spinners/slds_spinner_inverse.gif')}" alt="Loading..." />
+    </div>
+    <c:Console311_Scripts datatableenabled="false" datatablesettings="" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/parsley.js/2.0.7/parsley.js" type="text/javascript"></script>
+    <script>
+          // Variable Initials.
+          var $ = jQuery;
+          var addressLookup = {};
+          var isSubmitted = false;
+          // Initial Parsley Form.
+          var form = $("#newcaseform").parsley({
+            errorsWrapper: '<div class="parsley-errors-list"></div>',
+            errorTemplate: '<p class="errorMsg"></p>'
+       	  });
+          // Auto complete select function for Service Type.
+          var autocompleteSelect = function(event, ui) {
+			if (typeof ui.item.value != "undefined" && ui.item.value != null) {
+              $('.master-view').show();
+              $('.details-view-form').css('visibility', 'visible');
+              $('.service-type-description.active').removeClass('active');
+              var typeDescriptionView = $(".service-type-description[data-type-description-name='"+ui.item.value+"']");
+              typeDescriptionView.addClass('active');
+              $('#case-Agency__c').val(typeDescriptionView.data('agency'));
+              $('#case-SLA__c').val(typeDescriptionView.data('sla'));
+              $('.flexNoteQuestionContainer').html(' ');
+              $('#flexnotes-loading').show();
+                
+              var addressRequiredForType = typeDescriptionView.data('addressrequired');
+              $('#case-address-street').attr('data-parsley-required', addressRequiredForType);
+              $('.case-address-street-label').css('display', addressRequiredForType ? 'inline-block' : 'none');
+                
+              // Verify the contact information to validate if type requires contact information.
+              var contactRequired = typeDescriptionView.data('contactstatus') == 'Required (LN, FN, EM)' ? true : false;
+              $('#newcaseform').parsley().destroy();
+              $('#contact-first-name').attr('data-parsley-required', contactRequired);
+              $('#contact-last-name').attr('data-parsley-required', contactRequired);
+              $('#contact-email').attr('data-parsley-required', contactRequired);
+              form = $("#newcaseform").parsley({
+                errorsWrapper: '<div class="parsley-errors-list"></div>',
+                errorTemplate: '<p class="errorMsg"></p>'
+       	      });
+              // Get flexnotes for type.
+              getFlexnotes(typeDescriptionView.data('id'));
+
+              if ({!config.Value__c}) {
+                $('[id*=locationMapContainer]').removeClass('slds-hide');
+                rerenderKnowledgePanel(typeDescriptionView.data('typeDescriptionName'));
+              }
+            } else {
+              $('.master-view').hide();
+            }
+          };
+          // Setup service types auto complete.
+          var serviceRequestTypes = {!ServiceRequestNames};
+          $('#search-input').autocomplete({
+            source: serviceRequestTypes,
+            select: autocompleteSelect
+          }).focus(function(){
+            console.log("AutoComplete focused");
+            $(this).data("uiAutocomplete").search(' ');
+          });
+          // Addess autocomplete from MAR.
+          var queryTerm5;
+          $('#case-address-street').autocomplete({
+            source: function( request, response ) {
+              queryTerm5 = request.term;  
+                
+              Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.Console311_CaseController.getAddressAutocomplete}',
+                request.term,
+                function(result, event){
+                    if (event.status) {
+                      var addressList = [];
+                      var tableSet = [];
+
+                      if (typeof result != "undefined" && result != null) {
+                        tableSet = result.returnDataset.Table1;
+                          console.log(tableSet);
+
+                        if (typeof tableSet != 'undefined' || tableSet != null) {
+                          for (z = 0; z < tableSet.length; z++) {
+                            var addrKey = getFinalAddressValue(tableSet[z]);  
+                              
+                            addressLookup[addrKey] = tableSet[z];
+                          }
+                        }
+                      }
+                      response(tableSet);
+                    } else if (event.type === 'exception') {
+                      console.log('Exception: ' + event.message);
+                    } else {
+                      console.log('Error: ' + event.message);
+                    }
+                },
+                {escape: true}
+              );
+            },
+            select: function(event, ui) {
+              event.preventDefault();
+              $('#case-address-street').val(getFinalAddressValue(ui.item));
+              var addressQueryStr = getFinalAddressValue(ui.item);
+                
+              // Check for interstate. If it is one then trim the first bit so the API returns the proper object.  
+              if (addressQueryStr.includes("INTERSTATE")) {
+                addressQueryStr = addressQueryStr.substring(addressQueryStr.indexOf("INTERSTATE"));
+              }
+              getAddress(addressQueryStr);
+            }
+          }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+              console.log("=====> Inside the .data");
+              var aliasFulladdrss = getFinalAddressValue(item);
+              var entry = "<a>" + aliasFulladdrss;
+              entry = entry + "</a>";
+              entry = entry.replace(queryTerm5, "<b>" + queryTerm5 + "</b>");
+              
+              return $( "<li></li>" )
+              .data( "item.autocomplete", item )
+              .append( entry )
+              .appendTo( ul );
+              
+          };
+      
+      
+      
+          // Case Parent lookup popup call.
+          $('#case-parent-lookup').on('click', function() {
+            var lookupWindow = null;
+              lookupWindow = window.open(
+                '/apex/Console311_Lookup?sobject=Case&sortfield=Service_Request_Number__c',
+                'Lookup',
+                'height=500,width=500'
+              );
+          });
+          // Contact lookup popup call.
+          $('#contact-lookup').on('click', function() {
+            var lookupWindow = null;
+              lookupWindow = window.open(
+                '/apex/Console311_Lookup?sobject=Contact&sortfield=Name',
+                'Lookup',
+                'height=500,width=500'
+              );
+          });
+          // Toggle Dropdowns.
+          $(".case-record-types").on('click', '.slds-picklist__label', function(e) {
+			      console.log('-----> Dropdown Toggle');
+            e.preventDefault();
+            toggleDropdown(this);
+          });
+          // Toggle Dropdowns.
+          $(".case-record-types").on("click", '.slds-dropdown ul li', function(e) {
+            var menuItem = $(this);
+            var buttonTxt = menuItem.children('a').text();
+            e.preventDefault();
+
+            menuItem.parents('.slds-picklist').find('.slds-picklist__label span').text(buttonTxt);
+            toggleDropdown(menuItem.parents('.slds-picklist').find('.slds-picklist__label'));
+            setDropdownInputValue(menuItem);
+          });
+
+          $(".slds-button-type-selection").on("click", function() {
+              // Get details of service request type and present in the detail flow.
+              $('.detail-view').css('visibility', 'visible');
+          });
+
+          // On click of a flex note selection add the attribute to the hidden input.
+          $('body').on('click', '.flexNoteQuestionContainer .slds-dropdown ul li', function() {
+            setDropdownInputValue($(this));
+          });
+
+          // This on click function will trigger when an entry in a flexnote multil list is selected.
+          $("body").on("click", ".flexNoteQuestionContainer .slds-row-select .slds-checkbox--faux", function() {
+            // Grab all selected checkboxes and their values.
+
+            // Add the values to the input in a comma seperated string.
+          });
+
+          $("body").on("click", ".slds-checkbox .slds-checkbox--faux", function() {
+            // Get all necessary elements for input and value.
+            var container = $(this).parents('.multi-picklist-container');
+            var input = container.find('input.multi-picklist');
+            var value = $(this).parent().children('.slds-form-element__label').html();
+            var inputValueArray = input.val() != "" ? JSON.parse(input.val()) : [];
+            // If the input has value then continue otherwise just add to the array.
+            if (typeof inputValueArray != "undefined" && inputValueArray != null) {
+              // Check the array for a pre-existing version of the string.
+              var index = inputValueArray.indexOf(value);
+              // If the string existed then remove it, else add it.
+              if (index > -1) {
+                inputValueArray.splice(index, 1);
+              } else {
+                inputValueArray.push(value);
+              }
+              // Store the values as json on the input.
+              input.val(JSON.stringify(inputValueArray));
+            } else {
+              inputValueArray = [];
+              inputValueArray.push(value);
+            }
+          });
+
+          /*----------------------------Functions-------------------------------*/
+      
+      	  function getFinalAddressValue(item) {
+            var aliasFulladdress;  
+            
+            if(item.FULLADDRESS != null && item.CITY != null && item.STATE != null && item.ZIPCODE != null){
+              aliasFulladdress =item.FULLADDRESS;
+            }
+              
+            if(item.FULLADDRESS == null && item.CITY == null && item.STATE == null && item.ZIPCODE == null){
+              aliasFulladdress=item.FULLINTERSECTION;
+            }
+              
+            if(item.ALIASNAME != null && item.CITY != null && item.STATE != null && item.ZIPCODE != null){
+              aliasFulladdress=item.ALIASNAME;
+            }
+              
+            if(item.FULLINTERSECTION != null && item.INTERSECTIONID != null ){
+              aliasFulladdress=item.FULLINTERSECTION;
+            }
+              
+            if(item.FULLBLOCK!=null && item.BLOCKNAME!=null ){
+              aliasFulladdress=item.BLOCKNAME;
+            }  
+            return aliasFulladdress;
+          }
+
+          /*
+           * ToggleDropdown
+           *
+           * This function will show and hide a dropdown that is passed in.
+           * @author Darkis
+           */
+          function toggleDropdown(ele) {
+            var btn = $(ele);
+            var dropdown = btn.parent().children('.slds-dropdown');
+
+            btn.parent().attr('aria-expanded', !btn.parent().attr('aria-expanded'));
+            dropdown.toggleClass('slds-hide');
+          };
+
+          // Search for tree inputs.
+          $('#search-input').keyup(function() {
+            // get the value from text field
+            var input = $(this).val().toLowerCase();
+            // by default all services will be shown
+            $(".slds-tree").show();
+            // Non related services will be hidden after input
+            $(".slds-tree").not("[data-service*="+ input +"]").hide();
+          });
+          // Function to update the map with the given coords.
+          var updateMapContent = function() {
+            $('[id*=locationMapContainer]').removeClass('slds-hide');
+            var addressInfo = addressLookup[$('#case-address-street').val()];
+            $('#case-address-zipcode').html(parseInt(addressInfo.ZIPCODE));
+            $('#case-address-zipcode-input').val(parseInt(addressInfo.ZIPCODE));
+            var wardContainer = $('.ward-list');
+            wardContainer.find('[data-ward-value="'+addressInfo.WARD+'"]').click();
+            wardContainer.parent().toggleClass('slds-hide');
+            $('#case-Ward__c').val(wardContainer.find('[data-ward-value="'+addressInfo.WARD+'"]').children('a').html());
+          }
+          // Callback function for lookup popups.
+          var handleParentLookup = function(objType, resultId, resultName) {
+            var inputEle;
+
+            if (objType == 'Case') {
+              inputEle = $('#case-parent');
+              inputEle.val(resultName);
+              inputEle.data('id', resultId);
+            } else {
+              // Set the inputs return value.
+              inputEle = $('#contact-contact-id');
+              inputEle.val(resultId);
+              inputEle.data('id', resultId);
+              // Set the new label.
+              
+                
+              Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.Console311_CaseController.getContactDetails}', resultId, function(result, event) {
+                  $('#contact-contact-id-label').html(resultName);    
+                  
+                  try {
+                    var contactJson = result.length == 1 ? result[0] : {};                      
+                    $('#contact-contact-id-label').html(resultName);  
+                    $('#contact-first-name').val(contactJson.FirstName);  
+                    $('#contact-last-name').val(contactJson.LastName);  
+                    $('#contact-email').val(contactJson.Email);  
+                    $('#contact-phone').val(contactJson.Phone);  
+                    $('#contact-street').val(contactJson.MailingStreet);  
+                    $('#contact-city').val(contactJson.MailingCity);  
+                    $('#contact-state').val(contactJson.MailingState);  
+                    $('#contact-postal-code').val(contactJson.MailingPostalCode);  
+                      
+                    var activePicklistOption = $('.picklist-state .slds-dropdown ul li').filter(function(i,e){return $(e).children('a').data('value').includes(contactJson.MailingStateCode); })
+                    $('.picklist-state .slds-picklist__label').html(activePicklistOption.children('a').html());
+                      
+                    if (activePicklistOption) {
+                      setDropdownInputValue($(activePicklistOption[0]));
+                    }
+                  } catch (e) {
+                    console.log('Could not parse contact details. Please try again later');    
+                  }
+                }, { escape: true }
+              );  
+                
+            }
+          }
+
+          function setDropdownInputValue(ele) {
+            var value = ele.children('a').html();
+
+            if (ele.data('state')) {
+              value = ele.children('a').data('value');
+            }
+
+            value = value == '--None--' ? '' : value;
+            ele.parent().parent().parent().children('.picklist-input').val(value);
+
+            if (isSubmitted) {
+              form.validate();
+            }
+          }
+
+          function validationAndProcessForm(duplicatesAvailable) {
+            $('.loading-spinner').show();
+            isSubmitted = true;
+            console.log(form);
+
+            if (form.validate()) {
+              console.log("Form is valid");
+              //data = {
+              //  case: {type: '', latitude: '', longitude: '', ...},
+              //  flexnotes: {...},
+              //  contact: {firstName: '', lastName: '', ...}
+              //}
+              var formData = {
+                "c": {},
+                "flexnotes": [],
+                "contact": {}
+              };
+
+              for (i = 0; i < form.fields.length; i++) {
+                //console.log('Name: ' + form.fields[i].$element[0].name + ' Value: ' + form.fields[i].value);
+                var fieldName = form.fields[i].$element[0].name;
+                var value = form.fields[i].value;
+
+                // Split the field name so we know what the value applies to.
+                var fieldObj = fieldName.substr(0, fieldName.indexOf('-'));
+                var nameWithoutObject = fieldName.substr(fieldName.indexOf('-') + 1);
+
+                if (typeof value != "undefined" && value) {
+                  if (typeof fieldObj != "undefined" && fieldObj && typeof nameWithoutObject != "undefined" && nameWithoutObject) {
+                    if (fieldObj == 'flexnotes') {
+                      var flexNote = {};
+
+                      // Validate if the current value is a json object or array.
+                      try {
+                        value = JSON.parse(value);
+                        //console.log('----> String was JSON compatible.');
+                      } catch (e) {
+                        // Value was not a json object or array so continue as string.
+                        //console.log("----> String is not JSON compatible.");
+                      }
+
+                      if (isArray(value)) {
+                        flexNote['Answer__c'] = '';
+                        for (var z = 0; z < value.length; z++) {
+                          flexNote['Answer__c'] += value[z];
+                          console.log('----> Stiching together Multi-picklist: ' + z);
+
+                          if (z+1 != value.length) {
+                            flexNote['Answer__c'] += ',';
+                          }
+                        }
+                      } else {
+                        flexNote['Answer__c'] = value;
+                      }
+                      flexNote['Order__c'] = form.fields[i].$element[0].dataset.order;
+                      flexNote['Questions__c'] = form.fields[i].$element[0].dataset.question;
+                      flexNote['FlexNote_Question__c'] = form.fields[i].$element[0].dataset.flexnoteQuestionId;
+                      // Add flexnote obj to flexnotes array.
+                      formData[fieldObj].push(flexNote);
+                    } else if (fieldObj == 'c') {
+                      if (fieldName != 'service-type' && fieldName.indexOf('address') <= -1) {
+                        formData[fieldObj][nameWithoutObject] = value;
+                      }
+                    } else {
+                      formData[fieldObj][nameWithoutObject] = value;
+                    }
+                  }
+                }
+              }
+              // Verify there is a contact. If not then remove the country reference.
+              if (!formData.contact.hasOwnProperty('FirstName') && !formData.contact.hasOwnProperty('ContactId')) {
+                delete formData.contact.MailingCountryCode;
+              }
+              
+              // TODO: Remove this once it's been added to DCMAR package.   
+              var addressInfo = addressLookup[$('#case-address-street').val()];  
+                
+              if ('BLOCKNAME' in addressInfo && 'FULLBLOCK' in addressInfo) {  
+                storeJson(JSON.stringify(formData), addressInfo.BLOCKNAME, addressInfo.FULLBLOCK);  
+              } else {
+                storeJson(JSON.stringify(formData), '', '');
+              }
+                
+              console.log(JSON.stringify(formData));
+              
+            } else {
+              $('.loading-spinner').hide();
+            }
+          }
+
+          /**
+           * isArray
+           *
+           * @description A function to verify if the current value is an array or not.
+           * @author Darkis
+           * @param {object} subject is the variable that is tested for Array identity check
+           */
+          var isArray = (function () {
+              // Use compiler's own isArray when available
+              if (Array.isArray) {
+                  return Array.isArray;
+              }
+              // Retain references to variables for performance
+              // optimization
+              var objectToStringFn = Object.prototype.toString;
+              var arrayToStringResult = objectToStringFn.call([]);
+
+              return function (subject) {
+                  return objectToStringFn.call(subject) === arrayToStringResult;
+              };
+          }());
+    </script>
+    <!-- Scripts to convert src svg to inline svg. -->
+    <apex:outputpanel id="convertSvg">
+      <script>
+           /*
+            * Replace all SVG images with inline SVG
+            */
+            var convertSVGtoInlineSVG = function() {
+              jQuery('img.svg').each(function(){
+                var $img = jQuery(this);
+                var imgID = $img.attr('id');
+                var imgClass = $img.attr('class');
+                var imgURL = $img.attr('src');
+                var imgClickEvent = $img.attr('onclick');
+
+                jQuery.get(imgURL, function(data) {
+                    // Get the SVG tag, ignore the rest
+                    var $svg = jQuery(data).find('svg');
+
+                    // Add replaced image's ID to the new SVG
+                    if(typeof imgID !== 'undefined') {
+                        $svg = $svg.attr('id', imgID);
+                    }
+                    // Add replaced image's classes to the new SVG
+                    if(typeof imgClass !== 'undefined') {
+                        $svg = $svg.attr('class', imgClass+' replaced-svg');
+                    }
+
+                    if(typeof imgClickEvent !== 'undefined') {
+                        $svg = $svg.attr('onclick', imgClickEvent);
+                    }
+
+                    // Remove any invalid XML tags as per http://validator.w3.org
+                    $svg = $svg.removeAttr('xmlns:a');
+                    $svg = $svg.attr('height', '1.25rem');
+                    $svg = $svg.attr('width', '1.25rem');
+
+                    // Replace image with new SVG
+                    $img.replaceWith($svg);
+
+                }, 'xml');
+              });
+            }
+            convertSVGtoInlineSVG();
+      </script>
+    </apex:outputpanel>
+    <!-- Bulk Schedule Scripts -->
+    <apex:outputpanel id="bulkScheduleScripts">
+      <script>
+            function verifyRequestType() {
+              var type = "{!serviceType}";
+              console.log("Here and Type = " + type);
+
+              if ($('#case-address-street').val() != null && $('#search-input').val() === 'Residential Bulk Collection' && $('.flexNoteBulkCollectionNoAddress').is(':visible')) {
+                $('.flexNoteQuestionContainer').html(' ');
+                $('#flexnotes-loading').show();
+                getFlexnotes($('.service-type-description.active').data('id'));
+              }
+            }
+      </script>
+    </apex:outputpanel>
+    <!-- Scripts for Save -->
+    <apex:outputpanel id="onSaveScripts">
+      <script>
+        function verifyResultOfSave() {
+          var caseId = '{!caseId}';
+          var errorMsg = '{!errorMessage}';
+
+          if (typeof caseId != "undefined" && caseId != null && errorMsg == '') {
+			      openNewTab();
+          }
+        }
+
+        var closeTab = function closeTab() {
+          //First find the ID of the current tab to close it
+          sforce.console.getEnclosingTabId(closeSubtab);
+        }
+
+        var closeSubtab = function closeSubtab(result) {
+          //Now that we have the tab ID, we can close it
+          var tabId = result.id;
+          // If the tab has no id and success is false then we're on the navigation tab.
+          if (typeof tabId != "undefined" && tabId != "null") {
+            sforce.console.closeTab(tabId);
+            sforce.console.refreshPrimaryTabById(tabId, true);
+          } else {
+            sforce.console.refreshNavigationTab(null);
+          }
+        };
+
+        var openNewTab = function openNewTab() {
+          var caseId = '{!caseId}';
+          var caseNum = '{!caseNumber}';
+          sforce.console.openPrimaryTab(null, '/' + caseId, true, 'SR #: ' + caseNum, closeTab);
+        }
+      </script>
+    </apex:outputpanel>
+    <apex:outputpanel id="duplicateScriptId">
+      <script>
+           function confirmDuplicate() {
+              // Check for duplicates using the apex value.
+              var duplicatesAvailable = {!IF(duplicateServiceRequests.size > 0, true, false)};
+              console.log(duplicatesAvailable);
+
+              if (duplicatesAvailable) {
+                var selectEle = $(".picklist-input-status");
+                // Filter to check for an select option that contains duplicate and open.
+                var result = $(".picklist-status-list li").filter(function(i, e) {
+                   var option = $(e);
+                   var duplicateOption = option.text().match(/Duplicate/i);
+                   // If the option has the word duplicate in it.
+                   if (typeof duplicateOption != undefined && duplicateOption != null) {
+                     var matched;
+                     if ($(".picklist-input-status").val().match(/close/i) != null) {
+                         matched = option.text().match(/close/i);
+                     } else {
+                         matched = option.text().match(/open/i);
+                     }
+                     // If the duplicate option has
+                     if (typeof matched != 'undefined' && matched != null) {
+                       return option;
+                     }
+                   }
+                   return null;
+                });
+                // If the result is available then use it.
+                if (typeof result != 'undefined' && result != null && result.length > 0) {
+                  selectEle.val($(result).text());
+                }
+                // Show a confirm box to ensure the user wants to save the duplicate value.
+                if(!confirm('Duplicate records have been detected at this address. Are you sure you would like to save this record?')){
+                  return false;
+              	}
+              }
+  			  return true;
+            }
+      </script>
+    </apex:outputpanel>
+  </body>
+</html>
+</apex:page>

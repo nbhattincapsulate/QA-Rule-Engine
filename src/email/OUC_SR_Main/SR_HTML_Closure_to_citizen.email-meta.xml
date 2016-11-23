@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>HTML notification to Citizen upon SR closure</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Closure to citizen</name>
+    <style>freeForm</style>
+    <subject>Your 311 Request has been closed</subject>
+    <textOnly>Dear resident,
+
+Your request for {!Case.Subject} at {!Case.Address__c} was completed on {!Case.ClosedDate} and has been closed by {!Case.Servicing_Agency_Expanded__c}.   Please visit 311.dc.gov to review any notes on your request or to find answers to frequently asked questions.  You may also call 311 and reference service request number {!Case.CaseNumber}. An agent will be happy to answer your questions, concerns or connect you with the correct department. 
+
+Thanks again for contacting the Mayor’s 311 Hotline!</textOnly>
+    <type>html</type>
+</EmailTemplate>

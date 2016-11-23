@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <links>DC_Agencies_and_City_Services_Directory</links>
+    <links>DC_Telephone_Directory_TIPP</links>
+    <links>DC_Web_Mail</links>
+    <links>DMV_Information</links>
+    <links>DPW_Towed_Vehicle_Locator</links>
+    <links>eTims</links>
+    <links>iCarol</links>
+    <links>New_Parking_Meter_Translator</links>
+    <links>QuickBase</links>
+    <pageComponentType>links</pageComponentType>
+</HomePageComponent>

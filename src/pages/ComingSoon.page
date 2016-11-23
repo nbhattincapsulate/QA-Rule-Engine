@@ -1,0 +1,204 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <title>DC 311 | OUC</title>
+
+        <!-- CSS -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet"></link>
+        <style>
+
+        body {
+            background: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            text-align: center;
+        }
+
+
+
+
+        /***** Coming Soon *****/
+
+        .coming-soon {
+            margin: 0 auto;
+            color: #000;
+        }
+
+        .inner-bg {
+            padding: 75px 0 40px 0;
+        }
+
+        .coming-soon .logo {
+          padding-bottom: 20px;
+        }
+
+        .coming-soon .logo h1 {
+          margin: 0;
+        }
+
+        .coming-soon .logo a {
+          display: inline-block;
+          width: 113px;
+          height: 110px;
+          background: url(../img/logo.png) center center no-repeat;
+          text-indent: -99999px;
+        }
+        .coming-soon .logo a:focus { outline: 0; }
+
+        .coming-soon .logo a:before {
+          content: url(../img/logo-hover.png);
+          width: 0;
+          height: 0;
+          visibility: hidden;
+        }
+        .coming-soon .logo a:hover { background-image: url(../img/logo-hover.png); }
+
+        .coming-soon h2 {
+            font-size: 46px;
+            font-weight: 100;
+        }
+
+        .coming-soon p {
+          margin: 40px 0 10px 0;
+            font-size: 22px;
+            line-height: 36px;
+        }
+
+        .timer {
+            margin-top: 60px;
+        }
+
+        .timer .days-wrapper,
+        .timer .hours-wrapper,
+        .timer .minutes-wrapper,
+        .timer .seconds-wrapper {
+            display: inline-block;
+            width: 160px;
+            height: 160px;
+            margin: 0 10px;
+            padding-top: 20px;
+            border: 1px solid #fff;
+            font-size: 18px;
+            -moz-border-radius: 85px;
+            -webkit-border-radius: 85px;
+            border-radius: 85px;
+            cursor: pointer;
+            -o-transition: all .3s;
+            -moz-transition: all .3s;
+            -webkit-transition: all .3s;
+            -ms-transition: all .3s;
+            transition: all .3s;
+        }
+
+        .timer .days-wrapper:hover,
+        .timer .hours-wrapper:hover,
+        .timer .minutes-wrapper:hover,
+        .timer .seconds-wrapper:hover {
+            background: #e8643e;
+            border: 1px solid #e8643e;
+            -o-transition: all .3s;
+            -moz-transition: all .3s;
+            -webkit-transition: all .3s;
+            -ms-transition: all .3s;
+            transition: all .3s;
+        }
+
+        .timer .days,
+        .timer .hours,
+        .timer .minutes,
+        .timer .seconds {
+            font-size: 80px;
+            font-weight: 100;
+            line-height: 90px;
+        }
+
+        .coming-soon p.top-arrow {
+          margin-top: 50px;
+          font-size: 36px;
+        }
+
+        .coming-soon p.top-arrow i {
+          position: relative;
+          width: 100px;
+          height: 37px;
+          overflow: hidden;
+        }
+
+        .coming-soon p.top-arrow i:before {
+          position: absolute;
+          top: 0;
+          left: 33.5px;
+        }
+
+        .coming-soon p.top-arrow i:after {
+          content: "scroll down";
+          position: absolute;
+          top: -30px;
+          left: 0;
+          width: 100px;
+          font-family: 'Roboto', sans-serif;
+          font-size: 18px;
+          font-weight: 300;
+        }
+
+        .coming-soon p.top-arrow i:before,
+        .coming-soon p.top-arrow i:after {
+          -o-transition: all .3s;
+            -moz-transition: all .3s;
+            -webkit-transition: all .3s;
+            -ms-transition: all .3s;
+            transition: all .3s;
+        }
+
+        .coming-soon p.top-arrow i:hover:before { top: 40px; }
+        .coming-soon p.top-arrow i:hover:after { top: 10px; }
+        
+        .logo-image {
+            width:240px;
+            height:240px;
+        }
+        </style>
+
+    </head>
+
+    <body>
+
+        <!-- Coming Soon -->
+        <div class="coming-soon">
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="logo">
+                                 <apex:image id="logo-image" url="{!URLFOR($Resource.DC311,'DC311/assets/img/DC311_Logo.png')}" styleClass="logo-image"/>
+                            </div>
+                            <h2>We're coming soon</h2>
+                            <p>
+                                We are working hard on the new version of our site.
+                                It will bring a lot of new features. Stay tuned!
+                            </p>
+                             <p>
+                                While we are updating the site please call 311 for assistance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
+
+</apex:page>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Request Type  Jurisdiction</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Request Type  Jurisdictions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Agency Code --></label>
+        <name>Agency_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jurisdiction --></label>
+        <name>Jurisdiction__c</name>
+        <relationshipLabel><!-- Service Request Type  Jurisdictions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SLA --></label>
+        <name>SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>ServiceRequestType__c</name>
+        <relationshipLabel><!-- Service Request Type  Jurisdictions --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

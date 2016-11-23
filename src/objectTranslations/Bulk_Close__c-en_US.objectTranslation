@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Bulk Close Log</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Bulk Close Logs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Requester --></label>
+        <name>Requester__c</name>
+        <relationshipLabel><!-- Bulk Close Logs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Request Closure Comments --></label>
+        <name>Service_Request_Closure_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Number --></label>
+        <name>Service_Request_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

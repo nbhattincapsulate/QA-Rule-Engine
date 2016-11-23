@@ -1,0 +1,334 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ServiceRequestStatusCheckController">
+<apex:form id="statusCheck" styleClass="statusCheck">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <title>OUC | Service Home</title>
+            
+            <!-- include all css and js file -->
+            <c:OUC_Assests />
+            
+            <style>
+                .body .standard-form p.note {
+                    font-size: 12px;
+                    margin-left: -18px;
+                    width: 225px;
+                }
+                                
+                p.note, p.note.success {   
+                    width: 40%;
+                }
+                
+                .body .callout span {
+                    color: #cc0000;
+                    padding-bottom: 2px;
+                }
+              
+            </style>
+
+        </head>
+
+        <body>
+            <div class="page-wrapper">
+                <div class="slug-pattern">
+                    <div class="overlay">
+                        <div class="slug-cut"></div>
+                    </div>
+                 </div>
+                 
+                 <!-- header -->
+                 <c:OUC_Header tab="Service Home"/>
+                 <!-- end  of header -->
+        
+               <div class="body">
+                    <div class="body-round"></div>
+                    <div class="body-wrapper">
+                        <div class="side-shadows"></div>
+                            <apex:outputPanel id="Home">
+                                <apex:outputPanel rendered="{!home_rend}">                         
+                                    <div class="content">
+                                        <div class="container callout">
+                                            <div class="twelve columns">
+                                                <h4><span style="color:#2f86a8;font-style:normal;">Service Home</span></h4>                           
+                                            </div> <!-- .twelve columns-->                    
+                                         </div><!-- .container callout-->
+                                        <div class="callout-hr"></div>                        
+                                        <div class="container">
+                                                        
+                                            <div class="block-icons">
+                                                <div class="one-third column" style="width:170px;">
+                                                    <div class="icon">
+                                                        <div class="symbol client"></div>
+                                                        <h6><a href="../apex/ServiceRequest">Submit a New Service Request</a></h6>
+                                                        
+                                                    </div><!-- .icon-->
+                                                </div><!-- .one-third column-->
+                                                <div class="one-third column" style="width:170px;">
+                                                    <div class="icon">
+                                                        <div class="symbol client"></div>
+                                                        <h6><a href="../apex/ServiceRequestStatus">Check Service Request Status</a></h6>
+                                                       
+                                                    </div><!-- .icon-->
+                                                </div><!-- .one-third column-->
+                                               <div class="one-third column" style="width:170px;">
+                                                    <div class="icon">
+                                                        <div class="symbol client"></div>
+                                                        <h6><a href="../apex/ServiceRequestStatus">Check Your Request History</a></h6>
+                                                        
+                                                    </div><!-- .icon-->
+                                                </div><!-- .one-third column-->
+                                                <div class="one-third column" style="width:170px;">
+                                                    <div class="icon">
+                                                        <div class="symbol pushpin"></div>
+                                                        <h6><a href="#">View-311 Service Request Map</a></h6>
+                                                       
+                                                    </div><!-- .icon-->
+                                                </div><!-- .one-third column-->
+                                                <div class="one-third column" style="width:170px;">
+                                                    <div class="icon">
+                                                        <div class="symbol client"></div>
+                                                        <h6><a href="#">Resolution Time Table</a></h6>
+                                                        
+                                                    </div><!-- .icon-->
+                                                </div><!-- .one-third column-->
+                                            </div><!-- .block-icons-->
+                                            <div class="sixteen columns">    
+                                                               
+                                                <div class="two-thirds column alpha" style="width:940px;">
+                                                    <div class="title-wrapper">
+                                                        <div class="section-title">
+                                                            <h4 class="title">Frequently Asked Questions</h4>
+                                                        </div><!-- .section-title-->
+                                                        <span class="divider"></span>
+                                                        <div class="clear"></div>
+                                                    </div><!-- .title-wrapper-->
+                                                    <ul class="accordion" id="1">
+                                                        <li>
+                                                            <div class="parent first">
+                                                                <h6><div class="accordion-caption"></div>A contractor is doing work on my property, who is responsible for obtaining the permit?</h6>
+                                                            </div>
+                                                            <div class="tcontent">
+                                                                 This is a decision made between the homeowner and the contractor. The ultimate responsibility for obtaining the permit is the property owner. Direct any questions to the Public Space Permit office 202-442-4670.
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="parent">
+                                                                <h6><div class="accordion-caption"></div>How can I access DCs traffic cameras? What are the locations of DC traffic cameras?</h6>
+                                                            </div>
+                                                            <div class="tcontent">
+                                                                Click on the link below to access DC traffic camera information. Click a green dot on the interactive map to view a real time live feed of the location.
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="parent active">
+                                                                <h6><div class="accordion-caption"></div>How can I get a tree pruned? </h6>
+                                                            </div>
+                                                            <div class="tcontent">
+                                                                A resident may request an investigation regarding the necessity to prune a tree. Any tree that has fallen on homes or vehicles will be inspected and cleared in a timely manner.
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div><!-- .two-thirds column alpha-->
+                                                
+
+                                                <div class="clear"></div>
+                                                <span class="hr"></span>
+                                                 
+                                                <div class="callout intext">                                                                                                                                                                              
+                                                        
+                                                    <div class="alpha twelve columns">                                                                                                      
+                                                        <div class="content">                                                          
+                                                            
+                                                           <apex:outputPanel id="StatusCheck">
+                                                               <apex:outputPanel rendered="{!rend}">                                                        
+                                                                <h4>Status Check</h4>
+                                                                <p class="subtitle">This section allows you to check the status of previously submitted service requests.</p>
+                                                                
+                                                                <div class="standard-form compressed">                                                               
+                                                                    <div class="form-result"></div> 
+                                                                    <div style="color:red;display;inline;"><apex:pageMessages id="error_msg"/></div>                                                               
+                                                                    <form action="#" class="contactForm" id="contactus" name="contactus">
+                                                                       <apex:inputText value="{!requestId}" id="SRNumber" styleClass="input" html-placeholder="Service Request Number *" style="float: left; margin: 0 30px 16px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #000000; display: block;height: 30px;margin-bottom: 35px; text-indent: 5px;"/>
+                                                                       <!--<apex:inputText value="{!email}" id="Email" styleClass="input" html-placeholder="Email Address *"  style="float: left; margin: 0 30px 16px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 35px; text-indent: 5px;"/>-->
+                                                                        <div class="submit">
+                                                                              <apex:actionFunction name="statuscheck" action="{!action}" reRender="Home,StatusCheck,StatusCheckResult"> 
+                                                                                  <apex:param value="" assignTo="{!requestId}" name="requestId"/>
+                                                                                  <apex:param value="" assignTo="{!email}" name="email"/>
+                                                                              </apex:actionFunction>
+                                                                        </div>
+                                                                        <div class="clear"></div>
+                                                                    </form>
+                                                                </div>                                                                                                                                                          
+                                                             </apex:outputPanel>
+                                                             </apex:outputPanel>    
+                                                            </div><!-- .content-->
+                                                        </div><!-- .alpha twelve columns -->
+                                                           
+                                                        <div class="omega four columns">
+                                                           <div class="intext-button">
+                                                                <a href="javascript:contactUsSubmit();" class="big-button" style="top:85px;"><span>Check Status</span></a>
+                                                           </div>
+                                                        </div><!-- .omega four columns -->                                               
+                                                    
+                                        
+                                                    <div class="clear"></div>                                                  
+                                                 
+                                                </div> <!-- .callout intext -->                            
+                                            </div><!-- .sixteen columns--> 
+                            
+                                        <!--<div class="clients columns sixteen slidewrap2">
+                                            <ul class="slider carousel" id="clientSlider">
+                                                <li class="slide">
+                                                    <div class="client alpha">
+                                                        <a href="#"><img id="transparent" src="images/logo1.png" /></a>
+                                                    </div>
+                                                    <div class="client beta">
+                                                        <a href="#"><img id="transparent" src="images/logo2.png" /></a>
+                                                    </div>
+                                                    <div class="client delta">
+                                                        <a href="#"><img id="transparent" src="images/logo3.png" /></a>
+                                                    </div>
+                                                    <div class="client omega">
+                                                        <a href="#"><img id="transparent" src="images/logo4.png" /></a>
+                                                    </div>
+                                                </li>
+                                            
+                                                <li class="slide">
+                                                    <div class="client alpha">
+                                                        <a href="#"><img id="transparent" src="images/logo2.png" /></a>
+                                                    </div>
+                                                    <div class="client beta">
+                                                        <a href="#"><img id="transparent" src="images/logo3.png" /></a>
+                                                    </div>
+                                                    <div class="client delta">
+                                                        <a href="#"><img id="transparent" src="images/logo4.png" /></a>
+                                                    </div>
+                                                    <div class="client omega">
+                                                        <a href="#"><img id="transparent" src="images/logo1.png" /></a>
+                                                    </div>
+                                                </li>
+                                            </ul>                            
+                                        </div>--> <!-- .clients columns sixteen slidewrap2 --> 
+                                        <div class="clear"></div>
+                                        <div class="sixteen columns">
+                                            <span class="hr lip-quote"></span>
+                                            <blockquote class="standard bottom">
+                                                "Making the simple complicated is commonplace; making the complicated simple, awesomely simple, that's creativity" <br />- Charles Mingus
+                                            </blockquote>
+                                        </div><!-- .sixteen columns -->
+                                    </div>
+                                </div><!-- .content --> 
+                            </apex:outputPanel>
+                        </apex:outputPanel>                                    
+                
+                        <apex:outputPanel id="StatusCheckResult">
+                            <apex:outputPanel rendered="{!render}" >
+                                <div class="content">
+                                    <div class="container callout standard">
+                                        <div class="twelve columns">
+                                            <h4>Status Check</h4>
+                                             <!--<p class="link-location"><a href="index.html">Home</a> / <a href="#">Some Link</a> / <a href="#">Current Page</a></p>-->
+                                        </div>
+                                        <div class="four columns button-wrap">
+                                            <div class="wrapper search">
+                                                <form action="">
+                                                    <input type="text" class="search-box" name="" value="" placeholder='Search...' />
+                                                    <input type="image" src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/design/search-icon.png')}" class="searchbox-submit" value=""/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="callout-hr"></div>
+                                      
+                                    <div class="container"> 
+                                        <!-- Display Map --> 
+                                        <div class="sixteen map columns"> 
+                                             <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDX9ur1Wl-FKC6j6RUbt6t9WdtDAjM4pLQ&q={!caserecord.Address__c}"></iframe>                                                                                                                                   
+                                             <!--<iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=google&amp;aq=&amp;sll=37.6,-95.665&amp;sspn=38.949025,86.572266&amp;ie=UTF8&amp;hq=google&amp;hnear=&amp;t=m&amp;cid=10048610331046050672&amp;ll=40.744071,-74.002533&amp;spn=0.02276,0.036564&amp;z=14&amp;output=embed"></iframe>-->
+                                        </div>                                       
+
+                                        <div class="sixteen columns">
+                                           <span class="hr mapdv"></span>                                          
+                                        </div>
+                                
+                                        <div class="eight columns">
+                                            <h5 class="semi"><a href="#">Service Request Status Details</a> <!--<a class="button color" href="javascript:history.go(-1);" onclick="javascript:history.go(-1);" style="float:right; margin-right:150px;"><span>Go Back</span></a>--></h5>                                
+                                            <p>
+                                                <strong>Service Request Number:</strong> &nbsp; {!caserecord.CaseNumber__c}<br />                                       
+                                                <strong>Service Type:</strong> &nbsp;
+                                                    <apex:repeat value="{!servicename}" var="sr">                                                               
+                                                        {!sr.Service_Name__c}
+                                                    </apex:repeat><br />                          
+                                                <strong>Service Location:</strong> &nbsp; {!caserecord.Address__c}<br />                 
+                                                <strong>Status:</strong>
+                                                    <!--<apex:repeat value="{!servicename}" var="sr">  -->                                                             
+                                                        {!caserecord.status__c}
+                                                    <!--</apex:repeat>--><br />                           
+                                               <strong>Created On:</strong> &nbsp; 
+                                                     <!--<apex:repeat value="{!servicename}" var="sr"> -->                                                                
+                                                        {!caserecord.CreatedDate__c}
+                                                     <!--</apex:repeat> --> 
+                                            </p>                          
+                                         
+                                        </div>
+                                        <div class="eight columns">
+                                            <div class="standard-form compressed">
+                                                <h5 class="semi"><a href="#">Activities Performed</a></h5>
+                                                 <apex:variable var="count" value="{!1}"/>
+                                                        <apex:repeat value="{!caserecord}" var="c">
+                                                            <apex:repeat value="{!c.OUC_Activity_Histories__r}" var="tsk">
+                                                             <apex:pageBlock rendered="{!IF(tsk.External_Comments__c !=null,true,false)}">
+                                                                <p>                                                   
+                                                                    {!count}. <strong>{! tsk.Task_Short_Name__c}</strong><br />   
+                                                                    Status:&nbsp;{! tsk.Status__c}<br />  
+                                                                    Due Date:&nbsp;{! tsk.Due_Date__c} <br /> 
+                                                                    Completed Date:&nbsp;{! tsk.Completion_Date__c } <br /> 
+                                                                    Details:&nbsp;{! tsk.External_Comments__c}  
+                                                                </p>
+                                                                </apex:pageBlock>
+                                                                <apex:variable var="count" value="{!count + 1}"/>
+                                                            </apex:repeat>
+                                                        </apex:repeat>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>                  
+                    </div><!-- .body-wrapper -->
+                </div><!-- .body -->
+
+
+                <!-- footer -->
+                <c:OUC_Footer />
+                <!-- end of footer -->
+            </div>
+            <script type="text/javascript">            
+                $(window).load(function(){
+                     $("a[class^='prettyPhoto']").prettyPhoto({social_tools: '' });
+                });
+                
+                $(document).ready(function() {
+                    $('.slidewrap, .slidewrap2').carousel({
+                        slider: '.slider',
+                        slide: '.slide',
+                        slideHed: '.slidehed',
+                        nextSlide : '.next',
+                        prevSlide : '.prev',
+                        addPagination: false,
+                        addNav : false
+                    });
+                    $('.slide.testimonials').contentSlide();
+                });            
+            </script>
+           
+            <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.color.animation.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/ajax_default.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/email_conf.js')}"/>
+            <script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
+            <script type="text/javascript" src="http://api.twitter.com/1/statuses/user_timeline/EmpiricalThemes.json?callback=twitterCallback2&count=2"></script>
+        
+    </body>
+  </html>
+</apex:form>
+</apex:page>

@@ -1,0 +1,56 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false">
+<html lang="en">
+<head>
+  <title>DC311 Portal</title>
+  <meta charset="UTF-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+
+  <apex:remoteObjects jsNamespace="DoesNotMatter">
+  
+    <apex:remoteObjectModel name="User" fields="Id,ContactId,Name" />
+  
+    <apex:remoteObjectModel name="Service_Request_History__c" fields="Id,Name,CaseNumber__c,Origin__c,DateTimeOpened__c,Expected_Resolution_Date__c,Priority__c,Status__c,SLA__c,External_System_Name__c,Address__c,SRType__c,Contact_Email__c,Service_Request_Id__c,Description__c" />
+  
+    <apex:remoteObjectModel name="OUC_Activity_History__c" fields="Id,Service_Request_History__c,External_Comments__c,Task_Short_Name__c,Status__c,Due_Date__c,Completion_Date__c" />
+  
+    <apex:remoteObjectModel name="CaseComment" fields="Id,ParentId,CommentBody,CreatedById,CreatedDate" />
+  
+    <apex:remoteObjectModel name="Flex_Note_History__c" fields="Id,Flex_Note_Id__c,Answer__c,Order__c,FlexNote_Question__c,Questions__c,Service_Request_History__c" />
+  
+    <apex:remoteObjectModel name="FlexNoteQuestion__c" fields="Id,Name,Answer_Type__c" />
+  
+  </apex:remoteObjects>
+
+  <!-- inject:css -->
+  <link ios-href="{!URLFOR($Resource.DC311PortalResources, 'css/app.ios.css')}" rel="stylesheet"></link>
+  <link md-href="{!URLFOR($Resource.DC311PortalResources, 'css/app.md.css')}" rel="stylesheet"></link>
+  <link wp-href="{!URLFOR($Resource.DC311PortalResources, 'css/app.wp.css')}" rel="stylesheet"></link>
+  <!-- endinject -->
+</head>
+<body>
+  <script>
+    window.SF_ACCESS_TOKEN = '{! $Api.Session_ID }';
+    window.identity = {
+      display_name: '{! $User.FirstName } {! $User.LastName }',
+      first_name: '{! $User.FirstName }',
+      last_name: '{! $User.LastName }',
+      nick_name: '{! $User.CommunityNickname }',
+      addr_country: '{! $User.Country }',
+      email: '{! $User.Email }',
+      mobile_phone: '{! $User.MobilePhone }',
+      user_id: '{! $User.Id }'
+    };
+  </script>
+
+  <ion-app></ion-app>
+
+  <!-- inject:js -->
+  <script src="{!URLFOR($Resource.DC311PortalResources, 'js/Reflect.js')}"></script>
+  <script src="{!URLFOR($Resource.DC311PortalResources, 'js/es6-shim.min.js')}"></script>
+  <script src="{!URLFOR($Resource.DC311PortalResources, 'js/zone.js')}"></script>
+  <script src="{!URLFOR($Resource.DC311PortalResources, 'js/app.bundle.js')}"></script>
+  <!-- endinject -->
+</body>
+</html>
+
+</apex:page>

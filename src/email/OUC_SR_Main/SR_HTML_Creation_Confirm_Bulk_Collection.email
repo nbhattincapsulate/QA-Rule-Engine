@@ -1,0 +1,20 @@
+<messaging:emailTemplate subject="DC 311 Service Request {!relatedTo.CaseNumber} Received" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+<p>Automated Response E-mail Notification:   Receipt of Service Request - DO NOT REPLY</p>
+<br/>
+<p>DC 311 Service Request {!relatedTo.CaseNumber} Received</p>
+<br/>
+<p>Thank you for submitting your request using DC311!  We welcome the opportunity to serve you.</p>
+<br/>
+<p>Service Request Number: {!relatedTo.CaseNumber}</p>
+<p>Service Request Type: {!relatedTo.Subject}</p>
+<p>Servicing Agency: {!relatedTo.Servicing_Agency_Expanded__c}</p>
+<p>Expected Resolution Days: {!relatedTo.SLA__c} days</p>
+<!-- Component goes here. -->
+<p><c:Email_Case_Bulk_Date parentId="{!relatedTo.Id}"/></p>
+<br/>
+<p>This request has been added to the Service Request Tracking System for review and resolution. Please retain this number for your records.  It can be used in conjunction with your email address to obtain status of your Service Request on-line 24 hours a day by going to http://dc.gov/311.</p>
+<br/>
+<p>DC 311</p>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

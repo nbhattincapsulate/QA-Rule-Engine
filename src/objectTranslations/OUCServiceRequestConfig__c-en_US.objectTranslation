@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>OUC ServiceRequest Config</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>OUC ServiceRequest Config</value>
+    </caseValues>
+    <fields>
+        <label><!-- Bulk Collection Schedule QuestionCode --></label>
+        <name>BulkCollectionScheduleQuestionCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bulk Collection Schedule Question --></label>
+        <name>BulkCollectionScheduleQuestion__c</name>
+    </fields>
+    <fields>
+        <label><!-- BulkSchedule DailyStopLimit --></label>
+        <name>BulkScheduleDailyStopLimit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Default Businesshours Name --></label>
+        <name>DefaultBusinesshoursName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Days --></label>
+        <name>NumberofDays__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,1103 @@
+<apex:page controller="AgentConsoleCntrl">
+    <apex:includeScript value="//code.jquery.com/jquery-1.10.2.js" />
+    <apex:includeScript value="//code.jquery.com/ui/1.11.1/jquery-ui.js" />
+    <apex:styleSheet value="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+   
+   
+    <style>
+        .displayNone { 
+            display:none; 
+        }
+        .displayBlock {
+            display:block;
+        }
+        .ui-autocomplete-loading { 
+            background: white url(/img/loading32.gif) right center no-repeat;
+            background-size:15px 15px; 
+        }
+        .placeHolder {
+            font-style: italic;
+        }
+        
+       .ui-autocomplete {
+            max-height: 100px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+      }
+     
+      * html .ui-autocomplete {
+           height: 100px;
+      }
+      
+      .customOPStyle{
+         max-height: 100px;
+         overflow:auto;
+         width:100%;
+         
+      }
+      
+       /* dialog div must be hidden */
+        #basicModal{
+            display:none;
+        }
+      
+    </style>   
+   
+    <script>
+    // jquery funtion for pop up.
+     $ = jQuery.noConflict();   
+    
+      function doClone(){
+        $( '<div></div>' ).dialog({
+            resizable: false,
+            height:140,
+            modal: true,
+            open: function() {
+                 var markup = 'Please slect one of the following,';
+                 $(this).html(markup);
+            },
+            title: "Confirmation",
+            buttons: {
+                "Duplicate": function() {
+                    doCloneDuplicateSR();
+                    $( this ).dialog( "close" );                    
+                },
+                "Copy": function() {
+                    doCloneCopySR();
+                    $( this ).dialog( "close" );                    
+                },
+                "Cancel": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+       }
+    
+    </script>
+    
+    <script type="text/javascript">
+          /* invoked from search button and also on change of search fields*/ 
+          function doSearchFcnCall(){
+              searchFn(
+                document.getElementById("serviceRequestNumId").value,
+                document.getElementById("contactPhoneId").value,
+                document.getElementById("serviceRequestTypeId").value,
+                document.getElementById("ContactEmailId").value,
+                document.getElementById("serviceRequestAddress").value
+                );
+          }
+          
+          /* clear search data */
+          function doSearchClear(){              
+                document.getElementById("serviceRequestNumId").value='';
+                document.getElementById("contactPhoneId").value='',
+                document.getElementById("serviceRequestTypeId").value='';
+                document.getElementById("ContactEmailId").value='';
+                document.getElementById("serviceRequestAddress").value='';
+                
+          }
+          
+          
+          $ = jQuery.noConflict();
+          var isSearchSectionEnabled;
+          var isLocationValidationEnabled;
+          $(document).ready(function() {
+              isSearchSectionEnabled=false;
+              isLocationValidationEnabled=false;
+          });
+          /*USED TO COLLAPSE SEARCH SECTION*/
+          /*HARDCODE THE IDS NEED TO CHANGE  */
+          
+          
+          function doSearchSectionCollapse(){
+              //if(isSearchSectionEnabled==false){
+                  twistSection(document.getElementById('j_id0:j_id5:j_id6:searchPGSID').childNodes[0].childNodes[0]);
+                  //isSearchSectionEnabled=true;
+                  //console.log('need to check html--'+document.getElementById('j_id0:j_id5:j_id6:searchPGSID').childNodes[0].childNodes[0].innerHTML);
+                  //console.log('if condition--');
+              //}
+          }
+          /*USED TO COLLAPSE LocationValidation SECTION*/
+          function doLocationSectionCollapse(){
+              twistSection(document.getElementById('j_id0:j_id5:j_id6:locationPGBSId').childNodes[0].childNodes[0]);
+          }
+          
+          
+          function toggle_visibility(id) {
+             var e = document.getElementById(id);
+             if(e.style.display == 'block')
+                e.style.display = 'none';
+             else
+                e.style.display = 'block';
+          }    
+     </script> 
+     
+     <apex:form >
+       <apex:pageblock >
+             <!-- Start : error msg -->
+             <apex:outputPanel id="pageMessages" layout="block" rendered="{!isErrorMsg}">  
+                 <apex:pageMessages id="msgId"/> 
+             </apex:outputPanel>
+             <!-- end : error msg -->
+             
+             <!-- start: search -->
+             <apex:outputPanel id="searchOPPSId"> 
+                <apex:pageBlockSection Title="Search " columns="2" collapsible="true" id="searchPGSID" >
+                    <apex:pageblocksectionitem >
+                        <apex:OutputLabel Value="Service Request Number"></apex:OutputLabel>
+                        <input type="text" id="serviceRequestNumId" onchange="doSearchFcnCall();" />
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem >
+                       <apex:OutputLabel Value="Contact Phone"></apex:OutputLabel>
+                        <input type="text"  id="contactPhoneId" />
+                    </apex:pageblocksectionitem> 
+                    
+                    <apex:pageblocksectionitem >
+                        <apex:OutputLabel Value="Service Type"></apex:OutputLabel>
+                        <input type="text" id="serviceRequestTypeId" />
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem >
+                       <apex:OutputLabel Value="Contact Email"></apex:OutputLabel>
+                       <input type="text"  id="ContactEmailId" />
+                    </apex:pageblocksectionitem>  
+                    
+                    <apex:pageblocksectionitem >
+                       <apex:OutputLabel Value="Service Address"></apex:OutputLabel>
+                       <input type="text"  id="serviceRequestAddress" />
+                    </apex:pageblocksectionitem>                      
+                   
+                </apex:pageblocksection>                
+             </apex:outputPanel>             
+            
+            
+                <apex:panelGrid columns="3" id="theGrid">
+                    <input type="button" value="Search" onclick="doSearchFcnCall();"/>
+                    <apex:commandbutton value="Clear" onclick="doSearchClear();" reRender="searchIpOPId,pageMessages,scriptID"/>
+                </apex:panelGrid>            
+            <!-- end : search -->
+            
+            <apex:outputPanel id="closeCaseGrid" rendered="{!AND(NOT(ISNULL(casesList)),casesList.size >0)}">
+                <!-- <apex:panelGroup id="theGroup" rendered="{!AND(NOT(ISNULL(casesList)),casesList.size >0)}">-->
+                    <apex:outputLabel value="Include CloseCases" />
+                    <apex:inputCheckbox value="{!isClosedCases}" label="Included CloseCases" onchange="doSearchFcnCall();"/>
+                <!--</apex:panelGroup>-->                  
+            </apex:outputPanel> 
+            
+            <apex:outputPanel id="caseDetailsOPId">
+                <apex:outputPanel layout="block" styleClass="customOPStyle" rendered="{!AND(NOT(ISNULL(casesList)),casesList.size >0)}">
+                     <apex:pageblockTable value="{!casesList}" var="selCC" >
+                          <apex:column headerValue="Action">
+                              <input type="radio" name="selCase1" >
+                                  <apex:actionSupport event="onclick" action="{!doRetreieveContactCasesFlexNotes}" oncomplete="doLocationSectionCollapse();" reRender="CaseOPId,ContactOPId,ServiceOPId,scriptID,caseOUCHistoryOPId,caseHistoryOPId,panelpgeBlockButtonsId,panelpgeBlockButtonsId1">
+                                      <apex:param name="caseParm" value="{!selCC.Id}" assignTo="{!selectedParamCaseId}"/>
+                                  </apex:actionSupport>
+                              </input>
+                          </apex:column>
+                          
+                          <apex:column headerValue="Service Request Number">
+                              <apex:outputField value="{!selCC.Service_Request_Number__c}" style="padding-margin:50px;"/>
+                          </apex:column>
+                          
+                          <apex:column headerValue="Date/Time Opened">
+                              <apex:outputField value="{!selCC.CreatedDate}" style="padding-right:50px;"/>
+                          </apex:column>                              
+                              
+                          <apex:column headerValue="Status">
+                              <apex:outputField value="{!selCC.Status}" style="padding-right:50px;"/>
+                          </apex:column>
+                          
+                          <apex:column headerValue="Service Agency">
+                              <apex:outputField value="{!selCC.SRType__r.Agency__c}" style="padding-margin:50px;"/>
+                          </apex:column>
+                          
+                          
+                          <apex:column headerValue="Service Request Type">
+                              <apex:outputField value="{!selCC.SRType__r.Service_Name__c}" style="padding-margin:50px;"/>
+                          </apex:column>
+                          
+                          <apex:column headerValue="Address">
+                              <apex:outputField value="{!selCC.Address__c}" style="padding-right:50px;"/>
+                          </apex:column>
+                      </apex:pageblocktable>
+                   </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <!-- start : contact -->
+                <apex:outputPanel id="ContactOPId"> 
+                    <apex:pageBlockSection Title="Participant Information" columns="2" collapsible="true">
+                        <apex:pageblocksectionitem >
+                               <apex:outputlabel value="First Name"></apex:outputlabel>                             
+                               <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredInput','')}">
+                                   <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredBlock','')}"/>
+                                   <apex:inputText value="{!contactCaseFlexNote.selContact.FirstName}"></apex:inputText>
+                               </apex:outputpanel>                         
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                                                          
+                              <apex:outputlabel value="Last Name"></apex:outputlabel>                             
+                               <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredInput','')}">
+                                   <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredBlock','')}"/>
+                                   <apex:inputText value="{!contactCaseFlexNote.selContact.LastName}"></apex:inputText>
+                               </apex:outputpanel>                                                     
+                         </apex:pageblocksectionitem>
+                         
+                        <apex:pageblocksectionitem >
+                             <apex:OutputLabel Value="Phone"></apex:OutputLabel>                     
+                             <apex:inputText value="{!contactCaseFlexNote.selContact.Phone}"></apex:inputText>
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >
+                              <apex:outputlabel value="Email"></apex:outputlabel>                             
+                               <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredInput','')}">
+                                   <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ContactStatus__c == 'Required (LN, FN, EM)','requiredBlock','')}"/>
+                                   <apex:inputText value="{!contactCaseFlexNote.selContact.Email}"></apex:inputText>
+                               </apex:outputpanel>                            
+                        </apex:pageblocksectionitem>  
+                        
+                        <apex:pageblocksectionitem >
+                            <apex:outputLabel value="Contact"></apex:outputLabel>
+                            <apex:inputField value="{!contactCaseFlexNote.selCase.ContactId}" Id="ContId" onchange="contactFnCall(document.getElementById(this.id+'_lkid').value,this.value);"></apex:inputField>
+                        </apex:pageblocksectionitem>                        
+                        
+                        <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="Street"></apex:OutputLabel>                   
+                            <apex:inputText value="{!contactCaseFlexNote.selContact.MailingStreet}"></apex:inputText>                           
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="City"></apex:OutputLabel>
+                            <apex:inputText value="{!contactCaseFlexNote.selContact.MailingCity}"></apex:inputText>                            
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="State"></apex:OutputLabel>
+                            <apex:inputField value="{!contactCaseFlexNote.selContact.MailingStateCode}"></apex:inputField>                           
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="Country "></apex:OutputLabel>
+                            <apex:inputField value="{!contactCaseFlexNote.selContact.MailingCountryCode}"></apex:inputField>                          
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                             <apex:OutputLabel Value="PostalCode "></apex:OutputLabel> 
+                             <apex:inputText value="{!contactCaseFlexNote.selContact.MailingPostalCode}"></apex:inputText>                          
+                         </apex:pageblocksectionitem>                        
+                    </apex:pageblocksection>                
+                 </apex:outputPanel> 
+                 <!-- end : contact -->
+                 
+                   <!-- start : location info -->
+                 <apex:outputPanel id="LocationInfoOPId">
+                     <apex:pageBlockSection Title="Service Request Location" columns="2" collapsible="true" id="locationPGBSId">
+                        <apex:pageblocksectionitem >                             
+                            <apex:outputlabel value="Street"></apex:outputlabel>
+                            <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ServiceLocationRequired__c == true,'requiredInput','')}">
+                                   <apex:outputpanel layout="block" styleClass="{!IF(contactCaseFlexNote.sRType.ServiceLocationRequired__c == true,'requiredBlock','')}"/>
+                                <apex:inputText value="{!locationData.street}" id="streetIpId"  onkeyUp="doAddressValidationCall(this.value);"  style="width:200px"/>                           
+                            </apex:outputpanel>                              
+                         </apex:pageblocksectionitem>  
+                       
+                         <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="City"></apex:OutputLabel>
+                            <apex:inputText value="{!locationData.city}" disabled="true" Id="cityId"/>                           
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                            <apex:OutputLabel Value="State"></apex:OutputLabel>
+                            <apex:inputText value="{!locationData.state}" disabled="true" id="stateId"/>                           
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                             <apex:OutputLabel Value="Country"></apex:OutputLabel>
+                             <apex:inputText value="{!locationData.country}" disabled="true" id="countryId"/>                          
+                         </apex:pageblocksectionitem>
+                         
+                         <apex:pageblocksectionitem >                           
+                             <apex:OutputLabel Value="ZipCode"></apex:OutputLabel>
+                             <apex:inputText value="{!locationData.zipCode}" id="zipCodeId"/>                         
+                         </apex:pageblocksectionitem>
+                     </apex:pageBlockSection>
+                     
+                     <!-- hidden fields-->
+                         <apex:inputHidden value="{!locationData.longitude}" id="gLonId"/>
+                         <apex:inputHidden value="{!locationData.latitude}" id="gLatId"/>
+                         <apex:inputHidden value="{!locationData.addressId}" id="addressId"/>
+                         <apex:inputHidden value="{!locationData.intersectionFullAddress}" id="fullAddrId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.placename}" id="aliasId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.intersectionId}" id="interSectionId" ></apex:inputHidden>
+                          
+                         <apex:inputHidden value="{!locationData.quadrant}" id="qId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.xCoord}" id="xCId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.yCoord}" id="yCId"></apex:inputHidden>
+                         
+                         <apex:inputHidden value="{!locationData.aNC}" id="aNCId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.pSA}" id="pSAId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.ward}" id="wardId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.sMD}" id="sMDId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.podList}" id="podListId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.cluster}" id="clusterId"></apex:inputHidden>
+                         
+                         <apex:inputHidden value="{!locationData.blockName}" id="blockNameId"></apex:inputHidden>
+                         <apex:inputHidden value="{!locationData.fullBlock}" id="fullBlockId"></apex:inputHidden> 
+                     <!-- end -->
+                     
+                      <apex:commandbutton action="{!retrieveAdresses}" value="Validate Address" reRender="LocationInfoOPId,resultAddressOPId,pageMessages,scriptID" ></apex:commandbutton> 
+                 </apex:outputPanel>  
+                 <!-- end : location info -->   
+                  
+                 <!-- start: mar location info --> 
+                 <apex:outputPanel id="resultAddressOPId">
+                     <apex:outputPanel layout="block" styleClass="customOPStyle" rendered="{!AND(NOT(ISNULL(resultAddress)),resultAddress.size >0)}">            
+                        <apex:pageBlockTable value="{!resultAddress}" var="rA" >
+                            <apex:column headerValue="Action">
+                                <input type="radio" name="addr">
+                                    <apex:actionSupport event="onclick" action="{!doAddressSelection}" reRender="LocationInfoOPId,CaseOPId,scriptID,duplicateSRListId">
+                                        <apex:param value="{!rA.street}" name="selStreetParm" ></apex:param>
+                                        <apex:param value="{!rA.city}" name="selCityParm" ></apex:param>
+                                        <apex:param value="{!rA.state}" name="selStateParm" ></apex:param>
+                                        <apex:param value="{!rA.country}" name="selCountryParm" ></apex:param>
+                                        <apex:param value="{!rA.zipCode}" name="selZipCodeParm" ></apex:param>
+                                        <apex:param value="{!rA.longitude}" name="selLongituteParm" ></apex:param>
+                                        <apex:param value="{!rA.latitude}" name="selLatitudeParm" ></apex:param>
+                                        <apex:param value="{!rA.addressId}" name="selAddressIdParm"></apex:param>
+                                        <apex:param value="{!rA.intersectionId}" name="selInterIdParam"></apex:param>
+                                        <apex:param value="{!rA.intersectionFullAddress}" name="selInterFullAdrsParam"></apex:param>
+                                        <apex:param value="{!rA.placename}" name="selAliasParam"></apex:param>
+                                        <apex:param value="{!rA.quadrant}" name="selQuadrantParam"></apex:param>
+                                        <apex:param value="{!rA.xCoord}" name="selXCoordParam"></apex:param>
+                                        <apex:param value="{!rA.yCoord}" name="selYCoordParam"></apex:param>
+                                        <apex:param value="{!rA.aNC}" name="selANCParam"></apex:param>
+                                        <apex:param value="{!rA.pSA}" name="selPSAParam"></apex:param>
+                                        <apex:param value="{!rA.ward}" name="selWardParam"></apex:param>
+                                        <apex:param value="{!rA.sMD}" name="selSMDParam"></apex:param>
+                                        <apex:param value="{!rA.podList}" name="selPodlistParam"></apex:param>
+                                        <apex:param value="{!rA.cluster}" name="selClusterParam"></apex:param>
+                                        
+                                        <apex:param value="{!rA.fullBlock}" name="selfullBlockParam"></apex:param>
+                                        <apex:param value="{!rA.blockName}" name="selblockNameParam"></apex:param>
+                                    </apex:actionSupport>
+                                </input>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Name">
+                                <apex:OutputText rendered="{!rA.placename!=null}">{!rA.placename} </apex:OutputText>
+                                <apex:OutputText rendered="{!rA.intersectionFullAddress!=null}"> {!rA.intersectionFullAddress} </apex:OutputText>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Street">
+                                <apex:OutputText >{!rA.street}</apex:OutputText>
+                            </apex:column>
+                          
+                            <apex:column headerValue="ZipCode">
+                                <apex:OutputText >{!rA.zipCode} </apex:OutputText>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Longitude">
+                                <apex:OutputText > {!rA.longitude}</apex:OutputText>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Latitude">
+                                <apex:OutputText >{!rA.latitude}</apex:OutputText>
+                            </apex:column>                           
+                           
+                        </apex:pageblockTable>                 
+                     </apex:outputPanel>            
+                   </apex:outputPanel>
+                   <!-- end : mar location info --> 
+                    
+                    <!-- start : Service request info-->
+                    <apex:outputPanel id="CaseOPId">                        
+                        <apex:pageBlockSection Title="Service Request Information" columns="2">                      
+                              <apex:pageblocksectionitem >
+                             <!-- Start : error msg -->
+                             <apex:outputPanel id="pageMessages1" layout="block" rendered="{!isErrorMsgSr}">  
+                                 <apex:pageMessages id="msgId1"/> 
+                             </apex:outputPanel>
+                             <!-- end : error msg --> 
+                             </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                             <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                             <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >                             
+                                <apex:outputlabel value="Service Type"></apex:outputlabel>
+                                <apex:outputpanel layout="block" styleClass="requiredInput">
+                                     <apex:outputpanel layout="block" styleClass="requiredBlock"/>
+                                     <apex:inputText Value="{!contactCaseFlexNote.sRType.Service_Name__c}" id="selSRTypeId" style="width:200px">
+                                     <apex:actionsupport event="onblur" action="{!doRetrieveFlexNotesAnswer}" reRender="CaseOPId,ServiceOPId,msgId,scriptID,duplicateSRListId,ContactOPId,LocationInfoOPId" status="counterStatus"/> 
+                                 </apex:inputText>
+                                  <!-- <apex:selectList value="{!contactCaseFlexNote.sRType.Service_Name__c}" multiselect="false" size="1" id="selSRTypeId" style="padding: 0px 0px; height:20px;">
+                                     <apex:selectOptions value="{!ServiceRequestItems}"/>                                        
+                                        <apex:actionsupport event="onchange" action="{!doRetrieveFlexNotesAnswer}" reRender="CaseOPId,ServiceOPId,msgId,scriptID,duplicateSRListId,ContactOPId,LocationInfoOPId" status="counterStatus"/> 
+                                   </apex:selectList>--> 
+                                </apex:outputpanel>                              
+                             </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >                           
+                                <apex:outputlabel >Service Request Number</apex:outputLabel>
+                                <apex:outputPanel rendered="{!IF(isCloned == true,'false','true')}">
+                                    <apex:outputField value="{!contactCaseFlexNote.selCase.Service_Request_Number__c}"></apex:outputField>                          
+                                </apex:outputPanel>
+                             </apex:pageblocksectionitem> 
+                             
+                             <apex:pageblocksectionitem >
+                                <apex:outputlabel >Status</apex:outputLabel>
+                                <apex:inputField value="{!contactCaseFlexNote.selCase.Status}"></apex:inputField>
+                             </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >
+                              <apex:outputlabel >Agency Code</apex:outputLabel>
+                              <apex:outputField value="{!contactCaseFlexNote.selCase.AgencyCode__c}"></apex:outputField>
+                             </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >
+                                  <apex:outputlabel >Service Request Origin</apex:outputLabel>
+                                  <apex:inputField value="{!contactCaseFlexNote.selCase.Origin}"></apex:inputField> 
+                             </apex:pageblocksectionitem>   
+                             
+                             <apex:pageblocksectionitem >
+                              <apex:outputlabel >Address</apex:outputLabel>
+                              <apex:OutputField Value="{!contactCaseFlexNote.selCase.Address__c}" id="caseAddrId"></apex:OutputField>
+                             </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >
+                              <apex:outputlabel >Parent</apex:outputLabel>
+                              <apex:inputField value="{!contactCaseFlexNote.selCase.ParentId}"></apex:inputField>
+                              </apex:pageblocksectionitem>
+                             
+                             <apex:pageblocksectionitem >
+                              <apex:outputlabel >Ward</apex:outputLabel>
+                              <apex:OutputField value="{!contactCaseFlexNote.selCase.Ward__c}"></apex:OutputField>
+                             </apex:pageblocksectionitem>
+                             
+                              <apex:pageblocksectionitem >
+                               <apex:outputlabel >Description</apex:outputLabel>
+                               <apex:inputField value="{!contactCaseFlexNote.selCase.Description}"></apex:inputField>
+                              </apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem >
+                               <apex:outputlabel >SLA</apex:outputLabel>
+                               <apex:outputField value="{!contactCaseFlexNote.selCase.SLA__c}"></apex:outputField>
+                              </apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem >
+                               <apex:outputlabel >Created Date</apex:outputLabel>
+                               <apex:OutputField value="{!contactCaseFlexNote.selCase.CreatedDate}"></apex:OutputField>                           
+                              </apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem ></apex:pageblocksectionitem> 
+                              
+                              <apex:pageblocksectionitem >
+                               <apex:outputlabel >Closed Date</apex:outputLabel> 
+                               <apex:OutputField value="{!contactCaseFlexNote.selCase.ClosedDate}"></apex:OutputField>
+                              </apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem ></apex:pageblocksectionitem>
+                              
+                              <apex:pageblocksectionitem >
+                               <apex:outputlabel >Expected Resolution Date</apex:outputLabel>
+                               <apex:outputField value="{!contactCaseFlexNote.selCase.Expected_Resolution_Date__c}"></apex:outputField>
+                              </apex:pageblocksectionitem>
+                        </apex:pageblocksection> 
+                        
+                        
+                        <apex:outputPanel id="ServiceOPId" title="Flex Note">
+                            <apex:outputPanel id="outputPanelid">
+                                <apex:outputPanel rendered="{!flexnotelabel}"> 
+                                    <apex:outputlabel value="Additional Information" style="font-size:16px;"></apex:outputlabel>                               
+                                 </apex:outputPanel>                               
+                                    <apex:repeat value="{!serviceRequestQuestionWrapList}" var="items">
+                                        <apex:variable var="IndexValue" value="{!0}"/> 
+                                        <apex:repeat value="{!items.questionAnswerList}" var="SQ">
+                                             <apex:pageBlockSection columns="1">  
+                                             <!--  REquired question  -->
+                                             <apex:pageblocksectionitem > 
+                                                <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==true}">                            
+                                                    <apex:outputlabel value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputlabel>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==true}">                                                    
+                                                    <apex:outputpanel layout="block" styleClass="requiredInput">
+                                                         <apex:outputpanel layout="block" styleClass="requiredBlock"/>
+                                                         
+                                                             <apex:outputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Picklist'}" id="picklistOPTPanelid" >
+                                                                <apex:selectList value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                                   <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                                </apex:selectList>
+                                                               
+                                                                <apex:selectList value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" disabled="true" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" >
+                                                                   <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                                </apex:selectList>
+                                                               
+                                                                <apex:OutputPanel rendered="{!SQ.isRenderText==true}" >
+                                                                   <apex:inputField value="{!SQ.answer.Answer__c}"/>
+                                                                   <span>(Please select a value from the list or enter one .)</span>
+                                                                </apex:OutputPanel>                                                    
+                                                           </apex:outputPanel>
+                                                          
+                                                           <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}" >
+                                                               <apex:inputText value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                               <apex:outputField value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}"/>
+                                                            </apex:OutputPanel>
+                                                            
+                                                            
+                                                            
+                                                       <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                                           <apex:inputText value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                           <apex:inputText id="dateTimeAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateTimeAnswerFieldId}', true);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                            <span>
+                                                                [&nbsp; 
+                                                            <apex:outputLink value="javascript:DatePicker.insertDate('{!NOW()}', '{!$Component.dateTimeAnswerFieldId}', true);">{!NOW()}
+                                                            </apex:outputLink>
+                                                             &nbsp;]</span>
+                                                       </apex:OutputPanel>
+                                                   
+                                                       <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date'}">
+                                                           <apex:inputText value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                           <apex:inputText id="dateAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateAnswerFieldId}', false);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                            <span>
+                                                                [&nbsp;
+                                                            <apex:outputLink value="javascript:DatePicker.insertDate('{!TODAY()}', '{!$Component.dateAnswerFieldId}', true);">{!TODAY()}
+                                                            </apex:outputLink>
+                                                             &nbsp;]</span>
+                                                       </apex:OutputPanel>
+                                                   
+                                                       <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='TextArea'}">
+                                                           <apex:inputTextArea value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                           <apex:inputTextArea value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/> 
+                                                       </apex:OutputPanel>
+                                                    
+                                                       <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='MultiPicklist'}">
+                                                           <apex:repeat value="{!SQ.questionMultiPicklistValueList}" var="MPL">
+                                                               <ul style="list-style-type: none; padding: 0px;margin: -13px;">
+                                                                   <li style="margin-left: -2px;padding:02px">
+                                                                       <apex:outputText value="{!MPL.questionMultiPicklistItem}"/>  
+                                                                       
+                                                                       <apex:selectCheckboxes value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true">
+                                                                            <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                       </apex:selectCheckboxes>
+                                                                       
+                                                                       <apex:selectCheckboxes value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                                            <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                       </apex:selectCheckboxes>
+                                                                   </li>
+                                                               </ul>
+                                                           </apex:repeat> 
+                                                       </apex:OutputPanel>
+                                                        
+                                                    </apex:outputpanel> 
+                                                </apex:outputpanel> 
+                                                                           
+                                             </apex:pageblocksectionitem>
+                                             
+                                             <!--  NON-REquired question  -->                                            
+                                                <apex:pageblocksectionitem >                       
+                                                    <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==false}">  
+                                                         <apex:OutputPanel rendered="{!IF(SQ.flexNoteQuestion.Answer_Type__c=='' == true,'true','false')}" style="color:#A3A3A3;width:940px;font-weight: normal;">                          
+                                                            <apex:outputlabel value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputlabel>
+                                                         </apex:outputPanel>
+                                                         <apex:OutputPanel rendered="{!IF(SQ.flexNoteQuestion.Answer_Type__c!='' == true,'true','false')}">                          
+                                                            <apex:outputlabel value="{!SQ.flexNoteQuestion.Questions__c}"></apex:outputlabel>
+                                                         </apex:outputPanel>
+                                                    </apex:outputPanel>
+                                               
+                                                    <apex:outputPanel rendered="{!SQ.relationQuestion.IsRequiredQuestion__c==false}">                                                  
+                                                     <apex:outputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Picklist'}" id="picklistOPTPanelid" >
+                                                            <apex:selectList value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                              <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                            </apex:selectList>
+                                                          
+                                                            <apex:selectList value="{!SQ.answer.Answer__c}" size="1" onchange="doFunctionCall(this.value,{!FLOOR(IndexValue)})" disabled="true" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" >
+                                                              <apex:selectOptions value="{!SQ.questionPicklistValues}" />
+                                                            </apex:selectList>
+                                                          
+                                                            <apex:OutputPanel rendered="{!SQ.isRenderText==true}" >
+                                                              <apex:inputField value="{!SQ.answer.Answer__c}"/>
+                                                              <span>(Please select a value from the list or enter one .)</span>
+                                                            </apex:OutputPanel>                                                    
+                                                      </apex:outputPanel>
+                                                      
+                                                      <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Text'}" >
+                                                         <apex:inputField value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                         <apex:outputField value="{!SQ.answer.Answer__c}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}"/>
+                                                     </apex:OutputPanel> 
+                                                     
+
+                                                 
+                                                     <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date/Time'}">
+                                                         <apex:inputText value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                         <apex:inputText id="dateTimeAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateTimeAnswerFieldId}', true);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                          <span>
+                                                              [&nbsp; 
+                                                          <apex:outputLink value="javascript:DatePicker.insertDate('{!NOW()}', '{!$Component.dateTimeAnswerFieldId}', true);">{!NOW()}
+                                                          </apex:outputLink>
+                                                           &nbsp;]</span>
+                                                     </apex:OutputPanel>
+                                                 
+                                                     <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='Date'}">
+                                                         <apex:inputText value="{!SQ.answer.Answer__c}"  rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                         <apex:inputText id="dateAnswerFieldId" value="{!SQ.answer.Answer__c}"  onfocus="DatePicker.pickDate(true, '{!$Component.dateAnswerFieldId}', false);" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/>
+                                                          <span>
+                                                              [&nbsp;
+                                                          <apex:outputLink value="javascript:DatePicker.insertDate('{!TODAY()}', '{!$Component.dateAnswerFieldId}', true);">{!TODAY()}
+                                                          </apex:outputLink>
+                                                           &nbsp;]</span>
+                                                     </apex:OutputPanel>
+                                                 
+                                                     <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='TextArea'}">
+                                                         <apex:inputTextArea value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true"/>
+                                                         <apex:inputTextArea value="{!SQ.answer.Answer__c}" style="height:100px;width:200px" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}"/> 
+                                                     </apex:OutputPanel>
+                                                  
+                                                     <apex:OutputPanel rendered="{!SQ.flexNoteQuestion.Answer_Type__c=='MultiPicklist'}">
+                                                         <apex:repeat value="{!SQ.questionMultiPicklistValueList}" var="MPL">
+                                                             <ul style="list-style-type: none; padding: 0px;margin: -13px;">
+                                                                 <li style="margin-left: -2px;padding:02px">
+                                                                     <apex:outputText value="{!MPL.questionMultiPicklistItem}"/>  
+                                                                     
+                                                                     <apex:selectCheckboxes value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==true}" disabled="true">
+                                                                          <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                     </apex:selectCheckboxes>
+                                                                     
+                                                                     <apex:selectCheckboxes value="{!MPL.selectedMultipicklist}" rendered="{!SQ.relationQuestion.IsReadOnly__c==false}">
+                                                                          <apex:selectOptions value="{!MPL.flexNoteSelectItem}"/>
+                                                                     </apex:selectCheckboxes>
+                                                                 </li>
+                                                             </ul>
+                                                         </apex:repeat> 
+                                                     </apex:OutputPanel>
+                                                        
+                                                  </apex:outputpanel>                                                                          
+                                                </apex:pageblocksectionitem> 
+                                                
+                                                </apex:pageBlockSection> 
+                                                <apex:variable var="IndexValue" value="{!IndexValue+1}"/>
+                                            </apex:repeat>
+                                        </apex:repeat>                                    
+                                 
+                             </apex:outputPanel>
+                         </apex:outputPanel>              
+                                            
+                     </apex:outputPanel> 
+                     <!-- end : service request info--> 
+                     
+                     <!-- start : duplicate service request-->
+                     <apex:outputPanel id="duplicateSRListId">
+                        <apex:outputPanel layout="block" styleClass="customOPStyle" rendered="{!AND(NOT(ISNULL(duplicateSRList)),duplicateSRList.size >0)}"> 
+                            <apex:pageBlockSection Title="Potential Duplicates Information" columns="1">
+                                <apex:pageBlockTable value="{!duplicateSRList}" var="dSRList">
+                                    <apex:column headerValue="Service Request Number">
+                                        <apex:outputField value="{!dSRList.Service_Request_Number__c}"></apex:outputField>                          
+                                    </apex:column>
+                                    
+                                    <apex:column value="{!dSRList.SRType__r.Service_Name__c}"/> 
+                                    <apex:column value="{!dSRList.Address__c}"/>
+                                    <apex:column value="{!dSRList.CreatedDate}"/>
+                                    <apex:column value="{!dSRList.Status}"/>
+                                    
+                                </apex:pageBlockTable>
+                            </apex:pageblocksection>
+                        </apex:outputPanel>                
+                     </apex:outputPanel> 
+                     <!-- end : duplicate service request -->  
+                    
+                        <apex:outputPanel id="caseOUCHistoryOPId" >
+                            <apex:outputPanel rendered="{!AND(NOT(ISNULL(contactCaseFlexNote.selOUCActivity)),contactCaseFlexNote.selOUCActivity.size >0)}">
+                                <apex:pageblockSection title="SR Activity Information" columns="1">
+                                    <apex:pageblockTable value="{!contactCaseFlexNote.selOUCActivity}" var="cH" >
+                                        <apex:column headerValue="Task">
+                                            <apex:outputpanel >
+                                                <apex:outputpanel >
+                                                    <a href="/{!cH.Activity_Id__c}" target="_blank"><apex:outputText value="{!cH.Name}"/></a>
+                                                </apex:outputpanel>                                                
+                                            </apex:outputpanel>                                            
+                                        </apex:column> 
+                                        
+                                        <apex:column headerValue="Task Short Name">
+                                            <apex:outputText value="{!cH.Task_Short_Name__c}" style="padding-margin:50px;"/>
+                                        </apex:column>                                         
+                                        
+                                        <apex:column headerValue="Status">
+                                            <apex:outputText value="{!cH.Status__c }" style="padding-right:50px;"/>
+                                        </apex:column>
+                                     
+                                        <apex:column headerValue="Comments">
+                                            <apex:outputText value="{!cH.External_Comments__c}" style="padding-right:50px;"/>
+                                        </apex:column>                                       
+                                       
+                                        <apex:column headerValue="Due Date">
+                                            <apex:outputText value="{!cH.Due_Date__c}" style="padding-right:50px;"/>
+                                        </apex:column>
+                                     
+                                        <apex:column headerValue="Completion Date">
+                                            <apex:outputText value="{!cH.Completion_Date__c}" style="padding-right:50px;"/>
+                                        </apex:column> 
+                                        
+                                         <apex:column headerValue="OutCome">
+                                            <apex:outputText value="{!cH.OutCome__c}" style="padding-right:50px;"/>
+                                        </apex:column> 
+                                                                                
+                                    </apex:pageblockTable>
+                                </apex:pageblockSection>
+                            </apex:outputPanel>
+                        </apex:outputPanel>                       
+            
+                        <apex:actionStatus startText=" (Please Wait...)" stopText="" id="counterStatus"/>
+                        
+                        <apex:actionFunction action="{!doSearch}" name="searchFn" reRender="caseDetailsOPId,theGrid,pageMessages,CaseOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,caseHistoryOPId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1"><!--caseDetailsOPId,caseHistoryOPId,theGrid -->
+                            <apex:param value="" name="servicRequestNumber" assignTo="{!selServicRequestNumber}"></apex:param>
+                            <apex:param value="" name="contactPhone" assignTo="{!selContactPhone}"></apex:param>
+                            <apex:param value="" name="serviceRequestType" assignTo="{!selServiceRequestType}"></apex:param>
+                            <apex:param value="" name="contactEmail" assignTo="{!selContactEmail}"></apex:param>
+                            <apex:param value="" name="serviceRequestAddress" assignTo="{!selServiceAddress}"></apex:param>
+                        </apex:actionFunction>
+                        
+                        <apex:actionFunction action="{!doRetreieveContactCasesFlexNotes}" name="callCaseFn" reRender="CaseOPId,ContactOPId,ServiceOPId,caseHistoryOPId,scriptID,caseOUCHistoryOPId">
+                            <apex:param name="caseParm" value="" assignTo="{!selectedParamCaseId}"></apex:param>
+                        </apex:actionFunction>
+                        
+                        <apex:actionFunction action="{!retrieveAdresses}"  reRender="LocationInfoOPId,resultAddressOPId,pageMessages,scriptID" name="validateFnc"></apex:actionFunction>
+                        
+                        <apex:actionFunction action="{!updateContactsDetails}" reRender="ContactOPId,pageMessages,scriptID" name="contactFnCall" >
+                            <apex:param name="conId" value=""></apex:param>
+                            <apex:param name="conlkId" value=""></apex:param>
+                        </apex:actionFunction>
+                        
+                        <apex:actionFunction name="assignAddressFnCall" action="{!doAssignSelAddress}" reRender="LocationInfoOPId,CaseOPId,scriptID,outputPanelid,duplicateSRListId">
+                            <apex:param value="" name="streetParm" ></apex:param>
+                            <apex:param value="" name="zipCodeParm" ></apex:param>
+                            <apex:param value="" name="intersectionFullAddressParm"></apex:param>
+                            <apex:param value="" name="intersectionIdParam"></apex:param>
+                            <apex:param value="" name="AliasIdParam"></apex:param>
+                            <apex:param value="" name="wardIdParam"></apex:param>
+                            <apex:param value="" name="fullBlockParam"></apex:param>
+                            <apex:param value="" name="blockNameParam"></apex:param>
+                            <apex:param value="" name="latitudeParam"></apex:param>
+                            <apex:param value="" name="longitudeParam"></apex:param>
+                        </apex:actionFunction>
+                        
+                        <!-- <apex:actionFunction name="doCloneDuplicateSR" action="{!doCloneDuplicateSR}" reRender="CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,LocationInfoOPId,pageMessages,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1"></apex:actionFunction>
+                        <apex:actionFunction name="doCloneCopySR" action="{!doCloneCopySR}" reRender="CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,LocationInfoOPId,pageMessages,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1"></apex:actionFunction> -->
+                        
+                        <apex:pageBlockButtons id="pgeBlockButtonsId" location="top"> 
+                            <apex:outputpanel id="panelpgeBlockButtonsId">
+                                <apex:commandbutton action="{!doSave}" value="Save" />
+                                <apex:commandbutton action="{!doCancel}" value="Cancel" ></apex:commandbutton>
+                                <apex:commandbutton value="Clear Form for New SR" onclick="doSearchClear();" action="{!doClearOldDataCreateNewForm}"  reRender="closeCaseGrid,CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,caseHistoryOPId,LocationInfoOPId,pageMessages,pageMessages1,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1"/>      
+                                
+                                <apex:outputpanel rendered="{!isCloneBtn}" >
+                                    <apex:commandbutton value="Clone" action="{!doClone}" reRender="CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,LocationInfoOPId,pageMessages,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1" status="counterStatus"></apex:commandbutton>
+                                </apex:outputpanel> 
+                                <!-- <apex:outputpanel rendered="{!isCloneBtn}" >
+                                    <apex:commandbutton value="Clone"  onclick="doClone();" reRender="CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,LocationInfoOPId,pageMessages,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1" status="counterStatus"></apex:commandbutton>
+                                </apex:outputpanel> -->                              
+                            </apex:outputpanel> 
+                      </apex:pageBlockButtons> 
+                      
+                      <apex:pageBlockButtons id="pgeBlockButtonsId1" location="bottom"> 
+                            <apex:outputpanel id="panelpgeBlockButtonsId1">
+                                <apex:commandbutton action="{!doSave}" value="Save" />
+                                <apex:commandbutton action="{!doCancel}" value="Cancel" ></apex:commandbutton>
+                                <apex:commandbutton value="Clear Form for New SR" onclick="doSearchClear();" action="{!doClearOldDataCreateNewForm}"  reRender="closeCaseGrid,CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,caseHistoryOPId,LocationInfoOPId,pageMessages,pageMessages1,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1"/>      
+                                
+                                <apex:outputpanel rendered="{!isCloneBtn1}" >
+                                    <apex:commandbutton value="Clone" action="{!doClone}" reRender="CaseOPId,caseDetailsOPId,ContactOPId,ServiceOPId,caseOUCHistoryOPId,LocationInfoOPId,pageMessages,resultAddressOPId,searchPSId,scriptID,panelpgeBlockButtonsId,panelpgeBlockButtonsId1" status="counterStatus"></apex:commandbutton>
+                                </apex:outputpanel> 
+                            </apex:outputpanel> 
+                      </apex:pageBlockButtons>                      
+              
+                      <apex:outputPanel id="scriptID" >            
+                           <script type="text/javascript">
+                           
+                                 $ = jQuery.noConflict();
+                                 $(document).ready(function() {                           
+
+                                        var caseItems4;
+                                        var queryTerm4;
+                                         $('[id$=selSRTypeId]').autocomplete({
+                                             minLength: 2,
+                                              source: function(request, response) {
+                                                queryTerm4 = request.term;
+                                                AgentConsoleCntrl.getServiceRequestList(request.term,function(result, event){
+                                                  
+                                                    caseItems4 = result;
+                                                    response(caseItems4);
+                                                });
+                                              },
+                                              select: function( event, ui ) {
+                                                 $('[id$=selSRTypeId]').val( ui.item.Service_Name__c );
+                                                    return false;
+                                              }
+                                         })
+                                         .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                                            var entry = "<a>" + item.Service_Name__c;                                   
+                                            entry = entry + "</a>";
+                                            entry = entry.replace(queryTerm4, "<b>" + queryTerm4 + "</b>");
+                                            return $( "<li></li>" )
+                                                .data( "item.autocomplete", item )
+                                                .append( entry )
+                                                .appendTo( ul );
+                                        };
+                                   
+                                
+                                
+                                
+                                
+                                var caseItems;
+                                var queryTerm;
+                                 $('[id$=serviceRequestNumId]').autocomplete({
+                                     minLength: 5,
+                                      source: function(request, response) {
+                                        queryTerm = request.term;
+                                        AgentConsoleCntrl.getCaseList(request.term,'1',function(result, event){
+                                           
+                                            caseItems = result;
+                                            response(caseItems);
+                                        });
+                                      },
+                                      select: function( event, ui ) {
+                                         
+                                         $('[id$=serviceRequestNumId]').val( ui.item.Service_Request_Number__c );
+                                            return false;
+                                      }
+                                 })
+                                 .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                                   
+                                    var entry = "<a>" + item.Service_Request_Number__c;
+                                    entry = entry + "</a>";
+                                    entry = entry.replace(queryTerm, "<b>" + queryTerm + "</b>");
+                                    return $( "<li></li>" )
+                                        .data( "item.autocomplete", item )
+                                        .append( entry )
+                                        .appendTo( ul );
+                                };
+                                
+                                
+                                
+                                
+                                var caseItems1;
+                                var queryTerm1;
+                                 $('[id$=contactPhoneId]').autocomplete({
+                                     minLength: 5,
+                                      source: function(request, response) {
+                                        queryTerm1 = request.term;
+                                        AgentConsoleCntrl.getContactList(request.term,'2',function(result, event){
+                                            /*if(event.type == 'exception') {
+                                                 // alert(event.message);
+                                                   console.log('exception--'+event.message);
+                                            } else {
+                                                 caseItems1 = result;
+                                                 response(caseItems1);
+                                            }*/
+                                            caseItems1 = result;
+                                            response(caseItems1);
+                                        });
+                                      },
+                                      /*focus: function( event, ui ) {
+                                         $('[id$=contactPhoneId]').val( ui.item.phone );
+                                         return false;
+                                      },*/
+                                      select: function( event, ui ) {
+                                         $('[id$=contactPhoneId]').val( ui.item.Phone );
+                                            return false;
+                                      }
+                                 })
+                                 .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                                    var entry = "<a>" + item.Phone;
+                           
+                                    entry = entry + "</a>";
+                                    entry = entry.replace(queryTerm1, "<b>" + queryTerm1 + "</b>");
+                                    return $( "<li></li>" )
+                                        .data( "item.autocomplete", item )
+                                        .append( entry )
+                                        .appendTo( ul );
+                                };                              
+                                
+                                var caseItems2;
+                                var queryTerm2;
+                                 $('[id$=serviceRequestTypeId]').autocomplete({
+                                     minLength:2,
+                                      source: function(request, response) {
+                                        queryTerm2 = request.term;
+                                        AgentConsoleCntrl.getServiceRequestList(request.term,function(result, event){
+                                           
+                                            caseItems2 = result;
+                                            response(caseItems2);
+                                        });
+                                      },
+                                      select: function( event, ui ) {
+                                         $('[id$=serviceRequestTypeId]').val( ui.item.Service_Name__c );
+                                            return false;
+                                      }
+                                 })
+                                 .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                                    var entry = "<a>" + item.Service_Name__c;
+                           
+                                    entry = entry + "</a>";
+                                    entry = entry.replace(queryTerm2, "<b>" + queryTerm2 + "</b>");
+                                    return $( "<li></li>" )
+                                        .data( "item.autocomplete", item )
+                                        .append( entry )
+                                        .appendTo( ul );
+                                };
+                              
+                                
+                                var caseItems3;
+                                var queryTerm3;
+                                 $('[id$=ContactEmailId]').autocomplete({
+                                     minLength: 5,
+                                      source: function(request, response) {
+                                        queryTerm3 = request.term;
+                                        AgentConsoleCntrl.getContactList(request.term,'1',function(result, event){
+                                            
+                                            caseItems3 = result;
+                                            response(caseItems3);
+                                        });
+                                      },                                     
+                                      select: function( event, ui ) {
+                                         $('[id$=ContactEmailId]').val( ui.item.Email );
+                                            return false;
+                                      }
+                                 })
+                                 .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                                    var entry = "<a>" +item.Email;
+                           
+                                    entry = entry + "</a>";
+                                    entry = entry.replace(queryTerm3, "<b>" + queryTerm3 + "</b>");
+                                    return $( "<li></li>" )
+                                        .data( "item.autocomplete", item )
+                                        .append( entry )
+                                        .appendTo( ul );
+                                };
+                                
+            
+                                });
+                                
+                                    // function called if there are more than 3 character
+                                function doAddressValidationCall(strVar){
+                                  if(strVar.length==0){
+                                    
+                                      return;
+                                  }
+                                  var str2=strVar.split(' ');
+                                  console.log('str1--'+strVar.length);
+                                
+                                  if(strVar.length>2){
+                                   
+                                        var caseItems5;
+                                        var queryTerm5;
+                                         $('[id$=streetIpId]').autocomplete({
+                                             minLength: 2,
+                                              source: function(request, response) {
+                                                queryTerm5 = request.term;
+                                                
+                                                    AgentConsoleCntrl.getAddressSuggestion(request.term,function(result, event){
+                                                      
+                                                         caseItems5 = result;
+                                                        response(caseItems5); 
+                                                    });
+                                                  }, 
+                                              
+                                            
+                                              select: function( event, ui ) {
+                                                 $('[id$=streetIpId]').val( ui.item.FULLADDRESS );
+                                                 $('[id$=stateId]').val('DC');
+                                                 $('[id$=cityId]').val('WASHINGTON');
+                                                 $('[id$=countryId]').val('USA');
+                                                 var addrId;
+                                                 if(ui.item.ADDRESS_ID!=null && ui.item.ADDRESS_ID!=undefined){
+                                                    addrId=parseInt(ui.item.ADDRESS_ID);
+                                                 }
+                                                 $('[id$=addressId]').val(addrId);
+                                                 
+                                                 var zipId;
+                                                 if(ui.item.ZIPCODE!=null && ui.item.ZIPCODE!=undefined){
+                                                    zipId=parseInt(ui.item.ZIPCODE);
+                                                 }
+                                                 
+                                                 $('[id$=zipCodeId]').val( zipId );
+                                                 $('[id$=gLonId]').val( ui.item.LONGITUDE );
+                                                 $('[id$=gLatId]').val( ui.item.LATITUDE );
+                                                 $('[id$=fullAddrId]').val( ui.item.FULLINTERSECTION );
+                                                 $('[id$=aliasId]').val( ui.item.ALIASNAME );
+                                                 $('[id$=interSectionId]').val( ui.item.INTERSECTIONID );
+                                                 $('[id$=qId]').val( ui.item.QUADRANT );
+                                                 $('[id$=xCId]').val( ui.item.XCOORD );
+                                                 $('[id$=yCId]').val( ui.item.YCOORD );
+                                                 $('[id$=aNCId]').val( ui.item.ANC );
+                                                 $('[id$=pSAId]').val( ui.item.PSA );
+                                                 $('[id$=wardId]').val( ui.item.WARD );
+                                                 $('[id$=sMDId]').val( ui.item.SMD );
+                                                 
+                                                 $('[id$=podListId]').val( ui.item.POLDIST );
+                                                 $('[id$=clusterId]').val( ui.item.CLUSTER );
+                                                 
+                                                 $('[id$=fullBlockId]').val( ui.item.FULLBLOCK );
+                                                 $('[id$=blockNameId]').val( ui.item.BLOCKNAME );
+                                                 
+                                                 assignAddressFnCall( $('[id$=streetIpId]').val(),
+                                                                      $('[id$=zipCodeId]').val(),
+                                                                      $('[id$=fullAddrId]').val(),
+                                                                      $('[id$=interSectionId]').val(),
+                                                                      $('[id$=aliasId]').val(),
+                                                                      $('[id$=wardId]').val(),
+                                                                      $('[id$=fullBlockId]').val(),
+                                                                      $('[id$=blockNameId]').val(),
+                                                                      $('[id$=gLatId]').val(),
+                                                                      $('[id$=gLonId]').val()
+                                                                    );
+                                                 
+                                                    return false;
+                                              }
+                                         })
+                                         .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+
+                                            var aliasFulladdrss;
+                                           
+                                            if(item.FULLADDRESS != null && item.CITY != null && item.STATE != null && item.ZIPCODE != null){
+                                                aliasFulladdrss =item.FULLADDRESS;  
+                                            }
+               
+                                            if(item.FULLADDRESS == null && item.CITY == null && item.STATE == null && item.ZIPCODE == null){
+                                                aliasFulladdrss=item.FULLINTERSECTION;  
+                                            }
+               
+                                            if(item.ALIASNAME != null && item.CITY != null && item.STATE != null && item.ZIPCODE != null){
+                                                aliasFulladdrss=item.ALIASNAME;  
+                                            }
+                                            
+                                            if(item.FULLINTERSECTION != null && item.INTERSECTIONID != null ){
+                                                aliasFulladdrss=item.FULLINTERSECTION;  
+                                            }
+                                            if(item.FULLBLOCK!=null && item.BLOCKNAME!=null ){
+                                                aliasFulladdrss=item.BLOCKNAME;  
+                                            }
+                                            
+                                            var entry = "<a>" + aliasFulladdrss;
+                                            entry = entry + "</a>";
+                                            entry = entry.replace(queryTerm5, "<b>" + queryTerm5 + "</b>");
+                                            return $( "<li></li>" )
+                                                .data( "item.autocomplete", item )
+                                                .append( entry )
+                                                .appendTo( ul );
+                                                
+                                        };
+                                    return ;
+                                  }
+                                  return;
+                                  
+                                };                         
+                              
+                            </script>
+                       </apex:outputPanel>
+
+
+       </apex:pageblock>
+   </apex:form>
+</apex:page>

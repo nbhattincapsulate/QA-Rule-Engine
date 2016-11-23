@@ -1,0 +1,29 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false">
+<html lang="en">
+<head>
+  <title>Ionic</title>
+  <meta charset="UTF-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
+
+  <link ios-href="{!URLFOR($Resource.ionic2App, 'build/css/app.ios.css')}" rel="stylesheet"></link>
+  <link md-href="{!URLFOR($Resource.ionic2App, 'build/css/app.md.css')}" rel="stylesheet"></link>
+  <link wp-href="{!URLFOR($Resource.ionic2App, 'build/css/app.wp.css')}" rel="stylesheet"></link>
+</head>
+<body>
+    <script>
+        window.SF_ACCESS_TOKEN = '{$!Api.Session_ID }'
+    </script>
+
+  <ion-app></ion-app>
+
+  <!-- Polyfill needed for platforms without Promise and Collection support -->
+  <script src="{!URLFOR($Resource.ionic2App, 'build/js/es6-shim.min.js')}"></script>
+  <!-- Zone.js and Reflect-metadata  -->
+  <script src="{!URLFOR($Resource.ionic2App, 'build/js/Reflect.js')}"></script>
+  <script src="{!URLFOR($Resource.ionic2App, 'build/js/zone.js')}"></script>
+  <!-- the bundle which is built from the app's source code -->
+  <script src="{!URLFOR($Resource.ionic2App, 'build/js/app.bundle.js')}"></script>
+</body>
+</html>
+
+</apex:page>

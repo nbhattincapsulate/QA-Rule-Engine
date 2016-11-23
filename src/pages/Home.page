@@ -1,0 +1,431 @@
+<apex:page showheader="false" sidebar="false" standardstylesheets="false" controller="SRPortalController" language="en">
+  <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+  <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+  <!--[if !IE]><!-->
+  <html lang="en">
+  <!--<![endif]-->
+  <head>
+    <title>DC 311 | OUC</title>
+    <c:OUC311_Portal_Styles />
+
+    <style>
+      .title {
+        cursor: pointer;
+      }
+
+      #mobile-promo-modal-content .container {
+        width: auto !important;
+      }
+
+      .modal-header {
+        padding: 0;
+        height: 0;
+      }
+
+      #mobile-promo-modal-content .promo .overview {
+        margin-top: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      #mobile-promo-modal-content .promo .overview .btn-group {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body data-spy="scroll">
+    <!-- ******HEADER****** -->
+    <header id="top" class="header navbar-fixed-top">
+      <div class="container">
+        <h1 class="logo pull-left">
+          <a class="scrollto" href="#promo">
+            <apex:image id="dc-flag-image" alt="DC Flag" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/logo/dcflag.png')}" styleclass="logo-image" />
+            <span class="logo-title visible-md-inline visible-lg-inline">District Of Columbia <span class="text-danger">311</span></span>
+            <span class="logo-title visible-xs-inline visible-sm-inline">DC <span class="text-danger">311</span></span>
+          </a>
+        </h1><!--//logo-->
+        <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+          <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+              <span>Menu</span>
+            </button><!--//nav-toggle-->
+          </div><!--//navbar-header-->
+          <div class="navbar-collapse collapse" id="navbar-collapse">
+            <apex:outputpanel rendered="{!IF(loggedInUsername == '','true','false')}">
+              <ul class="nav navbar-nav">
+                <li class="active nav-item sr-only"><a class="scrollto" href="#promo">Home</a></li>
+                <li class="nav-item"><a class="" href="/ServiceRequestLogin">Login</a></li>
+                <li class="nav-item"><a class="" href="/ServiceRequestRegister">Register</a></li>
+              </ul><!--//nav-->
+            </apex:outputpanel>
+            <apex:outputpanel rendered="{!IF(loggedInUsername != '','true','false')}">
+              <ul class="nav navbar-nav">
+                <li class="dropdown nav-item">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><apex:outputtext value="{!loggedInUserFullName}"></apex:outputtext><span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="nav-item"><a href="/ServiceRequestProfile"><i class="fa fa-user"></i> My Profile</a></li>
+                    <li class="nav-item"><a href="/secur/logout.jsp"><i class="fa fa-sign-out"></i> Logout</a></li>
+                  </ul>
+                </li>
+              </ul><!--//nav-->
+            </apex:outputpanel>
+          </div><!--//navabr-collapse-->
+        </nav><!--//main-nav-->
+      </div>
+    </header><!--//header-->
+    <!-- ******PROMO****** -->
+    <section id="promo" class="promo section offset-header has-pattern">
+      <div class="container">
+        <!--             <div class="row visible-md-inline visible-lg-inline">
+                        <div class="col-md-3 col-md-offset-2">
+                            <apex:image id="logo-image" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/logo/logo_medium.png')}" styleClass="logo-image"/>
+                        </div>
+                        <div class="overview col-md-7 col-sm-12 col-xs-12">
+                            <h2 class="title">A one-stop service experience for constituents, residents and visitors of the District</h2>
+
+                        </div>
+                    </div> -->
+      </div><!--//container-->
+    </section><!--//promo-->
+    <!-- ******FEATURES****** -->
+    <section id="features" class="features section">
+      <div class="container">
+        <div class="row">
+          <div class="container">
+            <a href="/ServiceRequestHome">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-pencil"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Submit a Request</h3>
+                    <p>Request a city service to be addressed by the District.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a href="/ServiceRequestCheckStatus">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-flag"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Check Status</h3>
+                    <p>Check the status of requested service along with its activities.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a href="/ServiceRequestHistory">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-history"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">My Request History</h3>
+                    <p>Registered users can review all your service requests reported.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a href="/ServiceRequestGlossary">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-book"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Service Descriptions</h3>
+                    <p>All the service types and their service resolution estimates</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+          </div>
+        </div><!--//row-->
+        <div class="row">
+          <div class="container">
+            <!-- http://dcgis.maps.arcgis.com/apps/webappviewer/index.html?id=dca9e27c4c9d4c24a02cb2c5006beae2 -->
+            <!-- http://innovations.octo.dc.gov -->
+            <a onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://dcgis.maps.arcgis.com/apps/webappviewer/index.html?id=dca9e27c4c9d4c24a02cb2c5006beae2" data-web="http://dcgis.maps.arcgis.com/apps/webappviewer/index.html?id=dca9e27c4c9d4c24a02cb2c5006beae2">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-map-marker"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">311 Requests Map</h3>
+                    <p>A tool to visualize all the service requests reported in the last 30 days.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://ouc.dc.gov/" data-web="http://ouc.dc.gov/">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-users"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">OUC</h3>
+                    <p>OUC consolidates 911 and 311 call activities in the District.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://dc.gov/" data-web="http://dc.gov/">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-institution"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">DC Government</h3>
+                    <p>District of Columbia highlights, events, news and alerts.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://grade.dc.gov/" data-web="http://grade.dc.gov/">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-line-chart"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Grade DC</h3>
+                    <p>To view agency performance and provide feedback.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+          </div>
+        </div><!--//row-->
+
+        <div class="row">
+          <div class="container">
+            <a onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://geospatial.dcgis.dc.gov/gallery/311" data-web="http://geospatial.dcgis.dc.gov/gallery/311">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-street-view"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">DC Maps &amp; Apps</h3>
+                    <p>District of Columbia custom online mapping applications</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a onclick="javascript:openExternalLinkInApp(this)" data-mobile="https://mobile.twitter.com/mayorbowser" data-web="https://twitter.com/mayorbowser">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-twitter"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Mayor Twitter</h3>
+                    <p>Watch out for latest updates directly from our Mayor</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a onclick="javascript:openExternalLinkInApp(this)" data-mobile="https://mobile.twitter.com/311DCgov" data-web="https://twitter.com/311DCgov">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-twitter"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">311 DC Twitter</h3>
+                    <p>Watch out for latest updates directly from 311 DC Ops.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+            <a href="/ServiceRequestFaq">
+              <div class="item col-md-3 col-sm-6 col-xs-12">
+                <div class="row">
+                  <div class="icon col-md-3 col-sm-3 col-xs-3">
+                    <i class="fa fa-question"></i>
+                  </div><!--//icon-->
+                  <div class="content col-md-7 col-sm-8 col-xs-8">
+                    <h3 class="title">Questions</h3>
+                    <p>All the frequently asked questions about 311.</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+          </div>
+        </div><!--//row-->
+
+        <div class="row visible-xs">
+          <div class="container">
+            <a href="tel:2027374404">
+              <div class="item col-xs-12">
+                <div class="row">
+                  <div class="icon col-xs-3">
+                    <i class="fa fa-phone"></i>
+                  </div><!--//icon-->
+                  <div class="content col-xs-8">
+                    <h3 class="title">Call 311</h3>
+                    <p>Dial 311, 24 hours a day, 365 days a year, to request scheduled services</p>
+                  </div><!--//content-->
+                </div>
+              </div><!--//item-->
+            </a>
+          </div>
+        </div>
+      </div><!--//container-->
+    </section><!--//features-->
+    <!-- ******Featured Services****** -->
+    <section id="pricing" class="pricing section visible-md visible-lg">
+      <div class="container">
+        <div class="price-cols row">
+          <h2 class="title text-center">Featured Services</h2>
+          <div class="items-wrapper col-md-12 col-sm-12 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+            <div class="item price-1 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Sidewalk Repair</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-road"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>DDOT resolves sidewalk repair requests within 25 business days.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://ddot.dc.gov/node/544192" data-web="http://ddot.dc.gov/node/544192">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+            <div class="item price-2 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Streetlight Repairs</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-lightbulb-o"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>Expected date of completion depends upon the nature of the problem.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://ddot.dc.gov/service/street-and-alley-light-repair" data-web="http://ddot.dc.gov/service/street-and-alley-light-repair">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+            <div class="item price-3 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Supercans</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-trash-o"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>View frequently asked questions about Supercans.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://dpw.dc.gov/service/supercan-trash-can-and-recycling-can-frequently-asked-questions" data-web="http://dpw.dc.gov/service/supercan-trash-can-and-recycling-can-frequently-asked-questions">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+          </div><!--//items-wrapper-->
+        </div><!--//row-->
+        <div class="price-cols row">
+          <div class="items-wrapper col-md-12 col-sm-12 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-0">
+            <div class="item price-1 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Parking Meters</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-tachometer"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>Single-space meters are fixed within 72 hours, multi-space within 24.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://ddot.dc.gov/node/544142" data-web="http://ddot.dc.gov/node/544142">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+            <div class="item price-2 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Bulk Collection</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-truck"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>Learn which items are acceptable for bulk trash collection.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://dpw.dc.gov/service/bulk-trash-collection" data-web="http://dpw.dc.gov/service/bulk-trash-collection">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+            <div class="item price-3 col-md-4 col-sm-4 col-xs-12 text-center">
+              <div class="item-inner">
+                <div class="heading">
+                  <h3 class="title">Pothole Repair</h3>
+                  <p class="price-figure"><span class="price-figure-inner"><span class="icon"><i class="fa fa-wrench"></i></span></span></p>
+                </div>
+                <div class="content">
+                  <ul class="list-unstyled feature-list">
+                    <li>View a map of open and pending pothole repair requests.</li>
+                  </ul>
+                  <a class="btn btn-theme" onclick="javascript:openExternalLinkInBrowser(this)" data-mobile="http://ddot.dc.gov/service/pothole-repair" data-web="http://ddot.dc.gov/service/pothole-repair">Learn more</a>
+                </div><!--//content-->
+              </div><!--//item-inner-->
+            </div><!--//item-->
+          </div><!--//items-wrapper-->
+        </div><!--//row-->
+      </div><!--//container-->
+    </section><!--//pricing-->
+    <!-- ******PROMO****** -->
+    <apex:outputPanel rendered="{!IF(isAppleDevice || isAndroidDevice, false, true)}">
+      <!--<c:MobileAppPromo promotext="To Report a Broken Street Light" /> -->
+    </apex:outputPanel>
+      <!-- ******FOOTER****** -->
+      <footer class="footer visible-md visible-lg">
+        <div class="container">
+          <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+        </div>
+      </footer><!--//footer-->
+      <!-- Mobile App Modal -->
+      <div class="modal modal-feature" id="mobile-promo-modal" tabindex="-1" role="dialog" aria-labelledby="featureModalLabel-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-center">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn btn-success" style="background: #fff; color: #2d2d2d; font-size: 22px; border: none; position: absolute; right: 0;" data-dismiss="modal">X</button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div id="mobile-promo-modal-content" class="content col-md-12 col-sm-12 col-xs-12 text-center">
+                  <c:MobileAppPromo promotext=" To Report a Broken Street Light" logovisible="block" isQRVisible="true" isPhoneSectionVisible="false"/>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="content col-md-12 col-sm-12 col-xs-12 text-center">
+
+                </div><!--//content-->
+              </div><!--//row-->
+            </div><!--//modal-body-->
+          </div><!--//modal-content-->
+        </div><!--//modal-dialog-->
+      </div><!--//modal-->
+      <c:OUC311_Portal_Scripts injectcordovaapple="{!isAppleDevice}" injectcordovaandroid="{!isAndroidDevice}" />
+      <script>
+      window.mobileAndTabletcheck = function() {
+        var check = false;
+        (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
+        return check;
+      }
+
+
+      //if(typeof window.cordova == "undefined" && ($.browser.mobile || window.mobileAndTabletcheck())) {
+        $('#mobile-promo-modal').modal('show');
+      //}
+      </script>
+</body>
+</html>
+
+</apex:page>

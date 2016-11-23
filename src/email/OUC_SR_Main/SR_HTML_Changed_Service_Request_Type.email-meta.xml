@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Agency has reviewed the request and determined that it’s a different service request type than was original submitted. Agency has closed the original request and opened a new one with the correct service request type</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Changed Service Request Type</name>
+    <style>freeForm</style>
+    <subject>Your 311 Request</subject>
+    <textOnly>Dear resident,
+
+{!Case.Servicing_Agency_Expanded__c} has just reviewed your request for {!Case.Subject} and has determined that it should be changed to a different service request type.
+
+Agency comments: why was service request was changed to a new service request.
+
+We have closed the original request. &lt;&lt;Agency Name&gt;&gt; will now be handling your new service request for &lt;&lt;new service request name&gt;&gt;.   Your new service request number is &lt;&lt;New SERVICE REQUEST NUMBER&gt;&gt;. This request should be complete by &lt;&lt;expected resolution date&gt;&gt;.
+
+There is nothing for you to do at this time. This email is for informational purposes only.
+
+Please visit 311.dc.gov to check the status of your request or to find answers to frequently asked questions.  You may also call 311, and reference service request number: &lt;&lt;SERVICE REQUEST NUMBER&gt;&gt; to check your status or get help with questions. An agent will be happy to answer your questions, concerns or connect you with the correct department.
+
+Thanks again for contacting the Mayor’s 311 Hotline.</textOnly>
+    <type>html</type>
+</EmailTemplate>

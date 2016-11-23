@@ -1,0 +1,86 @@
+<apex:page controller="CallCenterController" sidebar="false">
+  <!-- Lightning Styles -->
+  <apex:stylesheet value="{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+  <style>
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Light.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Light.woff')}") format("woff");
+      font-weight: 300;
+    }
+
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-LightItalic.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-LightItalic.woff')}") format("woff");
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Regular.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Regular.woff')}") format("woff");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Italic.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Italic.woff')}") format("woff");
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Bold.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-Bold.woff')}") format("woff");
+      font-weight: 700;
+    }
+
+    @font-face {
+      font-family: "Salesforce Sans";
+      src: url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-BoldItalic.woff2')}") format("woff2"), url("{!URLFOR($Resource.LightningDesign, 'LightningDesign/assets/fonts/webfonts/SalesforceSans-BoldItalic.woff')}") format("woff");
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .slds .slds-text-heading--label.slds-text-heading--label-large {
+      font-size: 16px;
+    }
+  </style>
+
+  <apex:includescript value="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.0.0/svg4everybody.min.js" /> 
+
+  <apex:form >
+    <apex:actionfunction action="{!changeCallCenter}" name="changeCallCenter" rerender="mainContainer">
+      <apex:param assignto="{!newCallCenterId}" name="newCallCenterId" value="" />
+    </apex:actionfunction>
+  </apex:form>
+
+  <apex:outputPanel styleClass="slds" style="padding: 20px;" id="mainContainer">
+    <div class="user-container" style="margin-top: 5px;">
+      <h1 class="slds-text-heading--label slds-text-heading--label-large">User Information</h1> 
+      <div class="slds-grid" style="margin-top: 10px;">
+        <p class="slds-col">Name: {!currentUser.Name}</p>
+        <p class="slds-col">Active CallCenter: {!IF(currentCallCenter.Name != null, currentCallCenter.Name, 'None')}</p>
+      </div>
+    </div>
+    
+    <div class="call-center-container" style="margin-top: 20px;">
+      <h2 class="slds-text-heading--label slds-text-heading--label-large">All Available Call Centers</h2>
+
+      <apex:outputpanel rendered="{!callcenters.size > 0 && currentCallCenter.Name != null}" layout="block" style="margin-top: 5px;">
+        <apex:repeat value="{!callcenters}" var="callcenter">
+          <button class="slds-button slds-button--neutral" type="button" data-id="{!callcenter.Id}" onclick="changeCallCenter($(this).data('id'));">{!callcenter.Name}</button>
+        </apex:repeat>
+      </apex:outputpanel>
+
+      <apex:outputpanel rendered="{!callcenters.size == 0 && currentCallCenter.Name != null}" layout="block" style="margin-top: 5px;">
+        <p>No other call centres available.</p>
+      </apex:outputpanel>
+
+      <apex:outputpanel rendered="{!currentCallCenter.Name == null}" layout="block" style="margin-top: 5px;">
+        <p>Please have a supervisor add you to your first Call Center.</p>
+      </apex:outputpanel>
+    </div>
+  </apex:outputPanel>
+
+  <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" /> 
+</apex:page>

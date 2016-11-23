@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Request Type Flex Note</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Request Type Flex Notes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Auto Create --></label>
+        <name>Auto_Create__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Sort Order --></label>
+        <name>DisplaySortOrder__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNote Question --></label>
+        <name>FlexNote_Question__c</name>
+        <relationshipLabel><!-- Service Request Type Flex Notes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Force Upper --></label>
+        <name>Force_Upper__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsReadOnly --></label>
+        <name>IsReadOnly__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsRequired --></label>
+        <name>IsRequiredQuestion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lower Limit --></label>
+        <name>Lower_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Text --></label>
+        <name>Question_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Junction Count --></label>
+        <name>SR_Junction_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Agency --></label>
+        <name>SR_Type_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Jurisdiction Code --></label>
+        <name>SR_Type_Jurisdiction_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Name --></label>
+        <name>SR_Type_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>Service_Request_Type__c</name>
+        <relationshipLabel><!-- Service Request Type Flex Notes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Stop Date --></label>
+        <name>Stop_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Upper Limit --></label>
+        <name>Upper_Limit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Used By Interface Only --></label>
+        <name>Used_By_Interface_Only__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsRequired --></label>
+        <name>isRequired__c</name>
+    </fields>
+    <layouts>
+        <layout>Service Request Type Flex Note Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

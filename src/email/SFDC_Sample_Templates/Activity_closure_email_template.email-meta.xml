@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template to send email alert to citizen on completion of activity that closes SR</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Activity closure email template</name>
+    <style>none</style>
+    <subject>DC 311 - Service Request {!OUC_Activity__c.Case__c} - {!OUC_Activity__c.Case_Subject__c} - Update</subject>
+    <type>text</type>
+</EmailTemplate>

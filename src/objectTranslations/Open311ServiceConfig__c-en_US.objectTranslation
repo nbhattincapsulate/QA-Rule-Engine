@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Open311 Service Config</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Open311 Service Config</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active --></label>
+        <name>Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open 311 Production URL --></label>
+        <name>Open311ProductionURL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open 311 Test URL --></label>
+        <name>Open311TestURL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Formats --></label>
+        <name>ResponseFormats__c</name>
+    </fields>
+    <fields>
+        <label><!-- Support Email --></label>
+        <name>Support_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Support Phone --></label>
+        <name>Support_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Version --></label>
+        <name>Version__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

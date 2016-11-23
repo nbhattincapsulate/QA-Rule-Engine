@@ -1,0 +1,80 @@
+<apex:component >
+   <div class="header">
+    <div class="nav">          
+        <div class="container">
+                        
+            <!-- Standard Nav (x >= 768px) -->
+            <div class="standard">                            
+                <div class="five column alpha">
+                    <div class="logo">
+                        <a href="#"><img src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/logo.jpg')}" height="55" width="55"/></a><!-- Large Logo -->
+                    </div>
+                </div>
+                
+                <style>
+                    #ServiceHome {                       
+                       line-height: 0;                     
+                    }
+                
+                </style>
+    
+                <div class="eleven column omega tabwrapper">
+                   <apex:attribute name="tab" description="This is the value for the component." type="String" required="true"/>
+                    <div class="menu-wrapper">
+                        <ul class="tabs menu">
+                            <li>
+                               <a href="../apex/ServiceHome" class="{!IF(tab== 'Service Home','active','')}" ><span id="ServiceHome">Service Home</span></a>                                       
+                            </li>
+                            <li>
+                                <a href="../apex/ServiceRequest" class="{!IF(tab== 'Service Request','active','')}">Request Service </a>                                        
+                            </li>
+                            <li>
+                                <a href="../apex/ServiceRequestStatus" class="{!IF(tab== 'Status Check','active','')}">Status Check</a>                                        
+                            </li>
+                            <li>
+                                <a href="#" class="{!IF(tab== 'City Faq','active','')}">City Faq</a>                                        
+                            </li>
+                            <li>
+                                <a href="#" class="{!IF(tab== 'Search ','active','')}"> Search </a>
+                            </li>
+                             <li>
+                                <a href="../apex/Login" role="button" data-toggle="modal" class="{!IF(tab== 'Login','active','')}"> Login </a>
+                            </li>
+                             <li>
+                                <a href="../apex/Register" role="button" data-toggle="modal" class="{!IF(tab== 'Register','active','')}"> Register </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Standard Nav Ends, Start of Mini -->
+    
+            <div class="mini">
+                <div class="twelve column alpha omega mini">
+                    <div class="logo">
+                        <a href="index.html"><img src="images/logoMINI.png" /></a><!-- Small Logo -->
+                    </div>
+                </div>
+                
+                <div class="twelve column alpha omega navagation-wrapper">
+                    <select class="navagation">
+                        <option value="" selected="selected">Site Navagation</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Start of Mini Ends -->
+        </div>                
+    </div>
+
+    <div class="shadow"></div>
+      <div class="container">
+        <div class="page-title">
+            <div class="rg"></div>
+            
+        </div>
+    </div>  
+   
+    
+    </div>  
+
+</apex:component>

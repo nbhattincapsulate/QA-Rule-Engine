@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_ID</field>
+    </columns>
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>OUC_Activity__c.Status__c</field>
+    </columns>
+    <columns>
+        <field>OUC_Activity__c.Case__c</field>
+    </columns>
+    <columns>
+        <field>OUC_Activity__c.Final_Task_Code__c</field>
+    </columns>
+    <columns>
+        <field>OUC_Activity__c.Final_Task_Short_Name__c</field>
+    </columns>
+    <columns>
+        <field>OUC_Activity__c.Case_Subject__c</field>
+    </columns>
+    <description>Bulk collection SRs with xPUIPBUIT</description>
+    <filter>
+        <criteriaItems>
+            <column>OUC_Activity__c.Case_Subject__c</column>
+            <operator>equals</operator>
+            <value>Bulk Collection</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OUC_Activity__c.Status__c</column>
+            <operator>equals</operator>
+            <value>Open,In Progress</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>OUC_Activity__c.Final_Task_Code__c</column>
+            <operator>equals</operator>
+            <value>xPIUPBUIT,PIUPBUIT</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Bulk Collection PUIPBUIT</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$OUC_Activity__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>OUC_Activity__c.Final_Task_Code__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>OUC_Activity__c.Activity_Date__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

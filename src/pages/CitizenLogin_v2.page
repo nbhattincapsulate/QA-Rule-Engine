@@ -1,0 +1,166 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SiteLoginController">
+  <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <title>DC 311 | OUC</title>
+
+      <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+      <link rel="stylesheet" href="//code.getmdl.io/1.2.0/material.indigo-pink.min.css"/>
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css"/>
+      <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+      <script defer="true" src="//code.getmdl.io/1.2.0/material.min.js"></script>
+
+      <style>
+        body {
+          background: linear-gradient(to bottom left, #52649B, #EE4960);
+        }
+
+        .login-container {
+          text-align: center;
+          margin: 0 auto;
+        }
+
+        .button-container {
+          position: relative;
+          height: 50px;
+          bottom: 0;
+          padding: 0;
+          margin: 0 auto;
+          margin-top: 15px;  
+          background-color: transparent;
+        }
+
+        .button-container input {
+          height: 100%;
+          width: 300px;
+          color: #fff;
+          background-color: transparent;
+          opacity: 1;
+          border: 1px solid rgba(255,255,255,0.6);
+          border-radius: 5px;
+          box-shadow: none;
+          text-transform: capitalize;
+          font-size: 1.5em;
+          font-weight: 300;
+        }
+
+        .mdl-textfield__label {
+          color: rgba(255,255,255,0.6) !important;
+        }
+
+        .mdl-textfield__input {
+          color: rgba(255,255,255,1);
+          border-bottom: 2px solid rgba(255,255,255,0.6);
+        }
+
+        .error-text-container {
+          padding: 15px;
+          max-width: 550px;
+          margin: 0 auto;
+        }
+
+        .alert.alert-danger {
+          border: 1px solid #D50000;
+          padding: 5px;
+          border-radius: 5px;
+          color: #fff;
+        }
+
+        .need-help, .new-account {
+          color: #fff;
+          text-decoration: none;
+        }
+        
+        .input-container {
+          max-width: 500px;
+          margin: 0 auto;   
+        }
+
+        .link-container {
+          text-align: right;
+          display: inline-block;
+          width: 300px;
+          margin: 0;
+        }
+        
+        .header-container {
+          height: 56px;
+          background-color: #3e3e3e;   
+        }
+        
+        .header-container i {
+          position: fixed;
+          top: 15px;
+          color: #fff;
+          left: 15px;   
+          z-index: 2000;
+          cursor: pointer;
+        }
+        
+        .header-container p {
+          position: relative;
+          text-align: center;
+          font-size: 20px;
+          margin: 0;
+          padding-top: 15px;
+          color: #fff;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header-container">
+        <i class="material-icons" onClick="goBack();">close</i>
+        <p>Sign in</p>
+      </div>
+          
+      <!-- Features Section -->
+      <div class="login-container">
+
+        <div class="error-text-container">
+          <apex:outputPanel rendered="{!isLoginFailed}">
+            <div class="alert alert-danger" role="alert">
+              <apex:outputText value="Your login attempt has failed. Make sure the username and password are correct."></apex:outputText>
+            </div>
+          </apex:outputPanel>
+          <div id="form-messages"></div>
+          <div class="form-result" id="form-result"></div>
+        </div>
+
+        <div class="login-form-container">
+          <apex:form id="loginForm" forceSSL="true">
+            <div class="input-container">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <apex:inputText value="{!username}" id="email" styleClass="mdl-textfield__input"></apex:inputText>
+                <apex:outputLabel value="{!$Label.site.email}" for="username" styleClass="mdl-textfield__label"/>
+              </div>
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <apex:outputLabel value="{!$Label.site.password}" for="password" styleClass="mdl-textfield__label"/>
+                <apex:inputSecret value="{!password}" id="password" styleClass="mdl-textfield__input"></apex:inputSecret>
+              </div>
+
+              <div class="link-container">
+                <apex:outputLink value="{!$Page.CitizenForgotPassword}" styleClass="need-help">{!$Label.site.forgot_your_password_q}</apex:outputLink>
+              </div>
+            </div>
+
+            <div class="button-container">
+              <apex:commandButton action="{!login}" id="loginButton" value="Sign in" onclick="javascript:loginSubmit(); return false;" styleClass="mdl-button mdl-js-button"/>
+            </div>
+          </apex:form>
+        </div>
+      </div>
+                    
+      <script>
+        var goBack = function() { 
+          if (window.opener != null && window.opener.length <= 0) {
+            window.close();  
+          } else {
+            window.location = "{!$Site.BaseUrl}/apex/DC311CitizenPortal";
+          }    
+        }
+      </script>
+    </body>
+  </html>
+</apex:page>

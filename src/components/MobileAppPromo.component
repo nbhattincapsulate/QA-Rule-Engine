@@ -1,0 +1,74 @@
+<apex:component >
+  <apex:attribute name="promoText" type="String" required="true" default="false" description="Promo Text" />
+  <apex:attribute name="logoVisible" type="String" required="false" default="none" description="Show coloured label." />
+  <apex:attribute name="isQRVisible" type="Boolean" required="false" default="true" description="Is the QR code section visible." />
+  <apex:attribute name="isPhoneSectionVisible" type="Boolean" required="false" default="true" description="Is the phone image section visible." />
+
+  <section id="promo" class="promo section visible-md visible-lg visible-sm visible-xs">
+    <div class="container">
+      <div class="row">
+        <div class="overview {!IF(isPhoneSectionVisible, 'col-md-8', 'col-md-12')} col-sm-12 col-xs-12" style="{!IF(!isPhoneSectionVisible, 'text-align: center;','')}">
+          <h2 class="title">
+            <div class="row">
+              <div class="item {!IF(!isPhoneSectionVisible, 'col-md-offset-2 col-md-8', 'col-md-offset-1 col-md-3')} col-sm-12">
+                  <apex:image id="ouc-logo-file" alt="qr ios" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/logo/logo.png')}" />
+              </div>
+            </div>
+            <div class="row">
+               
+              <span style="display: {!logoVisible} !important; font-weight: bold;" class="logo-title visible-xs-inline visible-sm-inline">DC <span class="text-danger">311</span></span>
+              {!promoText}
+              <span style="display: {!logoVisible} !important; font-weight: bold;" class="logo-title">Text <span class="text-danger">Street Light</span> to 32311</span>
+              For additional information, go to <span class="text-danger">ouc.dc.gov</span>
+              </div>
+              <div class="row">
+                  <div class="item {!IF(!isPhoneSectionVisible, 'col-md-offset-2 col-md-8', 'col-md-offset-1 col-md-3')} col-sm-12" style="padding-left:0px">
+                      <apex:image id="ouc-flag" alt="qr ios" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/logo/311Flag.png')}" />
+                  </div>
+              </div>
+          </h2>
+        <!--
+          <div class="download-area">
+            <ul class="btn-group list-inline">
+              <li class="ios-btn"><a href="https://itunes.apple.com/us/app/dc-311/id966327559?mt=8">Download from the App Store</a></li>
+              <li class="android-btn"><a href="https://play.google.com/store/apps/details?id=com.dcgov.ouc311">Get it from Google Play</a></li>
+            </ul>
+          </div>
+          <div class="qr-codes {!IF(isQRVisible, 'visible-md visible-lg', 'hidden-xs hidden-sm hidden-md hidden-lg')}">
+            <div class="row">
+              <div class="item {!IF(!isPhoneSectionVisible, 'col-md-offset-2 col-md-4', 'col-md-offset-1 col-md-3')} col-sm-12">
+                <apex:image id="dcmobile-qr-ios-image" alt="qr ios" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/qrcodes/qr_ios.png')}" />
+              </div>
+              <div class="item {!IF(!isPhoneSectionVisible, 'col-md-4', 'col-md-offset-1 col-md-3')} col-sm-12">
+                <apex:image id="dcmobile-qr-android-image" alt="qr android" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/qrcodes/qr_android.png')}" />
+              </div>
+            </div>
+          </div>
+		-->
+          
+        </div><!--//overview-->
+        <!--// iPhone starts -->
+        <!--<div class="phone iphone iphone-black col-md-4 col-sm-12 col-xs-12 {!IF(isPhoneSectionVisible, 'visible-md visible-lg', 'hidden-xs hidden-sm hidden-md hidden-lg')}">
+          <div class="iphone-holder phone-holder">
+            <div class="iphone-holder-inner">
+              <div class="slider flexslider">
+                <ul class="slides">
+                  <li>
+                    <apex:image id="dcmobile-home-image" alt="dcmobile home" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/iphone/iphone-slide-1.png')}" />
+                  </li>
+                  <li>
+                    <apex:image id="dcmobile-map-image" alt="dcmobile map" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/iphone/iphone-slide-2.png')}" />
+                  </li>
+                  <li>
+                    <apex:image id="dcmobile-desc-image" alt="dcmobile desc" url="{!URLFOR($Resource.OUC311,'OUC311/assets/images/iphone/iphone-slide-3.png')}" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!--//iphone-->
+        <!--// iPhone ends -->
+      </div><!--//row-->
+    </div><!--//container-->
+  </section><!--//promo-->
+</apex:component>

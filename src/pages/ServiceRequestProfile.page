@@ -1,0 +1,306 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalController">
+ <apex:form id="statusCheck" styleClass="statusCheck form-horizontal" forceSSL="true">  
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <title>DC 311 | OUC</title>
+            <c:OUC311_Portal_Styles />
+           	<style>
+           	.profile{
+					padding-bottom:50px;;
+				}
+           	</style>
+        </head>
+        <body onload="checkIfloggedIn();">
+ 			<script>
+				function checkIfloggedIn(){
+					getProfileInfo();
+				}
+			</script>
+           <!-- header -->
+             <c:OUC311_Portal_Header loggedInUsername="{!loggedInUsername}" loggedInUserFullName="{!loggedInUserFullName}"/>
+            <!-- end  of header -->
+           <apex:actionfunction name="getProfileInfo" action="{!getProfileInfo}" rerender="profile"></apex:actionfunction>
+           
+          <div class="section">
+              <div class="profile container">
+                <div class="space-sm"></div>
+                <apex:outputPanel id="profile">
+                 	<apex:outputPanel rendered="{!loggedIn}">
+	                <h2 class="lg-title lg-title-border text-center text-primary">My Profile</h2>
+	                <br/>
+	                <div class="row">
+	                            <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+	                                <div class="row text-center">
+	                                        <div class= "col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+	                                          <div id="form-messages"></div>
+	                                          <div class="form-result text-center" id="form-result"></div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-signin">
+	                                        <div class="form-group icon">
+	                                             <label for="firstName" class="col-md-3 col-md-offset-1 control-label">First Name</label>
+	                                              <div class="col-md-5">
+	                                                  <div class="control">
+	                                                      <apex:inputText styleclass="form-control" id="firstName" value="{!NameFirst}" ></apex:inputText>
+	                                                  </div>
+	                                              </div>  
+	                                         </div>
+	                                         <div class="form-group icon">
+	                                             <label for="lastName" class="col-md-3 col-md-offset-1 control-label">Last Name</label>
+	                                              <div class="col-md-5">
+	                                                  <div class="control">
+	                                                      <apex:inputText styleclass="form-control" id="lastName" value="{!NameLast}"></apex:inputText>
+	                                                  </div>
+	                                              </div>  
+	                                         </div>
+	                                        <div class="form-group icon">
+	                                              <label for="email" class="col-md-3 col-md-offset-1 control-label">Email</label>
+	                                              <div class="col-md-5">
+	                                                  <div class="control">
+	                                                      <apex:inputText styleclass="form-control" id="email" value="{!email}" disabled="true"></apex:inputText>
+	                                                  </div>
+	                                              </div>
+	                                        </div>
+	                                        
+														<div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">Street Address</label>
+                                                          <div class="col-md-5">
+                                                             <div class="control">
+                                                                   <apex:inputText styleClass="form-control" value="{!selContact.MailingStreet}" id="Participants_0__Address_StreetAddress" maxlength="40"/>
+                                                             </div>
+                                                          </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">City</label>
+                                                          <div class="col-md-5">
+                                                            <div class="control">
+                                                              <apex:inputtext styleClass="form-control" value="{!selContact.MailingCity}" maxlength="20" id="Participants_0__Address_City"/>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">State</label>
+                                                          <div class="col-md-5">
+                                                            <div class="control">
+                                                                <apex:selectList styleClass="form-control" value="{!selContact.MailingState}" multiselect="false" size="1" id="Participants_0__Address_State">
+												               	<apex:selectOption itemValue=""   itemLabel="--None--"/>
+																<apex:selectOption itemValue="Alabama" itemLabel="Alabama"/>
+																<apex:selectOption itemValue="Alaska" itemLabel="Alaska"/>
+																<apex:selectOption itemValue="Arizona" itemLabel="Arizona"/>
+																<apex:selectOption itemValue="Arkansas" itemLabel="Arkansas"/>
+																<apex:selectOption itemValue="California" itemLabel="California"/>
+																<apex:selectOption itemValue="Colorado" itemLabel="Colorado"/>
+																<apex:selectOption itemValue="Connecticut" itemLabel="Connecticut"/>
+																<apex:selectOption itemValue="Delaware" itemLabel="Delaware"/>
+																<apex:selectOption itemValue="District of Columbia" itemLabel="District of Columbia"/>
+																<apex:selectOption itemValue="Florida" itemLabel="Florida"/>
+																<apex:selectOption itemValue="Georgia" itemLabel="Georgia"/>
+																<apex:selectOption itemValue="Hawaii" itemLabel="Hawaii"/>
+																<apex:selectOption itemValue="Idaho" itemLabel="Idaho"/>
+																<apex:selectOption itemValue="Illinois" itemLabel="Illinois"/>
+																<apex:selectOption itemValue="Indiana" itemLabel="Indiana"/>
+																<apex:selectOption itemValue="Iowa" itemLabel="Iowa"/>
+																<apex:selectOption itemValue="Kansas" itemLabel="Kansas"/>
+																<apex:selectOption itemValue="Kentucky" itemLabel="Kentucky"/>
+																<apex:selectOption itemValue="Louisiana" itemLabel="Louisiana"/>
+																<apex:selectOption itemValue="Maine" itemLabel="Maine"/>
+																<apex:selectOption itemValue="Maryland" itemLabel="Maryland"/>
+																<apex:selectOption itemValue="Massachusetts" itemLabel="Massachusetts"/>
+																<apex:selectOption itemValue="Michigan" itemLabel="Michigan"/>
+																<apex:selectOption itemValue="Minnesota" itemLabel="Minnesota"/>
+																<apex:selectOption itemValue="Mississippi" itemLabel="Mississippi"/>
+																<apex:selectOption itemValue="Missouri" itemLabel="Missouri"/>
+																<apex:selectOption itemValue="Montana" itemLabel="Montana"/>
+																<apex:selectOption itemValue="Nebraska" itemLabel="Nebraska"/>
+																<apex:selectOption itemValue="Nevada" itemLabel="Nevada"/>
+																<apex:selectOption itemValue="New Hampshire" itemLabel="New Hampshire"/>
+																<apex:selectOption itemValue="New Jersey" itemLabel="New Jersey"/>
+																<apex:selectOption itemValue="New Mexico" itemLabel="New Mexico"/>
+																<apex:selectOption itemValue="New York" itemLabel="New York"/>
+																<apex:selectOption itemValue="North Carolina" itemLabel="North Carolina"/>
+																<apex:selectOption itemValue="North Dakota" itemLabel="North Dakota"/>
+																<apex:selectOption itemValue="Ohio" itemLabel="Ohio"/>
+																<apex:selectOption itemValue="Oklahoma" itemLabel="Oklahoma"/>
+																<apex:selectOption itemValue="Oregon" itemLabel="Oregon"/>
+																<apex:selectOption itemValue="Pennsylvania" itemLabel="Pennsylvania"/>
+																<apex:selectOption itemValue="Rhode Island" itemLabel="Rhode Island"/>
+																<apex:selectOption itemValue="South Carolina" itemLabel="South Carolina"/>
+																<apex:selectOption itemValue="South Dakota" itemLabel="South Dakota"/>
+																<apex:selectOption itemValue="Tennessee" itemLabel="Tennessee"/>
+																<apex:selectOption itemValue="Texas" itemLabel="Texas"/>
+																<apex:selectOption itemValue="Utah" itemLabel="Utah"/>
+																<apex:selectOption itemValue="Vermont" itemLabel="Vermont"/>
+																<apex:selectOption itemValue="Virginia" itemLabel="Virginia"/>
+																<apex:selectOption itemValue="Washington" itemLabel="Washington"/>
+																<apex:selectOption itemValue="West Virginia" itemLabel="West Virginia"/>
+																<apex:selectOption itemValue="Wisconsin" itemLabel="Wisconsin"/>
+																<apex:selectOption itemValue="Wyoming" itemLabel="Wyoming"/>
+												              </apex:selectList>
+												              
+												               <!--<apex:selectList styleClass="form-control" value="{!selContact.MailingState}" multiselect="false" size="1" id="Participants_0__Address_State">
+												               	<apex:selectOption itemValue=""   itemLabel="--None--"/>
+																<apex:selectOption itemValue="AL" itemLabel="Alabama"/>
+																<apex:selectOption itemValue="AK" itemLabel="Alaska"/>
+																<apex:selectOption itemValue="AZ" itemLabel="Arizona"/>
+																<apex:selectOption itemValue="AR" itemLabel="Arkansas"/>
+																<apex:selectOption itemValue="CA" itemLabel="California"/>
+																<apex:selectOption itemValue="CO" itemLabel="Colorado"/>
+																<apex:selectOption itemValue="CT" itemLabel="Connecticut"/>
+																<apex:selectOption itemValue="DE" itemLabel="Delaware"/>
+																<apex:selectOption itemValue="DC" itemLabel="District of Columbia"/>
+																<apex:selectOption itemValue="FL" itemLabel="Florida"/>
+																<apex:selectOption itemValue="GA" itemLabel="Georgia"/>
+																<apex:selectOption itemValue="HI" itemLabel="Hawaii"/>
+																<apex:selectOption itemValue="ID" itemLabel="Idaho"/>
+																<apex:selectOption itemValue="IL" itemLabel="Illinois"/>
+																<apex:selectOption itemValue="IN" itemLabel="Indiana"/>
+																<apex:selectOption itemValue="IA" itemLabel="Iowa"/>
+																<apex:selectOption itemValue="KS" itemLabel="Kansas"/>
+																<apex:selectOption itemValue="KY" itemLabel="Kentucky"/>
+																<apex:selectOption itemValue="LA" itemLabel="Louisiana"/>
+																<apex:selectOption itemValue="ME" itemLabel="Maine"/>
+																<apex:selectOption itemValue="MD" itemLabel="Maryland"/>
+																<apex:selectOption itemValue="MA" itemLabel="Massachusetts"/>
+																<apex:selectOption itemValue="MI" itemLabel="Michigan"/>
+																<apex:selectOption itemValue="MN" itemLabel="Minnesota"/>
+																<apex:selectOption itemValue="MS" itemLabel="Mississippi"/>
+																<apex:selectOption itemValue="MO" itemLabel="Missouri"/>
+																<apex:selectOption itemValue="MT" itemLabel="Montana"/>
+																<apex:selectOption itemValue="NE" itemLabel="Nebraska"/>
+																<apex:selectOption itemValue="NV" itemLabel="Nevada"/>
+																<apex:selectOption itemValue="NH" itemLabel="New Hampshire"/>
+																<apex:selectOption itemValue="NJ" itemLabel="New Jersey"/>
+																<apex:selectOption itemValue="NM" itemLabel="New Mexico"/>
+																<apex:selectOption itemValue="NY" itemLabel="New York"/>
+																<apex:selectOption itemValue="NC" itemLabel="North Carolina"/>
+																<apex:selectOption itemValue="ND" itemLabel="North Dakota"/>
+																<apex:selectOption itemValue="OH" itemLabel="Ohio"/>
+																<apex:selectOption itemValue="OK" itemLabel="Oklahoma"/>
+																<apex:selectOption itemValue="OR" itemLabel="Oregon"/>
+																<apex:selectOption itemValue="PA" itemLabel="Pennsylvania"/>
+																<apex:selectOption itemValue="RI" itemLabel="Rhode Island"/>
+																<apex:selectOption itemValue="SC" itemLabel="South Carolina"/>
+																<apex:selectOption itemValue="SD" itemLabel="South Dakota"/>
+																<apex:selectOption itemValue="TN" itemLabel="Tennessee"/>
+																<apex:selectOption itemValue="TX" itemLabel="Texas"/>
+																<apex:selectOption itemValue="UT" itemLabel="Utah"/>
+																<apex:selectOption itemValue="VT" itemLabel="Vermont"/>
+																<apex:selectOption itemValue="VA" itemLabel="Virginia"/>
+																<apex:selectOption itemValue="WA" itemLabel="Washington"/>
+																<apex:selectOption itemValue="WV" itemLabel="West Virginia"/>
+																<apex:selectOption itemValue="WI" itemLabel="Wisconsin"/>
+																<apex:selectOption itemValue="WY" itemLabel="Wyoming"/>
+												              </apex:selectList>  -->
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">Zip Code</label>
+                                                          <div class="col-md-5">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" Value="{!selContact.MailingPostalCode}" id="Participants_0__Address_Zip" maxlength="5"/>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                                                                                
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">Phone Number</label>
+                                                          <div class="col-md-5">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" id="Participants_0__PhoneNumber" value="{!selContact.Phone}"/>
+                                                             </div>
+                                                           </div>
+                                                         </div>
+                                                                
+                                                        <div class="form-group icon">
+                                                          <label for="name" class="col-md-3 col-md-offset-1 control-label">Phone Number Ext</label>
+                                                          <div class="col-md-5">
+                                                            <div class="control">
+                                                              <apex:inputText styleClass="form-control" Value="{!selContact.OtherPhone}" id="Participants_0__PhoneExtension"/>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+	
+	                                                                                  
+	                                       <apex:actionFunction name="updateUserProfile" action="{!updateUserProfile}" reRender="Register"> 
+	                                          <apex:param value="" assignTo="{!email}" name="email"/>
+	                                          <apex:param value="" assignTo="{!NameFirst}" name="firstname"/>
+	                                          <apex:param value="" assignTo="{!NameLast}" name="lastname"/>
+	                                      </apex:actionFunction>
+	                                      <div class="form-group icon">
+	                                              <div class="col-md-6 col-md-offset-3">
+	                                                  <div class="control">
+	                                                     <apex:commandButton styleClass="btn btn-lg btn-primary btn-block" action="{!updateUserProfile}" onclick="javascript:UpdateProfileSubmit(); return false;" value="Update" id="register"/>
+	                                                  </div>
+	                                              </div>  
+	                                      </div>
+	                                    </div>
+	                            </div>
+	                </div>
+					</apex:outputPanel>
+				</apex:outputPanel> 
+              </div>
+          </div>
+    
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+         
+          <SCRIPT TYPE="text/javascript">
+
+                // copyright 1999 Idocs, Inc. http://www.idocs.com
+                // Distribute this script freely but keep this notice in place
+                function numbersonly(myfield, e, dec)
+                {
+                var key;
+                var keychar;
+                
+                if (window.event)
+                   key = window.event.keyCode;
+                else if (e)
+                   key = e.which;
+                else
+                   return true;
+                keychar = String.fromCharCode(key);
+                
+                // control keys
+                if ((key==null) || (key==0) || (key==8) || 
+                    (key==9) || (key==13) || (key==27) )
+                   return true;
+                
+                // numbers
+                else if ((("0123456789").indexOf(keychar) > -1))
+                   return true;
+                
+                // decimal point jump
+                else if (dec && (keychar == "."))
+                   {
+                   myfield.form.elements[dec].focus();
+                   return false;
+                   }
+                else
+                   return false;
+                }    
+           
+            </SCRIPT>
+            
+            <script>
+               function alphaOnly(event) {
+                      var key = event.keyCode;
+                      return ((key >= 65 && key <= 90) || key == 8);
+                };                                          
+            
+           </script>
+      </body>
+    </html>
+</apex:form> 
+</apex:page>

@@ -1,0 +1,103 @@
+<apex:component >
+   
+    <!-- Meta tags-->
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+   
+     <!-- Bootstrap framework style-->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/bootstrap.min.css')}"/>
+
+    <!-- Custom style -->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/influence.css')}"/>
+
+    <!-- Responsive Tabs style -->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/responsive-tabs.css')}"/>
+
+    <!-- Font Awesome Icons -->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/font-awesome/css/font-awesome.min.css')}"/>
+
+    <!-- Google Fonts - Lato -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet"></link>
+
+    <!-- CSS animations -->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/animate.min.css')}"/>
+
+    <!-- Modal Windows - portfolio item -->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/ModalWindowEffects.min.css')}"/>
+
+    <!-- Slideshow-->
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/slippry.min.css')}"/>
+
+    <!-- Colors Themes -->
+    <!--<link href="assets/css/themes/blue.min.css" rel="stylesheet" id="colors">-->
+    <!--<link href="assets/css/themes/light-blue.min.css" rel="stylesheet" id="colors">-->
+    
+    <apex:stylesheet value="{!URLFOR($Resource.DC311, 'DC311/assets/css/themes/red.min.css')}"/>
+    
+    <!--<link href="assets/css/themes/green.min.css" rel="stylesheet" id="colors">-->
+    <!--<link href="assets/css/themes/yellow.min.css" rel="stylesheet" id="colors">-->
+
+    <!--[if lt IE 9]>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <!-- Scripts -->
+
+    <!-- Modernizr-->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/modernizr.min.js')}"/>
+
+    <!-- jQuery -->
+    
+
+    <apex:includeScript value="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+    <apex:includeScript value="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"/>
+
+    <!-- Start animations -->
+    <apex:includeScript value="http://cdnjs.cloudflare.com/ajax/libs/wow/0.1.6/wow.min.js"/>
+
+    <!-- Main navigation -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/jquery.nav.min.js')}"/>
+
+    <!-- Smooth Scrolling -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/jquery.nicescroll.min.js')}"/>
+
+    <!-- Bootstrap JS -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/bootstrap.min.js')}"/>
+
+    <!-- Slidesho - Slippry.js -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/slippry.min.js')}"/>
+
+    <!-- Knobs -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/jquery.knob.min.js')}"/>
+
+    <!-- Contact Form -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/contact-form.min.js')}"/>
+
+    <!-- Filter - portfolio grid -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/jquery.mixitup.min.js')}"/>
+
+    <!-- Responsive Tabs -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/responsive-tabs.js')}"/>
+
+    <!-- Modal Windows -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/classie.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/modalEffects.min.js')}"/>
+    <script>
+        // this is important for IEs
+        var polyfilter_scriptpath = '/js/';
+        $( document ).ready(function() {
+            $(".tabbable.responsive").resptabs();
+        });
+    </script>
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/cssParser.min.js')}"/>
+
+    <!-- Google Maps -->
+    <apex:includeScript value="http://maps.googleapis.com/maps/api/js?sensor=false"/>
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/initmap.min.js')}"/>
+
+    <!-- Must be last of all js -->
+    <apex:includeScript value="{!URLFOR($Resource.DC311, 'DC311/assets/js/min/influence.min.js')}"/>
+
+</apex:component>

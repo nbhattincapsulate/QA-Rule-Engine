@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>A resident has submitted a request to the 311 system. Email notification is to confirm receipt</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Creation Confirmation</name>
+    <style>freeForm</style>
+    <subject>Your 311 Request</subject>
+    <textOnly>Dear resident,
+
+Thank you for contacting 311! 
+
+Your request for {!Case.Subject} has been received by our agents and will be forwarded to the {!Case.Servicing_Agency_Expanded__c} for completion. You may receive occasional updates on the status of this request as the agency works to complete your request. Your request is expected to be completed on or about {!Case.Expected_Resolution_Date__c} (SLA: {!Case.SLA__c} days). We will notify you when this request has been closed. 
+
+Please visit 311.dc.gov to check the status of your request or to find answers to frequently asked questions.  You may also call 311, and reference service request number: {!Case.CaseNumber} to check your status or get help with questions. 
+
+Thanks again for contacting the Mayor’s 311 Hotline!</textOnly>
+    <type>html</type>
+</EmailTemplate>

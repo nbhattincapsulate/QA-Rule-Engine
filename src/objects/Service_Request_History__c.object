@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>DCConsoleSearchFieldset</fullName>
+        <description>Service Console</description>
+        <displayedFields>
+            <field>CaseNumber__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>SRType__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>DateTimeClosed__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>DCConsoleSearchFieldset</label>
+    </fieldSets>
+    <fields>
+        <fullName>ANC__c</fullName>
+        <externalId>false</externalId>
+        <label>ANC</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AccountId__c</fullName>
+        <externalId>false</externalId>
+        <label>AccountId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AddressID__c</fullName>
+        <externalId>false</externalId>
+        <label>Address ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AliasName__c</fullName>
+        <externalId>false</externalId>
+        <label>Alias Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Asset__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BusinessHours__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Hours</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CaseNumber__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Source__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Case Source</label>
+        <length>125</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ClosedDate__c</fullName>
+        <externalId>false</externalId>
+        <label>Date/Time Closed (deprecated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Comments</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ContactEmail__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Email(needs to be deleted)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ContactFax__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Fax</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>ContactFirstName__c</fullName>
+        <description>Contact first name mapped to this field</description>
+        <externalId>false</externalId>
+        <label>Contact FirstName</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ContactLastName__c</fullName>
+        <description>Contact Last name mapped to this field</description>
+        <externalId>false</externalId>
+        <label>Contact LastName</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ContactMobile__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Mobile</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>ContactPhone__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Phone</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Email</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CreatedBy__c</fullName>
+        <externalId>false</externalId>
+        <label>Created By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CreatedDate__c</fullName>
+        <externalId>false</externalId>
+        <label>Date/Time Opened (deprecated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DateTimeClosed__c</fullName>
+        <externalId>false</externalId>
+        <label>Date/Time Closed</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DateTimeOpened__c</fullName>
+        <externalId>false</externalId>
+        <label>Date/Time Opened</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Deleted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This is set to true when a Case record has been deleted in SFDC.  It is not set to true when a Service Request has been instead logically archived.</description>
+        <externalId>false</externalId>
+        <label>Deleted</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Device__c</fullName>
+        <externalId>false</externalId>
+        <label>Device</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>District__c</fullName>
+        <externalId>false</externalId>
+        <label>District</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Escalated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Escalated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Resolution_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Resolution Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>External_System_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>External_System_Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FlexNotes__c</fullName>
+        <externalId>false</externalId>
+        <label>FlexNotes</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>GeoLocation__c</fullName>
+        <displayLocationInDecimal>true</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>GeoLocation</label>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>IntersectionId__c</fullName>
+        <externalId>false</externalId>
+        <label>Intersection Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsClosedOnCreate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Closed When Created</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsClosed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsClosed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsSelfServiceClosed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Closed by Self-Service User</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsVisibleInSelfService__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Visible in Self-Service Portal</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Jurisdiction_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Jurisdiction Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Jurisdiction_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Jurisdiction Description</label>
+        <length>1028</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Language</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Amharic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>French</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korean</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spanish</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vietnamese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Othe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>LastModifiedBy__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Modified By</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LastUpdateDateTime__c</fullName>
+        <externalId>false</externalId>
+        <label>LastUpdateDate</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Update_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Update Date (deprecated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Media_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Media URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Neighbor_Hood_Cluster__c</fullName>
+        <externalId>false</externalId>
+        <label>Neighbor Hood Cluster</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Origin__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Origin</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>311-App</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internal Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Owner__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Owner</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PSA__c</fullName>
+        <externalId>false</externalId>
+        <label>PSA</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Service_Request_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Service Request Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Case</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Emergency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Urgent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Escalated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Dispute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Quadrant__c</fullName>
+        <externalId>false</externalId>
+        <label>Quadrant</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>User didn&apos;t attend training</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complex functionality</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Existing problem</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Instructions not clear</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New problem</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Resolution_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Resolution Date (deprecated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RoadwaySegId__c</fullName>
+        <externalId>false</externalId>
+        <label>RoadwaySegId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Met_Days__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+(IsClosed__c &amp;&amp;(Expected_Resolution_Date__c &gt;= DateTimeClosed__c) &amp;&amp; SLA_Type__c == &apos;Calendar days&apos;), 
+
+(Expected_Resolution_Date__c - DateTimeClosed__c), 
+
+( 
+IF( 
+(IsClosed__c &amp;&amp;(Expected_Resolution_Date__c &gt;= DateTimeClosed__c) &amp;&amp; SLA_Type__c == &apos;Business days&apos;), 
+CASE(MOD( DATEVALUE(DateTimeClosed__c) - DATE(1985,6,24),7), 
+
+0 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,2,2,3,3,4,4,5,5,5,6,5,1), 
+1 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,2,2,3,3,4,4,4,5,4,6,5,1), 
+2 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,2,2,3,3,3,4,3,5,4,6,5,1), 
+3 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,2,2,2,3,2,4,3,5,4,6,5,1), 
+4 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,1,2,1,3,2,4,3,5,4,6,5,1), 
+5 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,0,2,1,3,2,4,3,5,4,6,5,0), 
+6 , CASE( MOD( DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c) ,7),1,1,2,2,3,3,4,4,5,5,6,5,0), 
+999) 
++ 
+(FLOOR((DATEVALUE(Expected_Resolution_Date__c ) - DATEVALUE(DateTimeClosed__c))/7)*5) 
+,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Met Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Met__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(SLA_Status__c=&apos;Met&apos;,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Met</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Missed_Days__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+(IsClosed__c &amp;&amp;(DateTimeClosed__c &gt; Expected_Resolution_Date__c) &amp;&amp; SLA_Type__c == &apos;Calendar days&apos;), 
+
+(DateTimeClosed__c - Expected_Resolution_Date__c), 
+
+( 
+IF( 
+(IsClosed__c &amp;&amp;(DateTimeClosed__c &gt; Expected_Resolution_Date__c) &amp;&amp; SLA_Type__c == &apos;Business days&apos;), 
+CASE(MOD( DATEVALUE(Expected_Resolution_Date__c) - DATE(1985,6,24),7), 
+
+0 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,2,2,3,3,4,4,5,5,5,6,5,1), 
+1 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,2,2,3,3,4,4,4,5,4,6,5,1), 
+2 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,2,2,3,3,3,4,3,5,4,6,5,1), 
+3 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,2,2,2,3,2,4,3,5,4,6,5,1), 
+4 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,1,2,1,3,2,4,3,5,4,6,5,1), 
+5 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,0,2,1,3,2,4,3,5,4,6,5,0), 
+6 , CASE( MOD( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) ,7),1,1,2,2,3,3,4,4,5,5,6,5,0), 
+999) 
++ 
+(FLOOR(( DATEVALUE(DateTimeClosed__c) - DATEVALUE(Expected_Resolution_Date__c) )/7)*5) 
+,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Missed Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Missed__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(SLA_Status__c=&apos;Missed&apos;,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Missed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Open__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(SLA_Status__c=&apos;Open&apos;,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Open</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Overdue__c</fullName>
+        <externalId>false</externalId>
+        <formula>If(SLA_Status__c=&apos;Overdue&apos;,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Overdue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( IsClosed__c,
+    if ( DateTimeClosed__c &lt;= BlankValue(Expected_Resolution_Date__c, Now()), 
+         &apos;Met&apos;, &apos;Missed&apos; ),
+    if ( Now() &lt;= BlankValue(Expected_Resolution_Date__c, Now()) , 
+         &apos;Open&apos;, &apos;Overdue&apos; )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SLA Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMD__c</fullName>
+        <externalId>false</externalId>
+        <label>SMD</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SRType_Jurisdiction__c</fullName>
+        <externalId>false</externalId>
+        <label>SR Type Jurisdiction</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SRType__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Request Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Due Date (deprecated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Notes</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Service_Request_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Service Request Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Source_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Source Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Type_Code_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Type Code Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Type_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Type Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Servicing_Agency__c</fullName>
+        <externalId>false</externalId>
+        <label>Servicing Agency</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Site Address</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SnowRoute__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Snow Route</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SnowZone__c</fullName>
+        <defaultValue>&quot;&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Snow Zone</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed - Incomplete Information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Duplicate (Closed)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Duplicate (Opened)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Voided</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dispute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Problem</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Feature Request</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Question</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Ward__c</fullName>
+        <externalId>false</externalId>
+        <label>Ward</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>XCOORD__c</fullName>
+        <externalId>false</externalId>
+        <label>XCOORD</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>YCOORD__c</fullName>
+        <externalId>false</externalId>
+        <label>YCOORD</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zipcode__c</fullName>
+        <externalId>false</externalId>
+        <label>Zipcode</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Service Request History</label>
+    <listViews>
+        <fullName>Homeless_Services_Service_Request_History</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Homeless Services</label>
+        <queue>Homeless_Services</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OUC_DPW_Queue_Service_Request_History</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OUC DPW Queue</label>
+        <queue>OUC_DPW_Queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OUC_SNOW_Queue_Service_Request_History</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OUC SNOW Queue</label>
+        <queue>OUC_SNOW_Queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Serve_DC_Queue_Service_Request_History</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Serve DC Queue</label>
+        <queue>Serve_DC_Queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>X311_info_dc_gov_Email_to_Case_Queue_Service_Request_History</fullName>
+        <filterScope>Queue</filterScope>
+        <label>311.info@dc.gov Email to Case Queue</label>
+        <queue>X311_info_dc_gov_Email_to_Case_Queue</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Service Request History Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Service Request Histories</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>CaseNumber__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Address__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Origin__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SRType__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CreatedDate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ClosedDate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Update_Date__c</customTabListAdditionalFields>
+        <searchFilterFields>DateTimeClosed__c</searchFilterFields>
+        <searchFilterFields>DateTimeOpened__c</searchFilterFields>
+        <searchFilterFields>SRType__c</searchFilterFields>
+        <searchResultsAdditionalFields>CaseNumber__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Address__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ContactLastName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ContactPhone__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SRType__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DateTimeOpened__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DateTimeClosed__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

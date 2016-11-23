@@ -1,0 +1,406 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalController">
+   <apex:form id="statusCheck" styleClass="statusCheck form-horizontal">     
+        <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+        <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+        <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+        <head>
+            <title>DC 311 | OUC</title>
+            <c:OUC311_Portal_Styles />           
+            
+            <script language="javascript" type="text/javascript">
+                // 1/24/12 MJB CR4101
+                // Trap Enter key events in text input fields
+                $(':text').keypress(function(e) {
+                    var loKey;
+        
+                    if (window.event) {
+                        loKey = window.event.keyCode;
+                    }
+                    else {
+                        loKey = e.which;
+                    }
+        
+                    if (loKey == 13) {
+                        document.getElementById("EnterKeyPressedInTextbox").value = true;
+                    }
+                });
+            </script>       
+            
+            <style> 
+                .check-status{
+                    padding-bottom:50px;
+                }
+                .list-item{
+                border-top: 1px solid #e4e5e7;
+                }
+                
+                #mapcontainer {
+                  position: relative;
+                  width: 100%;
+                  height: 350px;
+                  float: left;
+                  top:0;
+                  left:0;
+                }
+                 
+                #map {
+                  width: 100%;
+                  height: 100%;
+                  position: absolute;
+                }
+                 
+                #boundsLegend,#viewportLegend {
+                  position: absolute;
+                  background-color: white;
+                  right: 1px;
+                  font-family: sans-serif;
+                  font-size: small;
+                  padding: 2px;
+                  color: #222222;
+                  display: none;
+                }
+                 
+                #boundsLegend {
+                  border: 1px solid red;
+                  bottom: 40px;
+                }
+                 
+                #viewportLegend {
+                  border: 1px solid blue;
+                  bottom: 15px;
+                }
+                 
+                #responseStatus {
+                  display: none;
+                }
+                 
+                #responseCount {
+                  display: none;
+                }
+                 
+                #responseInfo {
+                  margin-top: 10px;
+                  background-color: #eeeeee;
+                  border: 1px solid #999999;
+                  padding: 10px;
+                  width: 600px;
+                  display: none;
+                }
+                 
+                .info {
+                  border-top: 1px solid #666666;
+                  padding: 4px;
+                  padding-left: 8px;
+                  font: 10pt sans-serif;
+                  margin-left: 4px;
+                  margin-right: 4px;
+                  cursor: pointer;
+                  background-color: white;
+                }
+                 
+                .infoWindowContent {
+                  width: 100%;
+                  height: 100px;
+                  overflow: auto;
+                }
+    
+                .infoWindowContent2 {
+                  width: 272px;
+                  height: 100px;
+                  overflow: auto;
+                }
+                 
+                .tabContent {
+                  font: 10pt sans-serif;
+                  border-collapse: collapse;
+                  table-layout: auto;
+                }
+                 
+                #matches {
+                  margin-top: 10px;
+                  width: 320px;
+                  height: 490px;
+                  float: left;
+                  border: 1px solid #666666;
+                  display: none;
+                  overflow: auto;
+                }
+                 
+                #inputForm {
+                  width: 650px;
+                  margin: 10px;
+                }
+                 
+                #footer {
+                  padding-top: 4px;
+                  font-family: sans-serif;
+                  font-size: 8pt;
+                  clear: both;
+                  width: 650px;
+                  border-top: 1px solid #999999;
+                }
+                 
+                #instructions {
+                  padding-bottom: 8px;
+                }
+                 
+                .key {
+                  /*text-align: right;*/
+                  font-weight: bold;
+                  vertical-align: top;
+                  white-space: nowrap 
+                }
+                 
+                .value {
+                  vertical-align: top;  
+                }
+                 
+                #options {
+                  margin-top: 5px;
+                }
+                 
+                #biasViewport,#country {
+                  margin-right: 16px;
+                }
+                 
+                #newFeatures {
+                  position: absolute;
+                  top: 1px;
+                  right: -2px;
+                  background-color: #ffffd0;
+                  border: 1px solid black;
+                  font-family: sans-serif;
+                  font-size: 8pt;
+                  padding: 2px;
+                }
+            </style>                                                                 
+           
+              
+            <script>
+                if (top.frames.length != 0)
+                    top.location = self.document.location;
+            </script> 
+           
+         </head>
+         <body>
+            <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="{!loggedInUsername}" loggedInUserFullName="{!loggedInUserFullName}"/>
+            <!-- end  of header -->
+            
+                <!-- ******FEATURES****** -->
+   
+            <div class="section">
+               <div class="check-status container">               
+                  <!-- Tab panes -->
+                  <div class="space-sm"></div>
+                  <div class="">
+                     <div class="" id="status">
+                        <div class="row text-center">
+                           <div class="col-md-12">
+                              <h3 class="text-primary">Service Status</h3>
+                           </div>
+                        </div>
+                        <div class="row">
+                           
+                            <apex:outputPanel id="StatusCheck">
+                                   <apex:outputPanel rendered="{!rend}">
+                                       <script type="text/javascript">
+                                          function numbersonly(myfield, e, dec)
+                                          {
+                                            var key;
+                                            var keychar;
+                                            
+                                            if (window.event)
+                                               key = window.event.keyCode;
+                                            else if (e)
+                                               key = e.which;
+                                            else
+                                               return true;
+                                            keychar = String.fromCharCode(key);
+                                            
+                                            // control keys
+                                            if ((key==null) || (key==0) || (key==8) || 
+                                                (key==9) || (key==13) || (key==27)  || (key==86) || (key==67) )
+                                               return true;
+                                            
+                                            // numbers
+                                            else if ((("0123456789-").indexOf(keychar) > -1))
+                                               return true;
+                                            
+                                            // decimal point jump
+                                            else if (dec && (keychar == "."))
+                                               {
+                                               myfield.form.elements[dec].focus();
+                                               return false;
+                                               }
+                                            else
+                                               return false;
+                                          }
+                                             
+                                          
+                                       </script>                      
+                                        <div class="row text-center">
+				                           <div class="col-md-12">
+				                              <p>Please enter the service request # provided with the service request to look up the status. </p>
+				                           </div>
+				                        </div>
+                                       <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                                            <div class="standard-form compressed style-2">                                                
+                                                <div class="form-result text-center" id="form-result"></div>
+                                                <apex:outputPanel rendered="{!IF(custom_error_msg != null && custom_error_msg != '',True,False)}">
+					                                  	<div class="alert alert-danger text-center" role="alert">
+	                                                     	<apex:outputText value="{!custom_error_msg}"></apex:outputText>
+					                                  	</div>                      
+	                                                  </apex:outputPanel><br/>                                              
+                                                 <form class="contactForm" id="contactus" name="contactus">
+                                                     <div class="form-group icon">
+                                                        <label for="name" class="col-md-3 col-md-offset-1 control-label">Service Request Number</label>
+                                                        <div class="col-md-5">
+                                                           <div class="control">
+                                                              <apex:inputText value="{!requestId}" id="srnumber" styleClass="form-control" required="false" html-placeholder="Service Request Number (eg: 11-00000001)" maxlength="12" onKeyPress="return numbersonly(this, event)"/>
+                                                           </div>
+                                                        </div>                                                       
+                                                     </div> 
+                                                      <div class="form-group icon">
+                                                        <label for="name" class="col-md-3 col-md-offset-1 control-label">Email</label>
+                                                        <div class="col-md-5">
+                                                           <div class="control">
+                                                              <apex:inputText value="{!email}" id="email" styleClass="form-control" required="false" html-placeholder="Email Address (eg: abc@xyz.com)" maxlength="80"/>
+                                                           </div>
+                                                        </div>
+                                                     </div>                                                        
+                                                     <br/>
+                                                     <div class="form-group icon">
+                                                        <div class="col-sm-offset-3 col-sm-6 text-center">
+                                                            <apex:actionFunction name="checkStatus" action="{!checkStatus}" reRender="StatusCheck,StatusCheckResult"> 
+                                                              <apex:param value="" assignTo="{!requestId}" name="requestId"/>
+                                                             <apex:param value="" assignTo="{!email}" name="email"/>
+                                                           </apex:actionFunction>
+                                                           
+                                                           <!--<button type="submit" name="submit" class="btn btn-primary">Check</button>-->
+
+                                                           <apex:commandlink styleclass="btn btn-primary" value="Check" action="{!checkStatus}" onclick="javascript:checkStatusSubmit(); return false;"></apex:commandlink>
+                                                        </div>
+                                                     </div>                                                    
+                                                     <div class="space visible-xs"></div>
+                                                 </form>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                               
+                                <apex:outputPanel id="StatusCheckResult">
+                                    <apex:outputPanel rendered="{!render}" >
+
+                                        <!--<div class="col-md-12 col-sm-12 col-xs-12">
+                                        	<h5 class="semi"><a href="#">Service Request</a></h5> 
+	                                        			   <div class="panel widget service-history-panel" style="background-color: #f5f5f5;">
+										                     <div class="panel-body">
+										                        <div class="row row-table">
+										                           <div class="col-xs-12">
+										                           	  <h4 class="pull-right"><span class="label label-success">{!caserecord.status__c}</span></h4>
+										                              <h3>{!caserecord.CaseNumber__c}</h3>
+										                              <h4>{!SrId}</h4>
+										                              <ul class="list-unstyled">
+										                                 <li class="mb-sm"><em class="fa fa-map-marker fa-fw"></em>{!caserecord.Address__c}</li>
+										                              </ul>
+										                           </div>
+										                        </div>
+										                     </div>
+										                  </div>
+	                                    </div>  -->
+	                                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                                    <div class="panel widget service-history-panel" style="background-color: #f5f5f5;">
+		                                     	<div class="panel-body text-center bg-primary" style="padding: 0px;">
+								                	<h4>{!serviceStatusTrimmed}</h4>
+								                </div>			                                    
+								                <div class="panel-heading text-center">
+								                    <h2>{!caserecord.Name}</h2>
+								                    <h3>{!SrId}</h3>
+                                                    <h5><i class="fa fa-clock-o fa-fw"></i><c:FormatDateTime date_Timevalue="{!caserecord.DateTimeOpened__c}"/></h5>
+								                    <i class="fa fa-map-marker fa-fw"></i>{!caserecord.Address__c}
+								                </div>
+							               
+								                <!--<ul class="list-group">
+								                    <li class="list-group-item">
+								                        <i class="fa fa-map-marker fa-fw"></i>{!caserecord.Address__c}
+								                    </li>
+								                </ul>  -->
+								            </div>
+	                                    </div>                                                                      
+                                        <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+
+									        <div class="hpanel">
+									         <apex:variable var="count" value="{!1}"/>
+                                                        <apex:repeat value="{!caserecord}" var="c">                                                          
+                                                            <apex:repeat value="{!c.OUC_Activity_Histories__r}" var="tsk">
+                                                             <apex:pageBlock rendered="{!IF((tsk.External_Comments__c !=null || (tsk.Status__c != null && tsk.Status__c != 'Open')),true,false)}"> 
+                                                                 <apex:pageBlock rendered="{!IF(count ==1,true,false)}">
+                                                                   <div class="panel-heading">
+														                <h4>Activities Performed</h4>
+														            </div>
+														         </apex:pageBlock>
+														         <div class="panel-body text-center bg-info" style="padding: 0px;"><strong><h4>{! tsk.Task_Short_Name__c}</h4></strong></div>
+														            <div class="panel-body list" style="background-color: #f5f5f5;">
+														                	
+														                <div class="list-item-container">
+														                    <div class="">
+														                    	<small><i class="fa fa-flag"></i> Status</small>
+														                        <h4 class="no-margins font-extra-bold text-success text-center">{! tsk.Status__c}</h4>
+														                        
+														                    </div>
+														                   
+														                    <div class="list-item">
+														                    	<small><i class="fa fa-clock-o fa-fw"></i> Due Date</small>	
+															                    <h5 class="no-margins font-extra-bold text-color3 text-center"><c:FormatDateTime date_Timevalue="{!tsk.Due_Date__c}"/></h5>
+														                    </div>
+														                      <div class="list-item">
+														                        <small><i class="fa fa-clock-o fa-fw"></i> Completed Date</small>
+															                    <h5 class="no-margins font-extra-bold text-color3 text-center"><c:FormatDateTime date_Timevalue="{!tsk.Completion_Date__c}"/></h5>
+														                    </div>
+														                     <div class="list-item">
+														                    	<small class="text-center"><i class="fa fa-comments"></i> Comments</small>
+														                        <h5 class="no-margins font-extra-bold">{! tsk.External_Comments__c}</h5>
+														                    </div>
+														                </div>
+														
+														            </div>
+														            <br/>
+                                                                </apex:pageBlock>
+                                                                <apex:variable var="count" value="{!count + 1}"/>
+                                                            </apex:repeat>
+                                                        </apex:repeat>      
+									          
+									        </div>
+    
+                                        </div>
+                                        
+                                        <!--<div class="col-md-12 col-sm-12"> 
+                                             <iframe width="100%" height="260" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDX9ur1Wl-FKC6j6RUbt6t9WdtDAjM4pLQ&q={!caserecord.Address__c}"></iframe>                                                                                                                                   
+
+                                        </div>                                       
+
+                                        <div class="col-md-12 col-sm-12">
+                                           <span class="hr mapdv"></span>                                          
+                                        </div>-->
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>           
+            
+            <div class="tab-row-last"></div>
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+         </body>
+      </html>
+   </apex:form>
+</apex:page>

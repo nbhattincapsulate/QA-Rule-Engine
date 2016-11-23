@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Request History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Service Request Histories</value>
+    </caseValues>
+    <fields>
+        <label><!-- ANC --></label>
+        <name>ANC__c</name>
+    </fields>
+    <fields>
+        <label><!-- AccountId --></label>
+        <name>AccountId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address ID --></label>
+        <name>AddressID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alias Name --></label>
+        <name>AliasName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Asset --></label>
+        <name>Asset__c</name>
+    </fields>
+    <fields>
+        <label><!-- Business Hours --></label>
+        <name>BusinessHours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Number --></label>
+        <name>CaseNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Source --></label>
+        <name>Case_Source__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Closed (deprecated) --></label>
+        <name>ClosedDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email(needs to be deleted) --></label>
+        <name>ContactEmail__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Fax --></label>
+        <name>ContactFax__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact FirstName --></label>
+        <name>ContactFirstName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact LastName --></label>
+        <name>ContactLastName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Mobile --></label>
+        <name>ContactMobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Phone --></label>
+        <name>ContactPhone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Address --></label>
+        <name>Contact_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>CreatedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Opened (deprecated) --></label>
+        <name>CreatedDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Closed --></label>
+        <name>DateTimeClosed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Opened --></label>
+        <name>DateTimeOpened__c</name>
+    </fields>
+    <fields>
+        <label><!-- Deleted --></label>
+        <name>Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Device --></label>
+        <name>Device__c</name>
+    </fields>
+    <fields>
+        <label><!-- District --></label>
+        <name>District__c</name>
+    </fields>
+    <fields>
+        <label><!-- Escalated --></label>
+        <name>Escalated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Expected Resolution Date --></label>
+        <name>Expected_Resolution_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- External_System_Name --></label>
+        <name>External_System_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNotes --></label>
+        <name>FlexNotes__c</name>
+    </fields>
+    <fields>
+        <label><!-- GeoLocation --></label>
+        <name>GeoLocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intersection Id --></label>
+        <name>IntersectionId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed When Created --></label>
+        <name>IsClosedOnCreate__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsClosed --></label>
+        <name>IsClosed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Closed by Self-Service User --></label>
+        <name>IsSelfServiceClosed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visible in Self-Service Portal --></label>
+        <name>IsVisibleInSelfService__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jurisdiction Code --></label>
+        <name>Jurisdiction_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Jurisdiction Description --></label>
+        <name>Jurisdiction_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Language --></label>
+        <name>Language__c</name>
+        <picklistValues>
+            <masterLabel>Amharic</masterLabel>
+            <translation><!-- Amharic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chinese</masterLabel>
+            <translation><!-- Chinese --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>French</masterLabel>
+            <translation><!-- French --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korean</masterLabel>
+            <translation><!-- Korean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Othe</masterLabel>
+            <translation><!-- Othe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Spanish</masterLabel>
+            <translation><!-- Spanish --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vietnamese</masterLabel>
+            <translation><!-- Vietnamese --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>LastModifiedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- LastUpdateDate --></label>
+        <name>LastUpdateDateTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Update Date (deprecated) --></label>
+        <name>Last_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Media URL --></label>
+        <name>Media_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Neighbor Hood Cluster --></label>
+        <name>Neighbor_Hood_Cluster__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Origin --></label>
+        <name>Origin__c</name>
+        <picklistValues>
+            <masterLabel>311-App</masterLabel>
+            <translation><!-- 311-App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal Transfer</masterLabel>
+            <translation><!-- Internal Transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone</masterLabel>
+            <translation><!-- Phone --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case Owner --></label>
+        <name>Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- PSA --></label>
+        <name>PSA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Service Request Id --></label>
+        <name>Parent_Service_Request_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Case --></label>
+        <name>Parent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+        <picklistValues>
+            <masterLabel>Emergency</masterLabel>
+            <translation><!-- Emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Escalated</masterLabel>
+            <translation><!-- Escalated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Dispute</masterLabel>
+            <translation><!-- In Dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Low</masterLabel>
+            <translation><!-- Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Urgent</masterLabel>
+            <translation><!-- Urgent --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Quadrant --></label>
+        <name>Quadrant__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Reason --></label>
+        <name>Reason__c</name>
+        <picklistValues>
+            <masterLabel>Complex functionality</masterLabel>
+            <translation><!-- Complex functionality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Existing problem</masterLabel>
+            <translation><!-- Existing problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Instructions not clear</masterLabel>
+            <translation><!-- Instructions not clear --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New problem</masterLabel>
+            <translation><!-- New problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User didn&apos;t attend training</masterLabel>
+            <translation><!-- User didn&apos;t attend training --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Resolution Date (deprecated) --></label>
+        <name>Resolution_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- RoadwaySegId --></label>
+        <name>RoadwaySegId__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Met Days --></label>
+        <name>SLA_Met_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Met --></label>
+        <name>SLA_Met__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Missed Days --></label>
+        <name>SLA_Missed_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Missed --></label>
+        <name>SLA_Missed__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Open --></label>
+        <name>SLA_Open__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Overdue --></label>
+        <name>SLA_Overdue__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Status --></label>
+        <name>SLA_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Type --></label>
+        <name>SLA_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA --></label>
+        <name>SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- SMD --></label>
+        <name>SMD__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Jurisdiction --></label>
+        <name>SRType_Jurisdiction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>SRType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Code --></label>
+        <name>Service_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Due Date (deprecated) --></label>
+        <name>Service_Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Notes --></label>
+        <name>Service_Note__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Id --></label>
+        <name>Service_Request_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Source Code --></label>
+        <name>Service_Source_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Type Code Description --></label>
+        <name>Service_Type_Code_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Type Code --></label>
+        <name>Service_Type_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicing Agency --></label>
+        <name>Servicing_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- Site Address --></label>
+        <name>Site_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Snow Route --></label>
+        <name>SnowRoute__c</name>
+    </fields>
+    <fields>
+        <label><!-- Snow Zone --></label>
+        <name>SnowZone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - Incomplete Information</masterLabel>
+            <translation><!-- Closed - Incomplete Information --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute</masterLabel>
+            <translation><!-- Dispute --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate (Closed)</masterLabel>
+            <translation><!-- Duplicate (Closed) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate (Opened)</masterLabel>
+            <translation><!-- Duplicate (Opened) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voided</masterLabel>
+            <translation><!-- Voided --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Feature Request</masterLabel>
+            <translation><!-- Feature Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem</masterLabel>
+            <translation><!-- Problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Question</masterLabel>
+            <translation><!-- Question --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Ward --></label>
+        <name>Ward__c</name>
+    </fields>
+    <fields>
+        <label><!-- XCOORD --></label>
+        <name>XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- YCOORD --></label>
+        <name>YCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Zipcode --></label>
+        <name>Zipcode__c</name>
+    </fields>
+    <layouts>
+        <layout>OUC Standard History Layout</layout>
+        <sections>
+            <label><!-- Additional Info --></label>
+            <section>Additional Info</section>
+        </sections>
+        <sections>
+            <label><!-- Contact Info --></label>
+            <section>Contact Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- MAR Demographic Data --></label>
+            <section>MAR Demographic Data</section>
+        </sections>
+        <sections>
+            <label><!-- Servicing Agency Info --></label>
+            <section>Servicing Agency Info</section>
+        </sections>
+        <sections>
+            <label><!-- To Be Reassigned --></label>
+            <section>To Be Reassigned</section>
+        </sections>
+        <sections>
+            <label><!-- Very Additional Info --></label>
+            <section>Very Additional Info</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Service Request History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

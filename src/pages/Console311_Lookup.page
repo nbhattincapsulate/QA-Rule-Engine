@@ -1,0 +1,89 @@
+<apex:page controller="Console311_LookupController" applyhtmltag="false" applybodytag="false" showheader="false" sidebar="false" standardstylesheets="false" readOnly="true">
+
+  <html lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <head>
+    <c:Console311_Header />
+
+    <style>
+      .slds-container {
+        padding-bottom: 30px;
+        margin-left: 20px;
+        margin-right: 10px;
+        margin-top: 10px;
+      }
+
+      .button-container {
+        margin-top: 21px;
+        padding-left: 5px;
+      }
+
+      .sr-item-row {
+        cursor: pointer;
+        padding: 10px 10px 0px 10px;
+      }
+
+        .sr-item-row:hover {
+          background: rgba(225,225,225,0.8);
+          cursor: pointer;
+        }
+    </style>
+  </head>
+
+  <body class="slds-container">
+    <apex:actionstatus id="searchStatus">
+      <apex:facet name="start">
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+          &nbsp;
+        </div>
+        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; top: 45%; left:35%">
+          <div style="display: inline-block; padding: 15px; background-color: #fff; border-radius:5px; width: 170px; height:60px; text-align:center">
+            <!--<img src="/img/loading32.gif"/>-->
+            <p class="loading-status"><b>Please Wait...</b></p>
+          </div>
+        </div>
+      </apex:facet>
+    </apex:actionstatus>
+
+    <apex:form styleclass="slds-grid slds-wrap">
+      <div class="slds-form-element slds-col slds-size--2-of-3">
+        <label class="slds-form-element__label" for="case-status">Search</label>
+        <div class="slds-form-element__control">
+          <apex:inputtext id="queryStr" value="{!queryStr}" styleclass="slds-input" />
+        </div>
+      </div>
+
+      <div class="button-container slds-col slds-size--1-of-3">
+        <apex:commandbutton action="{!query}" styleclass="slds-button slds-button--neutral" value="Search" rerender="result-container" status="searchStatus">
+          <!--<apex:param assignTo="{!queryStr}" name="queryStr" value=""/>  -->
+        </apex:commandbutton>
+      </div>
+
+      <apex:outputpanel id="result-container" style="margin-top: 20px; width: 100%;" layout="block">
+        <apex:outputpanel rendered="{!queryResults.size > 0}" layout="block">
+          <div class="slds-grid">
+            <!--<h4 class="slds-col slds-size--1-of-2">Id</h4>-->
+            <h4 class="slds-col slds-size--1-of-1">{!formattedSortName}</h4>
+          </div>
+          <apex:repeat value="{!queryResults}" var="obj">
+            <div class="slds-grid sr-item-row" data-id="{!obj.Id}" data-request-id="{!obj[sObjectSortField]}">
+              <!--<p class="slds-col slds-size--1-of-2">{!obj.Id}</p>-->
+              <p class="slds-col slds-size--1-of-1">{!obj[sObjectSortField]}</p>
+            </div>
+            <hr />
+          </apex:repeat>
+        </apex:outputpanel>
+      </apex:outputpanel>
+    </apex:form>
+
+    <c:Console311_Scripts datatableenabled="false" datatablesettings="" />
+
+    <script>
+        jQuery('form').on('click', '.sr-item-row', function() {
+          window.opener.handleParentLookup("{!sObjectName}", jQuery(this).data('id'), jQuery(this).data('request-id'));
+          window.close();
+        });
+    </script>
+  </body>
+</html>
+</apex:page>

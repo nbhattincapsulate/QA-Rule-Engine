@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>BulkSchedule__c$Name</field>
+    </columns>
+    <columns>
+        <field>BulkSchedule__c$ScheduleDate__c</field>
+    </columns>
+    <columns>
+        <field>BulkSchedule__c$Ward__c</field>
+    </columns>
+    <columns>
+        <field>BulkSchedule__c$ServiceRequestBulkScheduleCount__c</field>
+    </columns>
+    <columns>
+        <field>BulkSchedule__c$Id</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Bulk Schedule Calendar Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Bulk_Schedule__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>BulkSchedule__c$ScheduleDate__c</dateColumn>
+        <interval>INTERVAL_CURRENT</interval>
+    </timeFrameFilter>
+</Report>

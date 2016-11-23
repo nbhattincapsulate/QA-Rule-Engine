@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Flex Note</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FlexNotes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Answer Date Time --></label>
+        <name>Answer_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer --></label>
+        <name>Answer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- FlexNotes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CodeDescriptionSourcePart1 --></label>
+        <name>CodeDescriptionSourcePart1__c</name>
+    </fields>
+    <fields>
+        <label><!-- CodeDescriptionSourcePart2 --></label>
+        <name>CodeDescriptionSourcePart2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Description --></label>
+        <name>CodeDescription__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>Created_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNoteQuestionCode --></label>
+        <name>FlexNoteQuestionCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- FlexNote Question --></label>
+        <name>FlexNote_Question__c</name>
+        <relationshipLabel><!-- FlexNotes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IsSecure --></label>
+        <name>IsSecure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Answer (Deprecated) --></label>
+        <name>Is_Answer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>Last_Modified_By__c</name>
+    </fields>
+    <fields>
+        <label><!-- LegacyId --></label>
+        <name>LegacyId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question (deprecated) --></label>
+        <name>Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Questions__c</name>
+    </fields>
+    <layouts>
+        <layout>Flex Note Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

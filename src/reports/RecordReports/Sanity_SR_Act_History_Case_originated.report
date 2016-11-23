@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>OUC_Activity_History__c$Name</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>OUC_Activity_History__c$Activity_Id__c</column>
+            <operator>startsWith</operator>
+            <value>a0B</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OUC_Activity_History__c$Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sanity: SR Act History - Case originated</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SR_Activity_Histories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>OUC_Activity_History__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

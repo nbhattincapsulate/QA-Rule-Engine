@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Activity_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Type</label>
+        <referenceTo>Activity_Type__c</referenceTo>
+        <relationshipLabel>Activity Outcomes</relationshipLabel>
+        <relationshipName>Activity_Outcomes</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Can_Close_SR__c</fullName>
+        <description>Duplicates logic in Worfkflow for closing the parent SR based on activity outcomes.</description>
+        <externalId>false</externalId>
+        <formula>/*  This logic is implemented in workflow rules as of 2014-12-15.  A Formula field mirroring this logic should be put in OUC Activity that workflow rules can leverage in the future.
+*/
+OR ( CONTAINS(Name, &quot;Close SR&quot;),
+     CONTAINS(Name, &quot;Closed,&quot;)
+    )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Can Close SR</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Task_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Activity_Type__r.Task_Short_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Short Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Activity Outcome</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Activity_Type__c</columns>
+        <columns>Task_Short_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Can_Close_SR__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_closed</fullName>
+        <booleanFilter>1</booleanFilter>
+        <columns>Activity_Type__c</columns>
+        <columns>Task_Short_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Can_Close_SR__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Can_Close_SR__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Outcomes that will Close the parent SR</label>
+    </listViews>
+    <listViews>
+        <fullName>Outcomes_Not_closing</fullName>
+        <columns>Activity_Type__c</columns>
+        <columns>Task_Short_Name__c</columns>
+        <columns>NAME</columns>
+        <columns>Can_Close_SR__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Can_Close_SR__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Outcomes that will NOT close the SR</label>
+    </listViews>
+    <nameField>
+        <label>Allowable Outcomes</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Activity Outcomes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Activity_Type__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

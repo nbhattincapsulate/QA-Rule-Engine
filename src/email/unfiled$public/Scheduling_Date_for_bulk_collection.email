@@ -1,0 +1,5 @@
+Dear {!Contact.LastName}, 
+
+Next Scheduled Date for Bulk Collection is {!Contact.Schedule_Date__c} 
+
+Thank you.

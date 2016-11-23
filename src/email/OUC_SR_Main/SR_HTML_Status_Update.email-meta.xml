@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Status Update</name>
+    <style>freeForm</style>
+    <subject>DC 311 Service Request {!Case.CaseNumber} Updated</subject>
+    <textOnly>Automated Response E-mail Notification:  Service Request Status Update - DO NOT REPLY
+
+Your Service Request has been updated!
+
+Servicing Agency: {!Case.Servicing_Agency__c}
+Service Request Type: {!Case.Service_Request_Name__c}
+Service Request Number:  {!Case.CaseNumber}
+Service Request Status: {!Case.Reason}
+
+If you require additional information or the issue has not been resolved, please refer to the agency website for more information.  If this is an urgent matter or hazardous condition, please call 311.
+
+DC 311</textOnly>
+    <type>html</type>
+</EmailTemplate>

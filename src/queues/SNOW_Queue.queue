@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>SNOW Queue</name>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>OUC_Activity_History__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>OUC_Activity__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Service_Request_History__c</sobjectType>
+    </queueSobject>
+</Queue>

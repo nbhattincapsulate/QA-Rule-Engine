@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>DC311 Landing Page</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>DC311 Landing Page</value>
+    </caseValues>
+    <fields>
+        <label><!-- Icon --></label>
+        <name>Icon__c</name>
+    </fields>
+    <fields>
+        <label><!-- Link --></label>
+        <name>Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Code --></label>
+        <name>Service_Code__c</name>
+        <picklistValues>
+            <masterLabel>S0031</masterLabel>
+            <translation><!-- S0031 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S0276</masterLabel>
+            <translation><!-- S0276 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>S0441</masterLabel>
+            <translation><!-- S0441 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sub Title --></label>
+        <name>Sub_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title --></label>
+        <name>Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

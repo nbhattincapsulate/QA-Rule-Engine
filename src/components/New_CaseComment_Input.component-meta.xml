@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>33.0</apiVersion>
+    <description>This is a custom component that will present a chat styled input for adding comments to a case. The component requires two params: ctrl and saveCommentFunc. Ctrl is an instance of the current controller with</description>
+    <label>New_CaseComment_Input</label>
+</ApexComponent>

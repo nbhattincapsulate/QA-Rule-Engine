@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This is the custom setting stores parameters</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>BulkCollectionScheduleQuestionCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Bulk Collection Schedule QuestionCode</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BulkCollectionScheduleQuestion__c</fullName>
+        <description>This is for testing purpose</description>
+        <externalId>false</externalId>
+        <label>Bulk Collection Schedule Question</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>BulkScheduleDailyStopLimit__c</fullName>
+        <description>This determines the Daily schedule limit</description>
+        <externalId>false</externalId>
+        <label>BulkSchedule DailyStopLimit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DefaultBusinesshoursName__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Businesshours Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NumberofDays__c</fullName>
+        <description>This is for test purpose now ..</description>
+        <externalId>false</externalId>
+        <label>Number of Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>OUC ServiceRequest Config</label>
+    <visibility>Protected</visibility>
+</CustomObject>

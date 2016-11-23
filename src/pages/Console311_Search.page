@@ -1,0 +1,214 @@
+<apex:page standardstylesheets="false" applyhtmltag="false" doctype="html-5.0" showheader="false" controller="Console311_SearchController">
+  <html lang="en">
+  <head>
+    <c:Console311_Header />
+    <style>
+      .input-container {
+        margin-bottom: 10px;
+      }
+
+      .search-buttons-container {
+        display: block;
+        text-align: center;
+      }
+
+        .search-buttons-container button {
+          float: none;
+        }
+
+      #myTab li a, #myTab, .my-tab .tab-pane {
+        border: none;
+      }
+
+        #myTab li a {
+          background-color: #50ADFF;
+          border: 1px solid #50ADFF;
+          border-bottom: none;
+        }
+
+        #myTab li.active a {
+          background-color: #0070d2;
+          border: 1px solid #0070d2;
+          border-bottom: none;
+          color: #fff;
+        }
+
+      table.dataTable {
+        margin-top: 0 !important;
+      }
+
+      .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        background-color: #0070d2;
+      }
+    </style>
+  </head>
+  <body>
+    <apex:actionstatus id="searchStatus">
+      <apex:facet name="start">
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+          &nbsp;
+        </div>
+        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; top: 45%; left:45%">
+          <div style="display: inline-block; padding: 15px; background-color: #fff; border-radius:5px; width: 170px; height:60px; text-align:center">
+            <!--<img src="/img/loading32.gif"/>-->
+            <p class="loading-status"><b>Please Wait...</b></p>
+          </div>
+        </div>
+      </apex:facet>
+    </apex:actionstatus>
+    <br />
+    <div class="container">
+      <apex:form >
+        <apex:actionfunction name="doSearch" action="{!doSearch}" rerender="searchResults" oncomplete="onCompleteHandler();" status="searchStatus" />
+        <div class="search-container col-xs-12">
+          <div class="input-container col-xs-12 col-sm-6 col-md-7">
+            <div class="slds-form-element">
+              <div class="slds-form-element__control">
+                <apex:inputtext styleclass="slds-input" id="inputPassword" html-placeholder="Search String" value="{!searchString}" onkeydown="if (event.keyCode == 13) {this.blur();doSearch();}" />
+              </div>
+            </div>
+          </div>
+          <div class="search-buttons-container col-xs-12 col-sm-6 col-md-5">
+            <button type="button" class="slds-button slds-button--brand col-xs-5" onclick="doSearch();">
+              <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+            </button>
+            <button type="button" class="slds-button slds-button--brand col-xs-5" onclick="openNewCaseTab();">
+              <span class="glyphicon glyphicon-pencil"></span>&nbsp;Create Case
+            </button>
+          </div>
+        </div>
+      </apex:form>
+    </div>
+    <hr />
+    <apex:outputpanel id="searchResults" styleclass="container-fluid" layout="block">
+      <apex:outputpanel rendered="{!if(errorMsg!='',true,false)}">
+        <div class="alert alert-danger text-center"><strong>{!errorMsg}</strong></div>
+      </apex:outputpanel>
+      <apex:outputpanel rendered="{!if(resultsExist=='No',true,false)}" layout="block">
+        <div class="alert alert-info text-center"><strong>No records match the search criteria</strong></div>
+      </apex:outputpanel>
+      <apex:outputpanel rendered="{!if(resultsExist=='Yes',true,false)}" layout="block">
+        <ul class="nav nav-tabs" id="myTab">
+          <apex:variable var="counter" value="{!0}" />
+          <apex:repeat value="{!objectList}" var="objectName">
+            <li class="{!IF(counter == 0 && prepopulated, 'active', '')}">
+              <a href="{!'#'+''+objectName}" data-toggle="tab">{!$ObjectType[objectName].labelPlural}</a>
+            </li>
+            <apex:variable var="counter" value="{!counter + 1}" />
+          </apex:repeat>
+        </ul>
+        <div id="myTabContent" class="tab-content my-tab">
+          <apex:variable var="contentCounter" value="{!0}" />
+          <apex:repeat value="{!serachResults}" var="objectName">
+            <div class="tab-pane {!IF(contentCounter == 0 && prepopulated, 'active', '')}" id="{!objectName}">
+              <apex:outputpanel rendered="{!serachResults[objectName].size==0}" layout="block">
+                <br />
+                <div class="alert alert-info text-center"><strong>No {!$ObjectType[objectName].labelPlural} match the search criteria</strong></div>
+              </apex:outputpanel>
+              <apex:outputpanel rendered="{!serachResults[objectName].size>0}">
+                <!--<div class="slds-scrollable--x">-->
+                <table id="results-table-{!objectName}" class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+                  <thead>
+                    <tr class="slds-text-heading--label">
+                      <apex:repeat value="{!$ObjectType[objectName].fieldsets['DCConsoleSearchFieldset']}" var="fld">
+                        <th scope="col">
+                          <!--//TODO: Replace IF conditional when refactoring to make case number = sr ID instead.-->
+                          <apex:outputtext styleclass="slds-cell-wrap" value="{!IF(fld.Label == 'Case Number', 'Service Request Id', fld.Label)}" />
+                        </th>
+                      </apex:repeat>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <apex:repeat value="{!serachResults[objectName].records}" var="record">
+                      <tr onclick="openTab('{!record.id}', this); return false;" onmouseover="style.cursor='pointer';" class="slds-hint-parent">
+                        <apex:repeat value="{!$ObjectType[objectName].fieldsets['DCConsoleSearchFieldset']}" var="fld">
+                          <td data-label="{!fld.Label}">
+                            <apex:outputtext styleclass="slds-cell-wrap" value="{!record[fld]}" escape="false" rendered="{!IF(contains(fld, 'Date'), false, true)}" />
+                            <apex:outputtext styleclass="slds-cell-wrap" value="{0,date,MM/dd/yyyy HH:mm:ss}" rendered="{!IF(contains(fld, 'Date'), true, false)}">
+                              <apex:param value="{!record[fld]}" />
+                            </apex:outputtext>
+                          </td>
+                        </apex:repeat>
+                      </tr>
+                    </apex:repeat>
+                  </tbody>
+                </table>
+                <!--</div>-->
+              </apex:outputpanel>
+            </div>
+            <apex:variable var="contentCounter" value="{!contentCounter + 1}" />
+          </apex:repeat>
+        </div>
+      </apex:outputpanel>
+    </apex:outputpanel>
+  </body>
+  <c:Console311_Scripts datatableenabled="{!dataTableEnabled}" datatablesettings="{!dataTableSettings}" />
+  <script>
+            var j$ = jQuery.noConflict();
+
+            var objectList=new Array();
+             <apex:repeat value="{!objectList}" var="objectName">
+                objectList.push("{!objectName}");
+            </apex:repeat>
+            console.log("objectList: "+objectList);
+
+        function openNewCaseTab() {
+            //sforce.console.openPrimaryTab(null, '/500/e', true, 'New Case', function(result) {
+            sforce.console.openPrimaryTab(null, '/apex/Console311_Case', true, 'New Case', function(result) {
+                if (!result.success) {
+                    //handle errors
+                }
+                sforce.console.setTabTitle('New Case', result.id);
+            });
+        }
+
+        function openTab(id, currentRowObj) {
+            var tabId = tabIdsMap[id.substr(0, 15)];
+            currentRowObj = j$(currentRowObj);
+            var srId = currentRowObj.children("td[data-label='Service Request Id']").text();
+
+            if (tabId) {
+                sforce.console.focusPrimaryTabById( tabId );
+                sforce.console.focusSubtabById( tabId );
+            } else {
+                sforce.console.openPrimaryTab(null, '/' + id, true, srId, function(result){
+                  if (result.success == true) {
+                    console.log('Tab successfully opened');
+                  } else {
+                    console.log('Tab cannot be opened');
+                  }         
+                }, srId);
+            }
+        }
+
+        var openCallback = function openCallback(result) {
+            console.log('result ' + JSON.stringify(result));
+            //Report whether opening the new tab was successful
+            if (result.success == true) {
+                console.log('Tab successfully opened');
+            } else {
+                console.log('Tab cannot be opened');
+            }
+        };
+
+        var tabIdsMap = {};
+
+        sforce.console.addEventListener(sforce.console.ConsoleEvent.OPEN_TAB, function(message) {
+            console.log('Tab opened: ' + JSON.stringify(message));
+            if (message.objectId) {
+                tabIdsMap[message.objectId] = message.id;
+            }
+
+            console.log('tabIdsMap: ' + JSON.stringify(tabIdsMap));
+        });
+
+        sforce.console.addEventListener(sforce.console.ConsoleEvent.CLOSE_TAB, function(message) {
+            console.log('Tab Closed: ' + JSON.stringify(message));
+            if (message.objectId) {
+                //tabIdsMap[message.objectId] = null;
+                delete tabIdsMap[message.objectId];
+            }
+        });
+  </script>
+</html>
+</apex:page>

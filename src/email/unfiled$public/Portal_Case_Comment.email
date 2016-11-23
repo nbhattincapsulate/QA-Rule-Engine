@@ -1,0 +1,3 @@
+Greetings {!Case.OwnerFullName}:
+
+You have recieved a new comment on service request #{!Case.Service_Request_Number__c}.

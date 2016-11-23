@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Agency has completed an initial inspection on the service request, and has a better sense of the work that will need to be completed</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>SR HTML Open Inspection Complete</name>
+    <style>freeForm</style>
+    <subject>Your 311 Request</subject>
+    <textOnly>Dear resident,
+
+{!OUC_Activity__c.SR_Agency__c} has completed an inspection on your request for {!OUC_Activity__c.Case_Subject__c} at {!OUC_Activity__c.SR_Address__c} on {!OUC_Activity__c.Completion_Date__c} . This is the first step in completing your request.
+
+The agency comments on this request were: {!OUC_Activity__c.External_Comments__c} *
+
+The expected resolution date for this request is {!OUC_Activity__c.SR_Expected_Resolution_Date__c}.
+
+Please visit 311.dc.gov to check the status of your request or to find answers to frequently asked questions.  You may also call 311, and reference service request number: {!OUC_Activity__c.Case__c} to check your status or get help with questions. An agent will be happy to answer your questions, concerns or connect you with the correct department.
+
+Thanks again for contacting the Mayor’s 311 Hotline.
+
+*Agency comments
+
+Inspection complete. Work scheduled to begin.
+Inspection complete. Work requested has been added to the infrastructure priority requests for upcoming year (2017).</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,16 @@
+<apex:page standardController="Case" tabStyle="Case" recordsetvar="tokenlist">
+	<apex:includeScript value="//code.jquery.com/jquery-1.10.2.js" />
+  	<apex:enhancedList type="Case" height="50" rendered="false"/>
+	<script>
+		$ = jQuery.noConflict();
+		
+		$(document).ready(function(){
+		     MoveAlong();
+		});	
+		
+		function MoveAlong(){
+			//navigate to vf page
+			window.location.assign("/500");
+		}
+	</script>
+</apex:page>

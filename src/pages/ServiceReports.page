@@ -1,0 +1,530 @@
+<apex:page controller="ServiceReportsController" sidebar="false" readOnly="true" cache="false">    
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />  
+  <apex:stylesheet value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap/css/bootstrap.min.css')}"/>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
+  <apex:stylesheet value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-datetimepicker-marlot/bootstrap-datetimepicker.min.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-date-range-picker/daterangepicker.css')}" />
+  <style>
+      
+    html {
+      font-size: initial; 
+    }
+    
+    body {
+      font-size: 75%; 
+    }
+      
+    h1, .h1, h2, .h2, h3, .h3 {
+      margin-top: initial;
+      margin-bottom: initial;
+    }
+      
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      font-weight: bold; 
+    }
+      
+    .pbTitle, .pbSubheader {
+      display: none; 
+    }
+      
+    .report-info {
+      font-size: 14px; 
+    }
+      
+    .filter-buttons h1{
+      margin-left: 5px;
+      font-size: 18px;
+      font-weight: normal;
+    }
+      
+    [id=*buttons-form] {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+      
+    .filter-buttons {
+      margin-bottom: 15px;
+    }
+      
+    .nav-buttons form, .generate-container form {
+      width: 50%;
+      float: left;
+      text-align: center
+    }
+      
+    .loading-container {
+      display: block;
+      z-index: 9000;
+      height: 90%;
+      width: 99%;
+      position: absolute;
+      background: rgba(0,0,0,0.3);
+    }
+      
+    .spinner {
+      height: 60px;
+      width: 60px;
+      top: 50%;
+      bottom: 0;
+      left: 50%;
+  	  right: 0;
+      background-color: #fff;
+  	  position: absolute;
+      -webkit-animation: rotation .6s infinite linear;
+      -moz-animation: rotation .6s infinite linear;
+      -o-animation: rotation .6s infinite linear;
+      animation: rotation .6s infinite linear;
+      border-left: 6px solid rgba(0, 174, 239, .15);
+      border-right: 6px solid rgba(0, 174, 239, .15);
+      border-bottom: 6px solid rgba(0, 174, 239, .15);
+      border-top: 6px solid rgba(0, 174, 239, .8);
+      border-radius: 100%;
+    }
+    
+    @-webkit-keyframes rotation {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+      to {
+        -webkit-transform: rotate(359deg);
+      }
+    }
+    
+    @-moz-keyframes rotation {
+      from {
+        -moz-transform: rotate(0deg);
+      }
+      to {
+        -moz-transform: rotate(359deg);
+      }
+    }
+    
+    @-o-keyframes rotation {
+      from {
+        -o-transform: rotate(0deg);
+      }
+      to {
+        -o-transform: rotate(359deg);
+      }
+    }
+    
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(359deg);
+      }
+    }
+      
+    .button-offset {
+      position: relative;
+  	  top: -2px;
+      z-index: 1;
+    }
+      
+    .datepicker-from, .datepicker-to {
+      cursor: pointer;
+      position: relative;
+  	  top: -2px;
+    }
+      
+    .columnHeader, .columnHeader-sorted {
+      padding-bottom: 10px !important;
+      padding-top: 15px !important;
+    }
+      
+    .columnHeader-sorted {
+      padding-left: 20px !important;
+    }
+      
+    .sortable-link {
+      line-height: 0px;
+    }
+      
+    .sortable-link.DESC:before {
+      display: block;
+      content: "▲";
+      position: relative;
+      left: -15px;
+    }
+      
+    .sortable-link.ASC:before {
+      display: block;
+      content: "▼";
+      position: relative;
+      left: -15px;
+    }
+      
+    .srtype-select {
+      position: relative;
+  	  top: -2px; 
+      padding: 3px;
+    }
+  </style>
+  
+  <script>
+    $(document).ready(function() {
+        //$(".datepicker-from").datepicker({ dateFormat: 'yy-mm-dd' }); 
+        //$(".datepicker-to").datepicker({ dateFormat: 'yy-mm-dd' }); 
+        
+      $('.date').datetimepicker({
+        minuteStep: 15,
+        showInputs: false,
+        disableFocus: true,
+        showMeridian: true,
+        defaultTime: '00:00'
+      });
+      $('.date').on('change', function(){
+        $('.date').datetimepicker('hide');
+      });  
+    });
+    
+    $(window).load(function(){
+      $(".loading-container").hide();
+    });
+      
+    function startProcessing() {
+      $(".loading-container").show();
+    }
+    
+    function stopProcessing() {
+      $(".loading-container").hide();  
+    }
+  </script>
+    
+  <apex:sectionHeader subtitle="Report Generation for Service Requests" title="Service Requests"/>
+
+    <div class="loading-container">
+      <div class="spinner"></div>  
+    </div>
+    
+  <apex:pageBlock mode=""> 
+    <apex:pageBlockButtons location="top">
+      <apex:form id="buttons-form">
+        <apex:actionFunction name="picklistChanged" action="{!picklistChanged}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" oncomplete="stopProcessing();"></apex:actionFunction>
+        <apex:actionfunction name="closeSelectedCases" action="{!closeSelectedCases}" rerender="srPanel,internal-filter-buttons,filter-buttons-dd,date-range-container,nav-buttons,generate-container,convertSvg,srSelectedPanel" oncomplete="stopProcessing();">
+          <apex:param name="caseClosureComment" value="{!caseClosureComment}" assignto="{!caseClosureComment}" />
+        </apex:actionfunction>
+          
+        <apex:outputPanel id="filter-buttons" styleClass="filter-buttons" layout="block">     
+          <h1 style="margin-right: 10px;">Filters: </h1>
+          <!--<apex:commandButton styleClass="button-offset" action="{!allRequests}" title="All Requests" value="All Requests" disabled="{!IF(mode=='', true, false)}" reRender="srPanel,filter-buttons,date-range-container,nav-buttons,generate-container"/> 
+          <apex:commandButton styleClass="button-offset" action="{!openRequestsOnly}" title="Open Requests Only" value="Open Requests Only" disabled="{!IF(mode=='Open', true, false)}" reRender="srPanel,filter-buttons,date-range-container,nav-buttons,generate-container"/> 
+          <apex:commandButton styleClass="button-offset" action="{!closedRequestsOnly}" title="Closed Requests Only" value="Closed Requests Only" disabled="{!IF(mode=='Closed', true, false)}" reRender="srPanel,filter-buttons,date-range-container,nav-buttons,generate-container"/> -->
+          <!--<apex:selectlist value="{!selectedStatus}" multiselect="false" size="1" styleclass="srtype-select" onchange="picklistChanged();">
+            <apex:selectoptions value="{!statusOptions}" />
+          </apex:selectlist>-->
+          <c:MultiselectPicklist leftlabel="Available Statuses"
+                                 leftoption="{!statusOptions}"
+                                 rightlabel="Selected Statuses"
+                                 rightoption="{!selectedStatusesOptions}"
+                                 size="7"
+                                 width="150px"
+                                 loadingjsfunctionname="startProcessing"
+                                 addremoveonclickjsfunctionname="picklistChanged" />
+          <br/>
+          <apex:outputpanel id="internal-filter-buttons">
+            <!-- Servicing Agencies -->
+            <apex:selectlist value="{!activeServicingAgency}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();" style="margin-left: 5px; margin-top: 10px;">
+              <apex:selectoptions value="{!agencyPicklistOptions}" />
+            </apex:selectlist>
+            <!-- Service Types -->
+            <apex:selectlist value="{!selectedType}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();">
+              <apex:selectoptions value="{!serviceReportTypes}" />
+            </apex:selectlist>
+            <!-- Wards -->
+            <apex:selectlist value="{!selectedWard}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();">
+              <apex:selectoptions value="{!wardPicklistOptions}" />
+            </apex:selectlist>
+            <!-- Owners -->
+            <apex:selectlist value="{!selectedOwner}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();">
+              <apex:selectoptions value="{!ownerPicklistOptions}" />
+            </apex:selectlist>
+            <!-- SnowZone -->
+            <apex:selectlist value="{!selectedSnowZone}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();">
+              <apex:selectoptions value="{!snowZonePicklistOptions}" />
+            </apex:selectlist>
+            <!-- SnowRoute -->
+            <apex:selectlist value="{!selectedSnowRoute}" multiselect="false" size="1" styleclass="srtype-select" onchange="startProcessing();picklistChanged();">
+              <apex:selectoptions value="{!snowRoutePicklistOptions}" />
+            </apex:selectlist>
+          </apex:outputpanel>
+        </apex:outputPanel>  
+        
+        <apex:outputPanel id="date-range-container" styleClass="filter-buttons" layout="block">
+          <h1 style="margin-right: 10px;">Date and Time Range: </h1>
+          <div class="date-range-container" style="display: inline-block;">
+            <!--<apex:inputText value="{!daterangeFrom}" style="margin-right: 5px;" styleClass="datepicker-from date" html-readonly="true" html-placeholder="yyyy-mm-dd 00:00"/>
+            <h4>to</h4>
+            <apex:inputText value="{!daterangeTo}" style="margin-left: 10px;" styleClass="datepicker-to date" html-readonly="true" html-placeholder="yyyy-mm-dd 00:00"/>-->
+            <apex:inputtext value="{!daterangeComplete}" style="margin-left: 10px;width: 250px;" styleclass="date-range-picker" />
+            <apex:commandButton styleClass="button-offset" action="{!reset}" title="Apply Date Range" value="Apply" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container"/> 
+            <apex:commandButton styleClass="button-offset" action="{!clearDates}" title="Clear Date Range" value="Clear" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container"/>
+          </div>  
+          <script>
+              //$(".datepicker-from").datepicker({ dateFormat: 'yy-mm-dd' });
+              //$(".datepicker-to").datepicker({ dateFormat: 'yy-mm-dd' });
+               /*$('.date').datetimepicker({
+                 minuteStep: 15,
+                 showInputs: false,
+                 disableFocus: true,
+                 showMeridian: true,
+                 defaultTime: '00:00'
+               });
+               $('.date').on('change', function(){
+                 $('.date').datetimepicker('hide');
+               });*/
+               $('.date-range-picker').dateRangePicker({
+                 endDate: moment(),
+                 startOfWeek: 'sunday',
+	               separator : ' ~ ',
+	               format: 'YYYY-MM-DD HH:mm',
+	               autoClose: false,
+	               time: {
+		               enabled: true
+	               },
+	               defaultTime: moment().startOf('day').toDate(),
+	               defaultEndTime: moment().endOf('day').toDate()
+               });
+            </script>
+        </apex:outputPanel>
+      </apex:form> 
+        
+       
+        
+      <apex:outputPanel id="nav-buttons" styleClass="nav-buttons">
+        <apex:form >
+          <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="srPanel,nav-buttons,generate-container"/>
+          <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="srPanel,nav-buttons,generate-container"/>        
+          <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="srPanel,nav-buttons,generate-container"/>
+          <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="srPanel,nav-buttons,generate-container"/>        
+        </apex:form>
+      </apex:outputPanel>
+        
+      <apex:outputPanel id="generate-container" styleClass="generate-container">
+        <apex:form >
+          <apex:commandButton action="{!generate}" disabled="{!limitReached}" title="Generate Reports" value="Generate Reports" />  
+          <button type="button" class="btn" style="padding: 4px 3px; " title="Close Selected Cases" onclick="startProcessing();promptForCaseComment()">Close Selected Cases</button>
+        </apex:form>  
+      </apex:outputPanel>
+    </apex:pageBlockButtons>
+ 
+    
+        
+ 	<apex:form id="srReportForm">
+      <apex:actionFunction name="srChecked" action="{!serviceRequestChecked}" reRender="notifications, generate-container, srSelectedPageBlockSection, srPanel" oncomplete="stopProcessing();">
+        <apex:param name="caseId" value=""/>
+      </apex:actionFunction>
+        
+      <apex:actionFunction name="srCheckAll" action="{!serviceRequestCheckAll}" reRender="notifications, generate-container, srSelectedPageBlockSection, srPanel" oncomplete="stopProcessing();"></apex:actionFunction>
+        
+      <apex:pageBlockSection columns="1">
+        <apex:pageMessages id="notifications" />
+      </apex:pageBlockSection>
+        
+      <apex:pageBlockSection columns="1">
+        <p class="report-info">Please select up to <b>{!displayMaxReports}</b> Service Requests for report generation.</p>
+        <p>You can sort by columns by simply clicking on their name. If you wish to reverse the sort then simply click on the name again.</p>
+      </apex:pageBlockSection>
+        
+      <!-- Available Service Requests -->
+      <apex:pageBlockSection columns="1" title="Service Requests Available (Total List Size: {!total_size})" collapsible="false" >
+        <apex:outputPanel id="srPanel">
+          <h2 class="report-info">Available Cases</h2>
+          <apex:pageBlockTable id="reportsTable" value="{!allCasesList}" var="wrapper" styleClass="col-xs-12" style="width: 100%;" width="100%">
+            <apex:column >
+              <apex:facet name="header">
+                <apex:inputCheckbox onclick="startProcessing();srCheckAll()" value="{!checkAllEnabled}"/>
+              </apex:facet>  
+              <apex:inputCheckbox onclick="startProcessing();srChecked('{!wrapper.c.Id}')" value="{!wrapper.checked}"/>
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Service_Request_Number__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Service Request Id" styleClass="sortable-link {!IF(sortColumnName == 'Service_Request_Number__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Service_Request_Number__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <a href="/{!wrapper.c.Id}">{!wrapper.c.Service_Request_Number__c}</a>
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Service_Request_Name__c','columnHeader-sorted','')}">
+              	<apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Service Request Name" styleClass="sortable-link {!IF(sortColumnName == 'Service_Request_Name__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Service_Request_Name__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.Service_Request_Name__c}" />    
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'SR_Status__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Status" styleClass="sortable-link {!IF(sortColumnName == 'SR_Status__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="SR_Status__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.SR_Status__c}" />  
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'CreatedDate','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Opened Date" styleClass="sortable-link {!IF(sortColumnName == 'CreatedDate', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="CreatedDate" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <c:FormatDateTime date_Timevalue="{!wrapper.c.CreatedDate}"/>
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Last_Update_Date__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Last Update Date" styleClass="sortable-link {!IF(sortColumnName == 'Last_Update_Date__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Last_Update_Date__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <c:FormatDateTime date_Timevalue="{!wrapper.c.Last_Update_Date__c}"/>
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Owner.Name','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Owner" styleClass="sortable-link {!IF(sortColumnName == 'Owner.Name', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Owner.Name" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.Owner.Name}" />  
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Address__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Address" styleClass="sortable-link {!IF(sortColumnName == 'Address__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Address__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.Address__c}" />  
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'Ward__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Ward" styleClass="sortable-link {!IF(sortColumnName == 'Ward__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="Ward__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.Ward__c}" />
+            </apex:column>
+              
+            <!-- Snow Attributes -->  
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'SnowZone__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Snow Zone" styleClass="sortable-link {!IF(sortColumnName == 'SnowZone__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="SnowZone__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.SnowZone__c}" />
+            </apex:column>
+              
+            <apex:column headerClass="columnHeader {!IF(sortColumnName == 'SnowRoute__c','columnHeader-sorted','')}">
+                <apex:facet name="header">
+                    <apex:commandLink action="{!toggleSortOrder}" reRender="srPanel,internal-filter-buttons,date-range-container,nav-buttons,generate-container" value="Snow Area" styleClass="sortable-link {!IF(sortColumnName == 'SnowRoute__c', sortColumnDirection, '')}">
+                        <apex:param name="sortColumnName" value="SnowRoute__c" assignTo="{!sortColumnName}"/>
+                        <apex:param name="sortCoulmnDirection" value="{!sortColumnDirection}" assignTo="{!sortColumnDirection}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!wrapper.c.SnowRoute__c}" />
+            </apex:column>
+              
+            <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+          </apex:pageBlockTable>
+        </apex:outputPanel>
+      </apex:pageBlockSection>
+        
+      <!-- Selected Cases Panel -->
+      <apex:pageBlockSection id="srSelectedPageBlockSection" columns="1" collapsible="false" >
+        <apex:outputPanel id="srSelectedPanel" styleClass="col-xs-12" rendered="{!isSelectedCases}">
+          <h2 class="report-info">Selected Cases</h2>
+          <apex:pageBlockTable id="selectedCasesTable" value="{!allCasesSelected}" var="caseId" styleClass="col-xs-12">
+            <apex:column >
+              <apex:inputCheckbox onclick="startProcessing();srChecked('{!allCasesSelected[caseId].c.Id}')" value="{!allCasesSelected[caseId].checked}"/>
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Service Request Id</apex:facet>
+                <a href="/{!allCasesSelected[caseId].c.Id}">{!allCasesSelected[caseId].c.Service_Request_Number__c}</a>
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Service Request Name</apex:facet>
+                <apex:outputText value="{!allCasesSelected[caseId].c.Service_Request_Name__c}" />    
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Status</apex:facet>
+                <apex:outputText value="{!allCasesSelected[caseId].c.SR_Status__c}" />  
+            </apex:column>
+              
+			<apex:column >
+                <apex:facet name="header">Opened Date</apex:facet>
+                <apex:outputText value=" {!allCasesSelected[caseId].c.CreatedDate}" />  
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Last Update Date</apex:facet>
+                <apex:outputText value=" {!allCasesSelected[caseId].c.Last_Update_Date__c}" />  
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Owner</apex:facet>
+                <apex:outputText value="{!allCasesSelected[caseId].c.Owner.Name}" />  
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Address</apex:facet>
+                <apex:outputText value="{!allCasesSelected[caseId].c.Address__c}" />  
+            </apex:column>
+              
+            <apex:column >
+                <apex:facet name="header">Ward</apex:facet>
+                <apex:outputText value="{!allCasesSelected[caseId].c.Ward__c}" />
+            </apex:column>
+          </apex:pageBlockTable>
+        </apex:outputPanel>
+      </apex:pageBlockSection>
+        
+ 	</apex:form>
+  </apex:pageBlock>
+
+  <script>
+    function promptForCaseComment() {
+      // Prompt the user for a comment when closing the case.
+      var comment = prompt('NOTE: If service requests are selected for closure please allow some time for your request to be processed.\n\n Are you sure you wish to close the selected cases?');
+      // If the comment if not null.
+      if (comment) {
+        // Send the comment to the close selected cases function for processing with the closure.
+        closeSelectedCases(comment);
+      } else if (comment == '') {
+        alert('You must provide a comment to close the selected cases.');
+        stopProcessing();
+      } else if (!comment) {
+        stopProcessing();
+      }
+      // TODO: Warn user that comments are required.
+    }
+  </script>
+  
+  <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-1.11.1.min.js')}"/>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-migrate-1.2.1.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap/js/bootstrap.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/bootstrap-datetimepicker-marlot/bootstrap-datetimepicker.min.js')}"/>
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/moment/moment.min.js')}" />
+  <apex:includescript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-date-range-picker/jquery.daterangepicker.js')}" />
+</apex:page>

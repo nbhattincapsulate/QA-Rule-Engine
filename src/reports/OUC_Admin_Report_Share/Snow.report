@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Service_Request_History__c$Address__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$DateTimeClosed__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Expected_Resolution_Date__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$LastUpdateDateTime__c</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Name</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$Service_Type_Code__c</field>
+    </columns>
+    <description>Snow template</description>
+    <filter>
+        <criteriaItems>
+            <column>Service_Request_History__c$SRType__c</column>
+            <operator>equals</operator>
+            <value>snow removal complaints for sidewalks</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Service_Request_History__c$DateTimeOpened__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Service_Request_History__c$Ward__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Snow</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Service_Request_Master_Report_Type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Service_Request_History__c$DateTimeOpened__c</dateColumn>
+        <endDate>2016-01-26</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2016-01-24</startDate>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,7 @@
+This note advises that the intermediate step {!OUC_Activity__c.Task_Short_Name__c} in your Service Request for {!OUC_Activity__c.Case_Subject__c} has been completed. 
+
+Additional Details:  {!OUC_Activity__c.External_Comments__c}
+
+We will send you a separate email when your service request has been completed.
+
+Thank you.

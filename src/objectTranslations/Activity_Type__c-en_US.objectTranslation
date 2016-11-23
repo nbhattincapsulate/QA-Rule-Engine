@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Activity Type</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Activity Types</value>
+    </caseValues>
+    <fields>
+        <label><!-- Outcome Count --></label>
+        <name>Outcome_Count__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA Type --></label>
+        <name>SLAType__c</name>
+        <picklistValues>
+            <masterLabel>Business days</masterLabel>
+            <translation><!-- Business days --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Calendar days</masterLabel>
+            <translation><!-- Calendar days --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SLA --></label>
+        <name>SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request Type --></label>
+        <name>Service_Request_Type__c</name>
+        <relationshipLabel><!-- Activity Types --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Task Short Name --></label>
+        <name>Task_Short_Name__c</name>
+    </fields>
+    <layouts>
+        <layout>Activity Type Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Task Code (Activity Type Name) cannot have duplicate value --></errorMessage>
+        <name>Enforce_Unique_ActivityType_Code</name>
+    </validationRules>
+</CustomObjectTranslation>

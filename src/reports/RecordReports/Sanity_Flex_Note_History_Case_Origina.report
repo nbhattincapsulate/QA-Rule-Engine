@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Flex_Note_History__c$Name</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Flex_Note_History__c$Flex_Note_Id__c</column>
+            <operator>startsWith</operator>
+            <value>a03</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Flex_Note_History__c$FlexNote_Question__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sanity: Flex Note History - Case Origina</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Flex_Note_Histories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Flex_Note_History__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

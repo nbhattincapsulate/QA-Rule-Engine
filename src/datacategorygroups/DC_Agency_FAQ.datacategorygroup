@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>DOH FAQ</label>
+                <name>DOH_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DPW FAQ</label>
+                <name>DPW_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DDOT FAQ</label>
+                <name>DDOT_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DMV FAQ</label>
+                <name>DMV_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>LIHEAP UDC</label>
+                <name>LIHEAP_UDC</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DCRA FAQ</label>
+                <name>DCRA_FAQ</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TRU</label>
+                <name>TRU</name>
+            </dataCategory>
+            <label>DC Agency FAQ</label>
+            <name>DC_Agency_FAQ</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Agency Training</label>
+            <name>Agency_Training</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Servicing Agency Training</label>
+            <name>Servicing_Agency_Training</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <label>DC Agency FAQ</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

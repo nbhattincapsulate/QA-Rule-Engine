@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Workflow Rule Action</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Workflow Rule Actions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Action Type --></label>
+        <name>ActionType__c</name>
+        <picklistValues>
+            <masterLabel>Chatter Notification</masterLabel>
+            <translation><!-- Chatter Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insert Related Object</masterLabel>
+            <translation><!-- Insert Related Object --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Notification</masterLabel>
+            <translation><!-- Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send Email</masterLabel>
+            <translation><!-- Send Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update Field</masterLabel>
+            <translation><!-- Update Field --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Action Label --></label>
+        <name>Action_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action Object --></label>
+        <name>Action_Object__c</name>
+        <picklistValues>
+            <masterLabel>Account</masterLabel>
+            <translation><!-- Account --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contact</masterLabel>
+            <translation><!-- Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Opportunity</masterLabel>
+            <translation><!-- Opportunity --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Additional Emails --></label>
+        <name>Additional_Emails__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Relationship Name --></label>
+        <name>Child_Relationship_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Cross Object Field Notation :  Relationshipname.FieldName. Eg:- Account.Type --></help>
+        <label><!-- Cross Object Field --></label>
+        <name>CrossObjectField__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Template Name --></label>
+        <name>EmailTemplateName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Template Folder --></label>
+        <name>Email_Template_Folder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Template --></label>
+        <name>Email_Template__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>ExternalId__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Field API Name --></label>
+        <name>External_Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field API Name --></label>
+        <name>Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Name --></label>
+        <name>Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Type --></label>
+        <name>Field_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Long Value --></label>
+        <name>Long_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Notified User --></label>
+        <name>Notified_User__c</name>
+        <relationshipLabel><!-- Workflow Rule Actions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Notify User --></label>
+        <name>Notify_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reference Id --></label>
+        <name>Reference_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- User/Owner Id --></label>
+        <name>User_Owner_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workflow Rule --></label>
+        <name>Workflow_Rule__c</name>
+        <relationshipLabel><!-- Workflow Rule Actions --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Workflow Rule Action Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please select the email template --></errorMessage>
+        <name>Send_Email_Template_Req</name>
+    </validationRules>
+</CustomObjectTranslation>

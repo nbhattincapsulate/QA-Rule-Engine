@@ -1,0 +1,17 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p class="p1" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b><i>Automated Response E-mail Notification:&nbsp; Service Request Status Update - DO NOT REPLY</i></b></p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Your Service Request has been updated!</p>
+<p class="p3" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Servicing Agency:&nbsp; <span class="s1">{!Case.Servicing_Agency__c}</span></p>
+<p class="p2"><font face="arial" size="3">Service Request Type: &nbsp;</font><font face="arial">{!Case.Service_Request_Name__c}</font></p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Service Request Number: &nbsp;{!Case.CaseNumber}&nbsp;</p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Service Request Status:&nbsp; <span class="s1">{!Case.Reason}</span></p>
+<p class="p3" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">If you require additional information or the issue has not been resolved, please refer to the agency website for more information.&nbsp; If this is an urgent matter or hazardous condition, please call 311. &nbsp;</p>
+<p class="p3" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p>
+<p class="p2" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br>
+<i>DC 311&nbsp;</i></p>]]></td>
+</tr>
+</table>

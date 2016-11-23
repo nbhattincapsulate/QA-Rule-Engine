@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send Auto Alert to respective servicing agencies when new SRs are created.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Servicing Agency Email Alert on Creation</name>
+    <style>none</style>
+    <subject>{!Case.Servicing_Agency_Expanded__c} - Service Request Created - {!Case.CaseNumber}</subject>
+    <textOnly>Automated Notification E-mail: DO NOT REPLY  
+
+DC311 Service Request has been submitted for {!Case.Servicing_Agency_Expanded__c}  
+
+Service Request Type: {!Case.Service_Request_Name__c} 
+Service Request Number: {!Case.CaseNumber} 
+Creation Date: {!Case.CreatedDate} 
+
+Resolution is expected within {!Case.SLA__c} days.   
+
+To access, go to DC311.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

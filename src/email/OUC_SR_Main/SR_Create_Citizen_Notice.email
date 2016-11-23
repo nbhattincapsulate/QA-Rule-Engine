@@ -1,0 +1,3 @@
+Thank you for reporting your city services needs. Your service request for {!Case.Service_Request_Name__c} at {!Case.Address__c} has been added to the service request tracking system and assigned the unique service request number {!Case.CaseNumber}. This number is the official reference number for your service request if you need to inquire about it in the future. It can be used in conjunction with your E-mail address to query the latest available status via the Internet.
+
+The servicing agency for your request is {!Case.AgencyCode__c} and, subject to servicing agency operational hours, is expected to be resolved within {!Case.SLA__c} days.

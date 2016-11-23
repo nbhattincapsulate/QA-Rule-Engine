@@ -1,0 +1,163 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalRegisterController">
+ <apex:form id="statusCheck" styleClass="statusCheck form-horizontal" forceSSL="true">  
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <title>DC 311 | OUC</title>
+    		<c:OUC311_Portal_Styles />
+           
+        </head>
+        <body>
+           <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="" loggedInUserFullName=""/>
+            <!-- end  of header -->
+                    
+          <div class="section" id="sectionId">
+              <div class="container">
+              	<div class="space-sm"></div>
+                <h2 class="lg-title lg-title-border text-center text-primary">Registration</h2>
+                <br/>
+                <div class="row">
+			            	<div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+			            		<div class="row text-center">
+										<div class= "col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                            <apex:outputPanel id="out">
+                                              <apex:outputPanel rendered="{!IF(errorMessage != null,true,false)}">
+                                              	<div class="alert alert-danger" role="alert">
+						                		  <apex:outputText value="{!errorMessage}"></apex:outputText>
+											  	</div> 
+                                              </apex:outputPanel>
+                                            </apex:outputPanel>
+                                            
+						                  <div id="form-messages"></div>
+			                              <div class="form-result text-center" id="form-result"></div>
+									    </div>
+									</div>
+					                <div class="form-signin">
+					                 	<div class="form-group icon">
+				                             <label for="firstName" class="col-md-3 col-md-offset-1 control-label">First Name</label>
+				                              <div class="col-md-5">
+				                                  <div class="control">
+				                                      <apex:inputText styleclass="form-control" id="firstName" value="{!NameFirst}" ></apex:inputText>
+				                                  </div>
+				                              </div>  
+				                         </div>
+				                         <div class="form-group icon">
+				                             <label for="lastName" class="col-md-3 col-md-offset-1 control-label">Last Name</label>
+				                              <div class="col-md-5">
+				                                  <div class="control">
+				                                      <apex:inputText styleclass="form-control" id="lastName" value="{!NameLast}"></apex:inputText>
+				                                  </div>
+				                              </div>  
+				                         </div>
+                                      	<div class="form-group icon">
+				                              <label for="email" class="col-md-3 col-md-offset-1 control-label">Email</label>
+				                              <div class="col-md-5">
+				                                  <div class="control">
+				                                      <apex:inputText styleclass="form-control" id="email" value="{!Email}" ></apex:inputText>
+				                                  </div>
+				                              </div>
+			                         	</div>
+				                         <div class="form-group icon">
+				                              <label for="password" class="col-md-3 col-md-offset-1 control-label">Password</label>
+				                              <div class="col-md-5 ">
+				                                  <div class="control">
+				                                      <apex:inputSecret styleclass="form-control" id="password" value="{!Password}" html-data-toggle="tooltip" html-data-placement="bottom" title="Passwords need to be alpha numeric and be at least 8 characters"></apex:inputSecret>
+				                                  </div>
+				                              </div>                            
+				                             
+				                         </div>
+                                      	  <div class="form-group icon">
+				                             <label for="retypePassword" class="col-md-3 col-md-offset-1 control-label">Confirm Password</label>
+				                              <div class="col-md-5">
+				                                  <div class="control">
+				                                      <apex:inputSecret styleclass="form-control" id="retypePassword" value="{!RetypePassword}" ></apex:inputSecret>
+				                                  </div>
+				                              </div>  
+				                         </div>
+				                        
+				                          
+                                       <apex:actionFunction name="register" action="{!registerUser}" rerender="out,Register" status="myStatus"> 
+		                                  <apex:param value="" assignTo="{!Email}" name="email"/>
+		                                  <apex:param value="" assignTo="{!Password}" name="password"/>
+		                                  <apex:param value="" assignTo="{!RetypePassword}" name="retypepassword"/>
+		                                  <apex:param value="" assignTo="{!NameFirst}" name="firstname"/>
+		                                  <apex:param value="" assignTo="{!NameLast}" name="lastname"/>
+		                              </apex:actionFunction>
+		                              <div class="form-group icon">
+				                              <div class="col-md-6 col-md-offset-3">
+				                                  <div class="control">
+				                                     <apex:commandButton styleClass="btn btn-lg btn-primary btn-block" action="{!registerUser}" onclick="javascript:RegisterSubmit(); return false;" value="Register" id="register" reRender="Register,sectionId"/>
+				                                  </div>
+				                              </div>  
+				                      </div>
+					         	</div>
+			         	  </div>
+                	</div>
+              </div>
+          </div>
+    
+            <!-- ******FOOTER****** --> 
+		    <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+		        <div class="container">
+		            <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+		        </div>
+		    </footer><!--//footer-->
+		    
+            <c:OUC311_Portal_Scripts /> 
+         
+          <script>
+            $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+            </script>
+            
+          <SCRIPT TYPE="text/javascript">
+
+                // copyright 1999 Idocs, Inc. http://www.idocs.com
+                // Distribute this script freely but keep this notice in place
+                function numbersonly(myfield, e, dec)
+                {
+                var key;
+                var keychar;
+                
+                if (window.event)
+                   key = window.event.keyCode;
+                else if (e)
+                   key = e.which;
+                else
+                   return true;
+                keychar = String.fromCharCode(key);
+                
+                // control keys
+                if ((key==null) || (key==0) || (key==8) || 
+                    (key==9) || (key==13) || (key==27) )
+                   return true;
+                
+                // numbers
+                else if ((("0123456789").indexOf(keychar) > -1))
+                   return true;
+                
+                // decimal point jump
+                else if (dec && (keychar == "."))
+                   {
+                   myfield.form.elements[dec].focus();
+                   return false;
+                   }
+                else
+                   return false;
+                }    
+           
+            </SCRIPT>
+            
+            <script>
+               function alphaOnly(event) {
+                      var key = event.keyCode;
+                      return ((key >= 65 && key <= 90) || key == 8);
+                };                                          
+            
+           </script>
+      </body>
+    </html>
+</apex:form> 
+</apex:page>

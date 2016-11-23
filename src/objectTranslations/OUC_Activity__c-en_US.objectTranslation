@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SR Activity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SR Activities</value>
+    </caseValues>
+    <fields>
+        <label><!-- ActivityOwner --></label>
+        <name>ActivityOwner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Date --></label>
+        <name>Activity_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- UI Task Code --></label>
+        <name>Activity_Type__c</name>
+        <relationshipLabel><!-- SR Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- UI Outcome --></label>
+        <name>Allowable_Outcomes__c</name>
+        <relationshipLabel><!-- SR Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Service Request Id --></label>
+        <name>Case_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Type Name --></label>
+        <name>Case_Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Number --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- SR Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Citizen Email On Complete --></label>
+        <name>Citizen_Email_On_Complete__c</name>
+    </fields>
+    <fields>
+        <label><!-- Completion Date --></label>
+        <name>Completion_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Email --></label>
+        <name>Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact Name --></label>
+        <name>Contact_Name__c</name>
+        <relationshipLabel><!-- SR Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- CreatedBy --></label>
+        <name>CreatedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Created By --></label>
+        <name>Created_By__c</name>
+        <relationshipLabel><!-- SR Activities (Created By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Created Date --></label>
+        <name>Created_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal Comments (deprecated) --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Sort Order --></label>
+        <name>Display_Sort_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date (Internal) --></label>
+        <name>Due_Date_Internal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date SLA Type --></label>
+        <name>Due_Date_SLA_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date SLA --></label>
+        <name>Due_Date_SLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- Due Date --></label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Comments --></label>
+        <name>External_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Outcome (Short) --></label>
+        <name>Final_Outcome_Short__c</name>
+    </fields>
+    <fields>
+        <label><!-- Outcome --></label>
+        <name>Final_Outcome__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task Code --></label>
+        <name>Final_Task_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Task Short Name --></label>
+        <name>Final_Task_Short_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- LastModifiedBy --></label>
+        <name>LastModifiedBy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last Modified By --></label>
+        <name>Last_Modified_By__c</name>
+        <relationshipLabel><!-- SR Activities (Last Modified By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LegacyId --></label>
+        <name>LegacyId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modified Date --></label>
+        <name>Modified_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open311 Outcome --></label>
+        <name>Outcome__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone --></label>
+        <name>Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Public --></label>
+        <name>Public__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recurrence Interval --></label>
+        <name>Recurrence_Interval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repeat This Task --></label>
+        <name>Repeat_This_Task__c</name>
+    </fields>
+    <fields>
+        <label><!-- Responsible Party --></label>
+        <name>Responsible_Party__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Address --></label>
+        <name>SR_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Agency --></label>
+        <name>SR_Agency__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Case Status --></label>
+        <name>SR_Case_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Contact Email --></label>
+        <name>SR_Contact_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Expected Resolution Date --></label>
+        <name>SR_Expected_Resolution_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- SR Status --></label>
+        <name>SR_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Request History --></label>
+        <name>Service_Request_History__c</name>
+        <relationshipLabel><!-- SR Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Activity Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Cancelled</masterLabel>
+            <translation><!-- Cancelled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+        <picklistValues>
+            <masterLabel>Call</masterLabel>
+            <translation><!-- Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send Letter</masterLabel>
+            <translation><!-- Send Letter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Send Quote</masterLabel>
+            <translation><!-- Send Quote --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Open311 Task Code --></label>
+        <name>Task_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Open311 Task Short Name --></label>
+        <name>Task_Short_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text --></label>
+        <name>Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- SR Activities (User) --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>OUC Activity Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>OUC Activity Layout SU</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- The selected outcome will close the service request. External Comments are required when selecting such an outcome. --></errorMessage>
+        <name>Close_SR_Outcome_External_Comments</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No edits can be made to OUC Activities when service request is closed. --></errorMessage>
+        <name>Lock_OUC_Activity_when_Case_Closed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- External comments are mandatory --></errorMessage>
+        <name>Test_External_Comments_mandatory</name>
+    </validationRules>
+</CustomObjectTranslation>

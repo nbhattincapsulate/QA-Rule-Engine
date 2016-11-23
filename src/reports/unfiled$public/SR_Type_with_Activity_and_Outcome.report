@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ServiceRequestType__c$Name</field>
+    </columns>
+    <columns>
+        <field>ServiceRequestType__c.Activity_Types__r$Name</field>
+    </columns>
+    <columns>
+        <field>ServiceRequestType__c.Activity_Types__r.Activity_Outcomes__r$Name</field>
+    </columns>
+    <format>Tabular</format>
+    <name>SR Type with Activity and Outcome</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SR_Type_with_Activity_Type_and_Outcome__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>ServiceRequestType__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

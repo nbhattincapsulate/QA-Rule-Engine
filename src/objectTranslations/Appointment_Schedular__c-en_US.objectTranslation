@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Appointment Schedular</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Appointment Schedulars</value>
+    </caseValues>
+    <fields>
+        <label><!-- ACCTKEY --></label>
+        <name>ACCTKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- ADDBY --></label>
+        <name>ADDBY__c</name>
+    </fields>
+    <fields>
+        <label><!-- ADDDTTM --></label>
+        <name>ADDDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- ADDRKEY --></label>
+        <name>ADDRKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- ALLEY --></label>
+        <name>ALLEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- APKEY --></label>
+        <name>APKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- AREA --></label>
+        <name>AREA__c</name>
+    </fields>
+    <fields>
+        <label><!-- ARRIVAL_TI --></label>
+        <name>ARRIVAL_TI__c</name>
+    </fields>
+    <fields>
+        <label><!-- ASGNFLAG --></label>
+        <name>ASGNFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- BGTNO --></label>
+        <name>BGTNO__c</name>
+    </fields>
+    <fields>
+        <label><!-- CALLRKEY --></label>
+        <name>CALLRKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- CASEFLAG --></label>
+        <name>CASEFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- CLERICDTTM --></label>
+        <name>CLERICDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- COMMENTS --></label>
+        <name>COMMENTS__c</name>
+    </fields>
+    <fields>
+        <label><!-- COMPKEY --></label>
+        <name>COMPKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- CUSTFLAG --></label>
+        <name>CUSTFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- DEMAND --></label>
+        <name>DEMAND__c</name>
+    </fields>
+    <fields>
+        <label><!-- DISTRICT --></label>
+        <name>DISTRICT__c</name>
+    </fields>
+    <fields>
+        <label><!-- DISTTOFT --></label>
+        <name>DISTTOFT__c</name>
+    </fields>
+    <fields>
+        <label><!-- DISTTOM --></label>
+        <name>DISTTOM__c</name>
+    </fields>
+    <fields>
+        <label><!-- EARLIEST_A --></label>
+        <name>EARLIEST_A__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPDAYS --></label>
+        <name>INSPDAYS__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPDTTM --></label>
+        <name>INSPDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPECTR --></label>
+        <name>INSPECTR__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPFLAG --></label>
+        <name>INSPFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPHRS --></label>
+        <name>INSPHRS__c</name>
+    </fields>
+    <fields>
+        <label><!-- INSPMINS --></label>
+        <name>INSPMINS__c</name>
+    </fields>
+    <fields>
+        <label><!-- INWORKFLAG --></label>
+        <name>INWORKFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- LATITUDE --></label>
+        <name>LATITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- LOC --></label>
+        <name>LOC__c</name>
+    </fields>
+    <fields>
+        <label><!-- LONGITUDE --></label>
+        <name>LONGITUDE__c</name>
+    </fields>
+    <fields>
+        <label><!-- LinkID --></label>
+        <name>LinkID__c</name>
+    </fields>
+    <fields>
+        <label><!-- MAPNO --></label>
+        <name>MAPNO__c</name>
+    </fields>
+    <fields>
+        <label><!-- MODBY --></label>
+        <name>MODBY__c</name>
+    </fields>
+    <fields>
+        <label><!-- MODDTTM --></label>
+        <name>MODDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- MOREWORK --></label>
+        <name>MOREWORK__c</name>
+    </fields>
+    <fields>
+        <label><!-- PARTITION --></label>
+        <name>PARTITION__c</name>
+    </fields>
+    <fields>
+        <label><!-- PRCLKEY --></label>
+        <name>PRCLKEY__c</name>
+    </fields>
+    <fields>
+        <label><!-- PRI --></label>
+        <name>PRI__c</name>
+    </fields>
+    <fields>
+        <label><!-- PROBDTTM --></label>
+        <name>PROBDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- PROB --></label>
+        <name>PROB__c</name>
+    </fields>
+    <fields>
+        <label><!-- PROJ --></label>
+        <name>PROJ__c</name>
+    </fields>
+    <fields>
+        <label><!-- QTYCALLS --></label>
+        <name>QTYCALLS__c</name>
+    </fields>
+    <fields>
+        <label><!-- RESCODE --></label>
+        <name>RESCODE__c</name>
+    </fields>
+    <fields>
+        <label><!-- RESDTTM --></label>
+        <name>RESDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- RESDUEDTTM --></label>
+        <name>RESDUEDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- RESFLAG --></label>
+        <name>RESFLAG__c</name>
+    </fields>
+    <fields>
+        <label><!-- ROUTE --></label>
+        <name>ROUTE__c</name>
+    </fields>
+    <fields>
+        <label><!-- SCDCMPDTTM --></label>
+        <name>SCDCMPDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- SCHDUEDTTM --></label>
+        <name>SCHDUEDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- SCHEDDTTM --></label>
+        <name>SCHEDDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- SEQUENCE --></label>
+        <name>SEQUENCE__c</name>
+    </fields>
+    <fields>
+        <label><!-- SERVE_TIME --></label>
+        <name>SERVE_TIME__c</name>
+    </fields>
+    <fields>
+        <label><!-- SERVICE_SI --></label>
+        <name>SERVICE_SI__c</name>
+    </fields>
+    <fields>
+        <label><!-- SERVLINK --></label>
+        <name>SERVLINK__c</name>
+    </fields>
+    <fields>
+        <label><!-- SERVNO --></label>
+        <name>SERVNO__c</name>
+    </fields>
+    <fields>
+        <label><!-- SET --></label>
+        <name>SET__c</name>
+    </fields>
+    <fields>
+        <label><!-- SRC --></label>
+        <name>SRC__c</name>
+    </fields>
+    <fields>
+        <label><!-- SRTYPE --></label>
+        <name>SRTYPE__c</name>
+    </fields>
+    <fields>
+        <label><!-- STARTDTTM --></label>
+        <name>STARTDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- STDUEDTTM --></label>
+        <name>STDUEDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- SUBAREA --></label>
+        <name>SUBAREA__c</name>
+    </fields>
+    <fields>
+        <label><!-- SUSPDTTM --></label>
+        <name>SUSPDTTM__c</name>
+    </fields>
+    <fields>
+        <label><!-- TAKENBY --></label>
+        <name>TAKENBY__c</name>
+    </fields>
+    <fields>
+        <label><!-- TALLY_ROUT --></label>
+        <name>TALLY_ROUT__c</name>
+    </fields>
+    <fields>
+        <label><!-- XCOORD --></label>
+        <name>XCOORD__c</name>
+    </fields>
+    <fields>
+        <label><!-- YCOORD --></label>
+        <name>YCOORD__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

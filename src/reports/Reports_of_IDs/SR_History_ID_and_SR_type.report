@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Service_Request_History__c$Id</field>
+    </columns>
+    <columns>
+        <field>Service_Request_History__c$SRType__c</field>
+    </columns>
+    <description>SR history ID with SR type for SRs of All time</description>
+    <format>Tabular</format>
+    <name>SR History ID and SR type</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Service_Request_Master_Report_Type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Service_Request_History__c$DateTimeOpened__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

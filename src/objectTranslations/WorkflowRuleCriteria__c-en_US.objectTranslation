@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Workflow Rule Criteria</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Workflow Rule Criterias</value>
+    </caseValues>
+    <fields>
+        <label><!-- Child Relationship Name --></label>
+        <name>Child_Relationship_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Criteria Object --></label>
+        <name>Criteria_Object__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cross Formula --></label>
+        <name>CrossFormula__c</name>
+    </fields>
+    <fields>
+        <label><!-- Evaluate Child Criteria Using --></label>
+        <name>Evaluate_ChildCriteria_Using__c</name>
+        <picklistValues>
+            <masterLabel>AND</masterLabel>
+            <translation><!-- AND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OR</masterLabel>
+            <translation><!-- OR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Evaluate Criteria Result To --></label>
+        <name>Evaluate_Criteria_Result_To__c</name>
+        <picklistValues>
+            <masterLabel>False - If no child record found</masterLabel>
+            <translation><!-- False - If no child record found --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>True - If no child record found</masterLabel>
+            <translation><!-- True - If no child record found --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Field API Name --></label>
+        <name>Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Name --></label>
+        <name>Field_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Relation --></label>
+        <name>Field_Relation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Field Type --></label>
+        <name>Field_Type__c</name>
+        <picklistValues>
+            <masterLabel>Multi-Picklist</masterLabel>
+            <translation><!-- Multi-Picklist --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Percentage</masterLabel>
+            <translation><!-- Percentage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Text</masterLabel>
+            <translation><!-- Text --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Global Variable --></label>
+        <name>GlobalVariable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum Value --></label>
+        <name>Maximum_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Value --></label>
+        <name>Minimum_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Operator --></label>
+        <name>Operator__c</name>
+        <picklistValues>
+            <masterLabel>Between</masterLabel>
+            <translation><!-- Between --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contains</masterLabel>
+            <translation><!-- Contains --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Does Not Contain</masterLabel>
+            <translation><!-- Does Not Contain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ends With</masterLabel>
+            <translation><!-- Ends With --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equals</masterLabel>
+            <translation><!-- Equals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Excludes</masterLabel>
+            <translation><!-- Excludes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater Or Equal</masterLabel>
+            <translation><!-- Greater Or Equal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater Than</masterLabel>
+            <translation><!-- Greater Than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Includes</masterLabel>
+            <translation><!-- Includes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less Or Equal</masterLabel>
+            <translation><!-- Less Or Equal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less Than</masterLabel>
+            <translation><!-- Less Than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Equal To</masterLabel>
+            <translation><!-- Not Equal To --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Starts With</masterLabel>
+            <translation><!-- Starts With --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Parent Object Field --></label>
+        <name>Parent_Object_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Object Name --></label>
+        <name>Parent_Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Relationship Name --></label>
+        <name>Relationship_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rule Object --></label>
+        <name>RuleObjectType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value --></label>
+        <name>Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workflow Rule --></label>
+        <name>Workflow_Rule__c</name>
+        <relationshipLabel><!-- Workflow Rule Criterias --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Cross formula needs to be defined. --></errorMessage>
+        <name>Cross_Formula_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please enter a matching value --></errorMessage>
+        <name>Matching_Value_Is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When the Operator is Between, the Maximum Value field is required. --></errorMessage>
+        <name>Maximum_Value_Is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- When the Operator is Between, the Minimum Value field is required. --></errorMessage>
+        <name>Minimum_Value_Is_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Operator value is required --></errorMessage>
+        <name>Operator_Is_Required</name>
+    </validationRules>
+</CustomObjectTranslation>

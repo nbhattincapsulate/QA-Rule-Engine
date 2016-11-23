@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template to send email alert to agency or officer</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>OUC_Standard_Letterhead</letterhead>
+    <name>Email Notification to Agency or officer</name>
+    <style>freeForm</style>
+    <subject>DC 311 Service Request  {!Case.CaseNumber} Received</subject>
+    <textOnly>Automated Response E-mail Notification:   Receipt of Service Request - DO NOT REPLY
+
+DC 311 Service Request {!Case.CaseNumber} Received
+
+Service Request Number: {!Case.CaseNumber}
+Service Request Type: {!Case.Subject}
+Servicing Agency: {!Case.Servicing_Agency_Expanded__c}
+Expected Resolution Days: {!Case.SLA__c} days
+
+This request has been added to the Service Request Tracking System for review and resolution. Please retain this number for your records.
+
+DC 311</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>CUST_CREATED_DATE</field>
+    </columns>
+    <columns>
+        <field>Open311_API_Log__c.APIKey__c</field>
+    </columns>
+    <columns>
+        <field>Open311_API_Log__c.Endpoint__c</field>
+    </columns>
+    <columns>
+        <field>Open311_API_Log__c.Request_Method__c</field>
+    </columns>
+    <columns>
+        <field>Open311_API_Log__c.Request_Param__c</field>
+    </columns>
+    <columns>
+        <field>Open311_API_Log__c.Status__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Open311_API_Log__c.APIKey__c</column>
+            <operator>equals</operator>
+            <value>f4823730f18f4628aa86b81410caad9a</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>OUC CloseOut Logs</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Open311_API_Log__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <sortColumn>CUST_NAME</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
+    </timeFrameFilter>
+</Report>

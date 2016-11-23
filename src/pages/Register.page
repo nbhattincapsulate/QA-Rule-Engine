@@ -1,0 +1,195 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SiteRegisterController">
+    <apex:form id="statusCheck" styleClass="statusCheck" forceSSL="true">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+           <head>
+                <meta charset="utf-8" />
+                <title>OUC | Register</title>
+                
+                <!-- include all css and files -->
+                <c:OUC_Assests />
+         
+                <style>
+                    #errorMsg{
+                        color:#FF0000;
+                        font-size:0.7em;
+                        margin-left: 10px;
+                    }
+                    
+                    .body .standard-form p.note {
+                        width: 550px;
+                        margin-left: -19px;
+                    }
+                </style>              
+            </head>
+
+            <body>
+                <div class="page-wrapper">
+                    <div class="slug-pattern">
+                        <div class="overlay">
+                            <div class="slug-cut"></div>
+                        </div>
+                    </div>
+               
+                    <!-- header --> 
+                    <c:OUC_Header tab="Register"/>
+                    <!-- end of header -->   
+                   
+                    
+                    <div class="shadow"></div>
+                    <div class="container">
+                        <div class="page-title">
+                            <div class="rg"></div>
+                            <h1>Register</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="body">
+                    <div class="body-round"></div>
+                    <div class="body-wrapper">
+                        <div class="side-shadows"></div>
+                        <div class="content">
+                            <div class="container callout standard">
+                                <div class="twelve columns">
+                                    <h4>Register</h4>
+                                </div>                                
+                            </div>
+                            <div class="callout-hr"></div>
+                              
+                            <div class="container">
+                                <apex:outputPanel id="Register">
+                                   <apex:outputPanel rendered="{!rend}"> 
+                                    <div class="twelve columns">                                     
+                                        <div class="standard-form compressed">
+                                            <h4 class="semi"></h4>
+                                            <div class="form-result"></div>
+                                            <apex:pageMessages id="error_msg"/>
+                                            <form action="#" class="contactForm" id="contactus" name="contactus">
+                                                <apex:inputText styleclass="input extend" id="Email" maxlength="40" value="{!Email}" html-placeholder="Email Address *" style="float: left; margin: 0 30px 18px -18px;width: 625px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:inputText>
+                                                <apex:inputSecret id="Password" value="{!Password}"  maxlength="30" html-placeholder="Password *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:inputSecret>
+                                                <apex:inputSecret id="RetypePassword" maxlength="30" value="{!RetypePassword}" html-placeholder="RetypePassword *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:inputSecret>
+                                                <apex:inputText id="NameFirst" value="{!NameFirst}" maxlength="40" html-placeholder="FirstName *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;" onkeydown="return alphaOnly(event);"></apex:inputText>
+                                                <apex:inputText id="NameLast" value="{!NameLast}" maxlength="40" html-placeholder="LastName *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;" onkeydown="return alphaOnly(event);"></apex:inputText>
+                                                <apex:inputText id="Address_StreetAddress" maxlength="40" value="{!Address_StreetAddress}" html-placeholder="Street Address *" style="float: left; margin: 0 30px 18px -18px;width: 625px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:inputText>
+                                                <apex:outputtext id="Address_City" value="{!Address_City}" style="float: left; margin: 0 30px 18px -18px;width: 292px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:outputtext>
+                                                <apex:outputtext id="Address_State" value="{!Address_State}" style="float: left; margin: 0 30px 18px -18px;width: 150px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;"></apex:outputtext>
+                                                <apex:inputText id="Address_Zip"  maxlength="5" value="{!Address_Zip}" html-placeholder="Zip Code *" style="float: left; margin: 0 30px 18px -18px;width: 150px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;" onKeyPress="return numbersonly(this, event)"></apex:inputText>
+                                                <apex:inputText id="Phone" value="{!Phone}" maxlength="14" html-placeholder="Phone *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;" onKeyPress="return numbersonly(this, event)"></apex:inputText>
+                                                <apex:inputText id="PhoneExt" value="{!PhoneExt}" maxlength="14" html-placeholder="PhoneExt *" style="float: left; margin: 0 30px 18px -18px;width: 303px;background-color: #f8f8f8;border: 1px solid #d8d7d7;box-shadow: 2px 2px 1px 1px #f1f1f1 inset;color: #666666; display: block;height: 30px;margin-bottom: 18px; text-indent: 5px;" onKeyPress="return numbersonly(this, event)"></apex:inputText>
+                                                <br /><br />
+                                                <div class="submit">
+                                                      <apex:actionFunction name="register" action="{!registerUser}" reRender="Register"> 
+                                                          <apex:param value="" assignTo="{!Email}" name="email"/>
+                                                          <apex:param value="" assignTo="{!Password}" name="password"/>
+                                                          <apex:param value="" assignTo="{!RetypePassword}" name="retypepassword"/>
+                                                          <apex:param value="" assignTo="{!NameFirst}" name="firstname"/>
+                                                          <apex:param value="" assignTo="{!NameLast}" name="lastname"/>
+                                                          <apex:param value="" assignTo="{!Address_StreetAddress}" name="street"/>
+                                                          <apex:param value="" assignTo="{!Address_City}" name="city"/>
+                                                          <apex:param value="" assignTo="{!Address_State}" name="state"/>
+                                                          <apex:param value="" assignTo="{!Address_Zip}" name="zip"/>
+                                                          <apex:param value="" assignTo="{!Phone }" name="phone"/>
+                                                          <apex:param value="" assignTo="{!PhoneExt }" name="phoneext"/>
+                                                      </apex:actionFunction>
+                                                      
+                                                      <a class="button color" href="javascript:RegisterSubmit();" style="margin-left:444px;"><span>Register</span></a>
+                                                      <a class="button color" href="#" onclick="window.location=window.location.href;" style="margin-left:12px;"><span>Cancel</span></a>
+                                                </div>
+                                                <div class="clear"></div>
+                                                
+                                                <SCRIPT TYPE="text/javascript">
+
+                                                    // copyright 1999 Idocs, Inc. http://www.idocs.com
+                                                    // Distribute this script freely but keep this notice in place
+                                                    function numbersonly(myfield, e, dec)
+                                                    {
+                                                    var key;
+                                                    var keychar;
+                                                    
+                                                    if (window.event)
+                                                       key = window.event.keyCode;
+                                                    else if (e)
+                                                       key = e.which;
+                                                    else
+                                                       return true;
+                                                    keychar = String.fromCharCode(key);
+                                                    
+                                                    // control keys
+                                                    if ((key==null) || (key==0) || (key==8) || 
+                                                        (key==9) || (key==13) || (key==27) )
+                                                       return true;
+                                                    
+                                                    // numbers
+                                                    else if ((("0123456789").indexOf(keychar) > -1))
+                                                       return true;
+                                                    
+                                                    // decimal point jump
+                                                    else if (dec && (keychar == "."))
+                                                       {
+                                                       myfield.form.elements[dec].focus();
+                                                       return false;
+                                                       }
+                                                    else
+                                                       return false;
+                                                    }    
+                                               
+                                                </SCRIPT>
+                                                <script>
+                                                   function alphaOnly(event) {
+                                                          var key = event.keyCode;
+                                                          return ((key >= 65 && key <= 90) || key == 8);
+                                                    };                                          
+                                                
+                                               </script>                  
+                                            </form>
+                                        </div>                                    
+                                    </div><!-- .twelve columns -->
+                                  </apex:outputPanel> 
+                                </apex:outputPanel> 
+                                
+                                <div class="four columns">
+                                    <div class="sidebar">
+                                        <div class="sideborder"></div>
+                                        <h5>Create an Account</h5>
+                                        <ul class="blogs">
+                                            <li>
+                                                <div class="border">
+                                                    <img src="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/images/icons/info_button_16.png')}" />
+                                                    <a class='link' href="#"></a>
+                                                </div>
+                                                <p>
+                                                    Registering allows you to track your service requests.<br />
+                                                    It also allows you to store templates to easily request repeat services.                                                    
+                                                </p>
+                                                <div class="clear"></div>
+                                            </li>                                            
+                                        </ul>
+                                    </div><!-- .sidebar -->
+                                </div><!-- .four columns -->
+                               
+                            </div>
+                        </div>
+                     </div>
+                 </div> 
+                 
+                 <!-- footer -->
+                 <c:OUC_Footer />
+                 <!-- end of footer --> 
+                 
+                 <script>                   
+                    $("[id*='Phone']").usphone();
+                    $("[id*='PhoneExt']").usphone();
+                </script>
+                                        
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.usphone.js')}"/>            
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/js/jquery.color.animation.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/ajax_default.js')}"/>
+                <apex:includeScript value="{!URLFOR($Resource.OUC_Assests1, 'OUC_Assests1/ajax/email_conf.js')}"/>
+                <script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
+                <script type="text/javascript" src="http://api.twitter.com/1/statuses/user_timeline/EmpiricalThemes.json?callback=twitterCallback2&count=2"></script>
+            
+            </body>
+
+        </html>
+    </apex:form>
+</apex:page>

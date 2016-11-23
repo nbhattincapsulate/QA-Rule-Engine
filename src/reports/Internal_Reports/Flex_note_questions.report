@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FlexNoteQuestion__c$Name</field>
+    </columns>
+    <columns>
+        <field>FlexNoteQuestion__c$Answer_Type__c</field>
+    </columns>
+    <columns>
+        <field>FlexNoteQuestion__c$Questions__c</field>
+    </columns>
+    <columns>
+        <field>FlexNoteQuestion__c.Service_Request_Type_Flex_Notes__r$isRequired__c</field>
+    </columns>
+    <columns>
+        <field>FlexNoteQuestion__c.Service_Request_Type_Flex_Notes__r$Service_Request_Type__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>FlexNoteQuestion__c.Service_Request_Type_Flex_Notes__r$Service_Request_Type__c</column>
+            <operator>equals</operator>
+            <value>DYRS - Placement Violations,CFSAMISS,TRUREPOR</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>FlexNoteQuestion__c$Answer_Type__c</column>
+            <operator>equals</operator>
+            <value>Date/Time</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>Flex note questions for CAD</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>FN_Questions_and_SR_Type_FN__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>FlexNoteQuestion__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

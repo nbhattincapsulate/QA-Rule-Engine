@@ -1,0 +1,362 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="SRPortalController">
+  
+        <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+        <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+        <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+        <head>
+            <title>DC 311 | OUC</title>
+            <c:OUC311_Portal_Styles />
+            <style>
+            .tab-row-last{
+                    padding-bottom:40px;
+                }
+                .filter-parent {
+                    font-size: 18px;
+                    position: relative;
+                }
+                .filter-parent label {
+                    left: 17px;
+                    position: absolute;
+                    top: 8px;
+                    padding-left:14px;
+                }
+                .filter-parent #search-service-input{
+                    border-radius: 23px;
+                    padding-left: 43px;
+                    padding-right: 43px;
+                    background-color: transparent; 
+                    position: relative;
+                }
+                .service-panel{
+                    margin-top:5px;
+                }
+                .bg-sky {
+                    background-color: #11a9cc !important;
+                }
+                .bg-azure {
+                    background-color: #2dc3e8 !important;
+                }
+.panel, .panel .panel-footer {
+    border-radius: 0;
+    margin-bottom:5px;
+}
+.panel-default {
+    border-color: #e5e5e5;
+}
+.panel-default .panel-heading {
+    border-color: #e5e5e5;
+}
+.panel-primary {
+    border-color: #0099da;
+}
+.panel-primary .panel-heading, .panel-primary .panel-footer {
+    background-color: #0099da;
+    color: #fff;
+}
+.panel-heading {
+    border-radius: 0;
+    font-family: "Lato","Open Sans",sans-serif;
+}
+.panel-heading a {
+    font-weight: 500 !important;
+}
+.panel-heading i {
+    font-size: 1.1em;
+    margin-right: 5px;
+}
+.panel-title {
+    padding: 7px;
+}
+.panel-group .panel {
+    border-radius: 0;
+}
+.panel-heading-link, .panel-plus-link {
+    background-color: transparent;
+    border: 0 none;
+    font-family: "Lato","Open Sans",sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.panel-plus-link a {
+    background-color: inherit;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+}
+.panel-plus-link a:hover, .panel-plus-link a:focus, .panel-plus-link a:active {
+    background-color: transparent !important;
+}
+.panel-group .panel > .panel-heading.panel-plus-link a.collapsed:before {
+    content: "\f078";
+    font-family: "FontAwesome";
+    font-size: 1.4em;
+    font-style: normal;
+    font-weight: normal;
+    margin-right: 10px;
+    text-decoration: inherit;
+    vertical-align: middle;
+}
+.panel-group .panel > .panel-heading.panel-plus-link a:before {
+    content: "\f078";
+    font-family: "FontAwesome";
+    font-size: 1.4em;
+    font-style: normal;
+    font-weight: normal;
+    margin-right: 10px;
+    text-decoration: inherit;
+    vertical-align: middle;
+}
+.panel-primary .panel-heading a, .panel-primary-dark .panel-heading a, .panel-info-dark .panel-heading a, .panel-success-dark .panel-heading a, .panel-warning-dark .panel-heading a, .panel-danger-dark .panel-heading a, .panel-royal-dark .panel-heading a, .panel-primary .panel-plus-link a, .panel-primary-dark .panel-plus-link a, .panel-info-dark .panel-plus-link a, .panel-success-dark .panel-plus-link a, .panel-warning-dark .panel-plus-link a, .panel-danger-dark .panel-plus-link a, .panel-royal-dark .panel-plus-link a {
+    color: #fff;
+}
+.panel-primary .panel-heading a:hover, .panel-primary-dark .panel-heading a:hover, .panel-info-dark .panel-heading a:hover, .panel-success-dark .panel-heading a:hover, .panel-warning-dark .panel-heading a:hover, .panel-danger-dark .panel-heading a:hover, .panel-royal-dark .panel-heading a:hover, .panel-primary .panel-plus-link a:hover, .panel-primary-dark .panel-plus-link a:hover, .panel-info-dark .panel-plus-link a:hover, .panel-success-dark .panel-plus-link a:hover, .panel-warning-dark .panel-plus-link a:hover, .panel-danger-dark .panel-plus-link a:hover, .panel-royal-dark .panel-plus-link a:hover {
+}
+.panel-primary .panel-header a, .panel-primary .panel-footer a, .panel-primary-dark .panel-header a, .panel-primary-dark .panel-footer a, .panel-info-dark .panel-header a, .panel-info-dark .panel-footer a, .panel-success-dark .panel-header a, .panel-success-dark .panel-footer a, .panel-warning-dark .panel-header a, .panel-warning-dark .panel-footer a, .panel-danger-dark .panel-header a, .panel-danger-dark .panel-footer a, .panel-royal-dark .panel-header a, .panel-royal-dark .panel-footer a, .panel-primary .panel-header a, .panel-primary .panel-footer a, .panel-primary-dark .panel-header a, .panel-primary-dark .panel-footer a, .panel-info-dark .panel-header a, .panel-info-dark .panel-footer a, .panel-success-dark .panel-header a, .panel-success-dark .panel-footer a, .panel-warning-dark .panel-header a, .panel-warning-dark .panel-footer a, .panel-danger-dark .panel-header a, .panel-danger-dark .panel-footer a, .panel-royal-dark .panel-header a, .panel-royal-dark .panel-footer a {
+    color: #fff;
+}
+.panel-default .panel-heading-link a, .panel-default .panel-plus-link a {
+    color: #333;
+}
+.panel .panel-footer i {
+    margin: 0 5px;
+}
+
+ .panel .panel-heading-link a:after {
+    /*background-color: #0099da;*/
+    color: #0099da;
+    content: "\f078";
+    float: right;
+    font-family: "FontAwesome";
+    /*font-size: 1.2em;*/ 
+    font-weight:bold;
+    margin-right: -15px;
+    margin-top: -25px;
+    padding: 5px 0;
+    text-align: center;
+    width: 20px;
+}  
+
+
+.panel-primary .panel-heading-link a:after, .panel-primary-dark .panel-heading-link a:after, .panel-info-dark .panel-heading-link a:after, .panel-success-dark .panel-heading-link a:after, .panel-warning-dark .panel-heading-link a:after, .panel-danger-dark .panel-heading-link a:after, .panel-royal-dark .panel-heading-link a:after {
+    background-color: #333;
+}
+ .panel .panel-heading-link a.collapsed:after {
+    content: "\f054";
+}
+.panel-success .panel-heading-link a:after {
+    background-color: #02c66c;
+}
+.panel-info .panel-heading-link a:after {
+    background-color: #54c8eb;
+}
+.panel-warning .panel-heading-link a:after {
+    background-color: #f0ad4e;
+}
+.panel-danger .panel-heading-link a:after {
+    background-color: #d9534f;
+}
+.panel-royal .panel-heading-link a:after {
+    background-color: #ac60d0;
+}
+.panel-success .panel-plus-link a, .panel-success .panel-heading-link a {
+    color: #017a43;
+}
+.panel-info .panel-plus-link a, .panel-info .panel-heading-link a {
+    color: #19add9;
+}
+.panel-warning .panel-plus-link a, .panel-warning .panel-heading-link a {
+    color: #df8a13;
+}
+.panel-danger .panel-plus-link a, .panel-danger .panel-heading-link a {
+    color: #b52b27;
+}
+.panel-royal .panel-plus-link a, .panel-royal .panel-heading-link a {
+    color: #8834b0;
+}
+.panel-heading.panel-plus-link > a, .panel-heading-link > a {
+    display: block;
+    padding: 5px 15px;
+}
+.panel-heading-link > a > i {
+    margin-right: 10px;
+}
+.panel .panel-heading a {
+    font-size: 1em;
+    font-weight: 400;
+    text-decoration: none;
+}
+.panel .panel-primary .panel-heading a:hover, .panel .panel-success .panel-heading a:hover, .panel .panel-info .panel-heading a:hover, .panel .panel-warning .panel-heading a:hover, .panel .panel-danger .panel-heading a:hover, .panel .panel-royal .panel-heading a:hover, .panel .panel-primary-dark .panel-heading a:hover, .panel .panel-info-dark .panel-heading a:hover, .panel .panel-success-dark .panel-heading a:hover, .panel .panel-warning-dark .panel-heading a:hover, .panel .panel-danger-dark .panel-heading a:hover, .panel .panel-royal-dark .panel-heading a:hover {
+    background-color: transparent !important;
+}
+.panel-body-no-padding {
+    padding: 0 !important;
+}
+.panel-default .panel-heading, .panel-default .panel-footer {
+    background-color: #f3f3f3;
+    color: #333;
+}
+.panel-royal .panel-heading, .panel-royal .panel-footer {
+    background-color: #dfc2ed;
+    border: 1px solid #d5afe7;
+    color: #5a2275;
+}
+.panel-royal .panel-body {
+    border: 1px solid #dfc2ed;
+}
+.panel-primary-dark .panel-heading, .panel-primary-dark .panel-footer {
+    background-color: #0075a7;
+    color: #fff;
+}
+.panel-success-dark .panel-heading, .panel-success-dark .panel-footer {
+    background-color: #5ca43f;
+    color: #fff;
+}
+.panel-info-dark .panel-heading, .panel-info-dark .panel-footer {
+    background-color: #288ec3;
+    color: #fff;
+}
+.panel-warning-dark .panel-heading, .panel-warning-dark .panel-footer {
+    background-color: #e4c016;
+    color: #fff;
+}
+.panel-danger-dark .panel-heading, .panel-danger-dark .panel-footer {
+    background-color: #a94242;
+    color: #fff;
+}
+.panel-royal-dark .panel-heading, .panel-royal-dark .panel-footer {
+    background-color: #792e9c;
+    color: #fff;
+}
+.panel-primary-dark .panel-body {
+    border: 1px solid #0075a7;
+}
+.panel-success-dark .panel-body {
+    border: 1px solid #5ca43f;
+}
+.panel-info-dark .panel-body {
+    border: 1px solid #288ec3;
+}
+.panel-warning-dark .panel-body {
+    border: 1px solid #e4c016;
+}
+.panel-danger-dark .panel-body {
+    border: 1px solid #a94242;
+}
+.panel-royal-dark .panel-body {
+    border: 1px solid #792e9c;
+}
+                .description-text {
+                  text-align: left; 
+                }
+            </style>           
+         </head>
+         <body>
+            <!-- header -->
+            <c:OUC311_Portal_Header loggedInUsername="{!loggedInUsername}" loggedInUserFullName="{!loggedInUserFullName}"/>
+            <!-- end  of header -->
+            <div class="section">
+               <div class="container">               
+                     <div class="animated" id="">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <h3 class="text-primary text-center">Service Descriptions</h3>
+                            <div id="search" class="filter-parent col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+                              <label for="filter-by"><i class="fa fa-search"></i></label>
+                              <div style="position: relative; height: 46px; display: block;">
+                                  <input tabindex="1" class="form-control" id="search-service-input" placeholder="Search Services.."></input>
+                              </div>
+                            </div>
+                              <br/>
+                               <apex:outputPanel id="FAQ_D">
+                                  <apex:outputPanel rendered="{!FAQ_D}" >
+                                      <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+                                         <apex:variable var="faqcount" value="{!1}"/>
+                                         <div id="accordion" class="panel-group">
+                                            <apex:repeat value="{!FaqSrdescription}" var="faq_srd">                                              
+                                                    <apex:pageBlock rendered="{!IF(faq_srd.External_Name__c !=null,true,false)}">
+                                                         <div class="panel panel-default service-panel" data-service="{!LOWER(faq_srd.External_Name__c)}">
+                                                            <div class="panel-heading panel-heading-link">
+                                                                <a href="#collapse{!faqcount}" data-parent="#accordion" data-toggle="collapse" class="collapsed">
+                                                                    <div class="row">
+                                                                        <div class="col-md-11 col-sm-11 col-xs-11">
+                                                                            <i class="fa fa-gear"></i>{! faq_srd.External_Name__c}
+                                                                        </div>
+                                                                    </div>
+                                                                </a>                                                               
+                                                            </div>
+                                                            <div class="panel-collapse collapse" id="collapse{!faqcount}">
+                                                              <div class="panel-body">
+                                                                 <div class="row row-table text-center">
+                                                                           <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                              <p class="m0 text-muted">Servicing Agency</p>
+                                                                              <h4 class="m0">{! faq_srd.Agency__c}</h4>
+                                                                           </div>
+                                                                           <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                              <p class="m0 text-muted">Service Resolution Estimate</p>
+                                                                              <h4 class="m0">{! faq_srd.SLA__c} {!faq_srd.SLAType__c}</h4>
+                                                                           </div>
+                                                                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                <p class="m0 text-muted">Description</p>
+                                                                                <div class="h5 mt0 description-text"><p style="word-break: break-word;">{! faq_srd.LongExternalDescription__c}</p></div>
+                                                                           </div>
+                                                                  </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                    </apex:pageBlock> 
+                                                    <apex:pageBlock rendered="{!IF(faq_srd.External_Name__c ==null,true,false)}">
+                                                         <div class="panel panel-default service-panel" data-service="{! LOWER(faq_srd.Service_Name__c)}">
+                                                            <div class="panel-heading panel-heading-link">
+                                                                <a href="#collapse{!faqcount}" data-parent="#accordion" data-toggle="collapse" class="collapsed">
+                                                                    <div class="row">
+                                                                        <div class="col-md-11 col-sm-11 col-xs-11">
+                                                                            <i class="fa fa-gear"></i>{! faq_srd.Service_Name__c}
+                                                                        </div>
+                                                                    </div>
+                                                                </a>                                                                
+                                                            </div>
+                                                            <div class="panel-collapse collapse" id="collapse{!faqcount}">
+                                                              <div class="panel-body">
+                                                                <div class="row row-table text-center">
+                                                                           <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                              <p class="m0 text-muted">Servicing Agency</p>
+                                                                              <h4 class="m0">{! faq_srd.Agency__c}</h4>
+                                                                           </div>
+                                                                           <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                              <p class="m0 text-muted">Service Resolution Estimate</p>
+                                                                              <h4 class="m0">{! faq_srd.SLA__c} {!faq_srd.SLAType__c}</h4>
+                                                                           </div>
+                                                                           <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                <p class="m0 text-muted">Description</p>
+                                                                                <div class="h5 mt0 description-text"><p style="word-break: break-word;">{! faq_srd.LongExternalDescription__c}</p></div>
+                                                                           </div>
+                                                                  </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>                                                    
+                                                    </apex:pageBlock>                                               
+                                                    <apex:variable var="faqcount" value="{!faqcount + 1}"/>                                           
+                                             </apex:repeat>       
+                                         </div>
+                                      </div>
+                                  </apex:outputPanel>
+                               </apex:outputPanel>                                
+                           </div>
+                        </div>
+                                            
+                    </div>
+               </div>
+            </div> 
+            <div class="tab-row-last"></div>                    
+            <!-- ******FOOTER****** --> 
+            <footer class="footer navbar-fixed-bottom visible-md visible-lg">
+                <div class="container">
+                    <small class="copyright pull-left">&copy; 2015 Office of Unified Communications (OUC)</small>
+                </div>
+            </footer><!--//footer-->
+            
+            <c:OUC311_Portal_Scripts /> 
+         </body>
+      </html>
+ 
+</apex:page>

@@ -1,0 +1,48 @@
+<apex:page standardcontroller="Case" standardstylesheets="false" applyhtmltag="false" doctype="html-5.0" showheader="false">
+  <html lang="en">
+    <head>
+      <c:Console311_Header />
+    </head>
+
+    <body>
+      <div class="search-container">
+        <div class="slds-form-element">
+          <div class="slds-form-element__control">
+            <input class="slds-input" id="searchInput" placeholder="Search String..." />
+          </div>
+        </div>
+        <button class="slds-button slds-button--brand col-xs-5 col-md-4" style="margin-top: 5px;" onclick="doSearch();" type="button">
+          <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+        </button>
+      </div>
+      <c:Console311_Scripts datatableenabled="false" datatablesettings="false" />
+
+      <script>
+        /**
+         * doSearch
+         *
+         * @description This function will get the primary tab id and do a callback to open a new subtab with the
+         * the search text prepopulated.
+         * @author Darkis
+         */
+        var doSearch = function doSearch() {
+          // Open new subtab with the url for the search page with a param for the search text.
+          sforce.console.getEnclosingPrimaryTabId(openSearchSubtab);
+        }
+
+        /**
+         * opneSearchSubtab
+         *
+         * @description This function will open the new search subtab with the prepopulated subquery.
+         * @author Darkis
+         */
+        var openSearchSubtab = function openSearchSubtab(result) {
+          // Grab search text
+          var searchText = $('#searchInput').val();
+          // Open the new subtab.
+          sforce.console.openSubtab(result.id, '/apex/Console311_Search?query=' + searchText, true, 'Search: ' + searchText, null);
+        }
+      </script>
+    </body>
+  </html>
+</apex:page>

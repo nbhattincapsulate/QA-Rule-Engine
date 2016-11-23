@@ -1,0 +1,252 @@
+<apex:page controller="FlexNoteQuestionAdminCntrl">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    
+    <script>
+        function confirmDelete() {
+          return confirm('Are you sure you want to delete?');
+        }
+    </script>
+    <style>
+        .popupWindow {
+            background-color: white;
+            border-radius: 1px;
+            border-style: solid;
+            border-width: 1px;
+            left: 50%;
+            margin-left: -400px; 
+            padding: 4px;
+            position: absolute;
+            top: 180px;
+            width: 828px;
+            z-index: 9999;
+        }
+        
+         .datePicker{
+            z-index:10000;
+        }
+        
+        
+        .alpha-link {
+               font-weight: normal;
+               font-size: 91%;
+               padding: 0 4px;
+               color: #015BA7 !important;
+         }
+            
+        .alpha-select {
+           font-weight: bold;
+           text-decoration: none;
+           background-color: #C6E1FF;
+           color: #000000 !important;
+        }
+    </style>
+    
+    <apex:form >
+        <apex:pageBlock >
+          <!--<apex:pageMessages />  -->   
+         
+            <apex:outputPanel id="MainOPId">
+                 <span><br></br></span>
+                <apex:commandbutton action="{!doCreateFlexNoteQuestion}" value="New FlexNote Question"  reRender="popUpPanelId" ></apex:commandbutton>
+            <span><br></br><br></br></span>
+            
+            <span style="float: right; margin: 5px 5px 5px 5px;">
+                <apex:repeat var="a" value="{!alphaList}">
+                    <apex:commandlink action="{!doSearchByAlphabet}" reRender="MainOPId" value="{!a}" styleClass="alpha-link{!if(filterStr=a,' alpha-select','')}">
+                        <apex:param value="{!a}" name="filterName" assignTo="{!filterStr}"></apex:param>
+                    </apex:commandlink>
+                </apex:repeat>
+            </span>
+            
+            <span><br></br><br></br></span>
+            
+            <apex:variable value="{!0}" var="FNQindex"/>
+            <apex:pageBlockTable value="{!FlexNotesQuestionsList}" var="FNQ">
+                
+                <apex:column width="10px">
+                  <apex:facet name="header" ><b>SlNo</b></apex:facet>
+                  <apex:outputlabel value="{!FNQindex+1}"/>
+                </apex:column>          
+                
+                <apex:column width="20px">
+                     <apex:facet name="header" ><b>Action</b></apex:facet>
+                     <apex:outputPanel >
+                     
+                        <apex:commandlink value="Edit" action="{!doEditFlexNoteQuestion}"  rerender="popUpPanelId"  >
+                            <apex:param value="{!FNQ.Id}" name="FNQId" assignTo="{!flexNoteQuestionId}"/><span>&nbsp;||&nbsp;</span>  
+                        </apex:commandlink>
+
+                        <apex:commandlink value="Del" action="{!doDeleteFlexNoteQuestion}" onClick="if (!confirmDelete()) return false;" rerender="MainOPId"  >    
+                            <apex:param value="{!FNQ.Id}" name="FNQ" assignTo="{!flexNoteQuestionId}"/>
+                        </apex:commandlink>
+                           
+                                
+                     </apex:outputPanel>
+                </apex:column>
+                
+                <apex:column >
+                     <apex:facet name="header" ><b>Code</b></apex:facet>
+                     
+                     <a href="/{!FNQ.Id}" target="_blank"><apex:outputText value="{!FNQ.Name}"/></a>
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header" ><b>FlexNoteQuestion Name</b></apex:facet>
+                     <!--<a href="/{!FNQ.Id}" target="_blank"><apex:outputText value="{!FNQ.Questions__c}"/></a>  -->
+                    <apex:outputText value="{!FNQ.Questions__c}"/>
+                </apex:column>
+
+                <apex:column >
+                     <apex:facet name="header" ><b>Object</b></apex:facet>
+                     <apex:outputText value="{!FNQ.Object_Name__c}"/>
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header" ><b>DataType</b></apex:facet>
+                    <apex:outputText value="{!FNQ.Answer_Type__c}"/>
+                </apex:column>
+                
+                <!-- incremmenter will have to remove this -->
+                <apex:column > 
+                    <apex:outputlabel > 
+                      <apex:variable value="{!FNQindex+1}" var="FNQindex"/>
+                    </apex:outputlabel> 
+                </apex:column>
+            </apex:pageBlockTable> 
+           
+           
+            <apex:outPutPanel >
+            <span><br></br></span>
+                <apex:panelGrid columns="7">
+                    <apex:commandLink action="{!firstPage}" rendered="{!hasPreviousPage}">First</apex:commandlink>
+                    <apex:commandLink action="{!previousPage}" rendered="{!hasPreviousPage}">Previous</apex:commandlink>
+                    <apex:outputText value="Page:{!PageNum} of {!TotalPageSize}"></apex:outputText>
+                    <apex:outputText value="Total Records:{!TotalNumber}"></apex:outputText>
+                   <!-- <apex:inputText value="{!noOfRowsToDisplay}"> No of Rows In Page : 
+                        <apex:actionSupport event="onchange" action="{!setNoRowsDisplay}" reRender="pbId,tableOPId">
+                        
+                        </apex:actionSupport> 
+                    </apex:inputText>  -->
+                    <apex:commandLink action="{!nextPage}" rendered="{!hasNextPage}">Next</apex:commandlink> 
+                    <apex:commandLink action="{!lastPage}" rendered="{!hasNextPage}">Last</apex:commandlink>
+                </apex:panelGrid>
+               
+            </apex:outPutPanel>
+    </apex:outputPanel>
+            
+             
+            <apex:outputPanel id="popUpPanelId">
+                <apex:outputPanel layout="block" rendered="{!showPopUp}" styleClass="popupWindow">
+                    <apex:pageblock >
+                        <apex:pageMessages />
+                        <apex:sectionHeader title="FlexNoteQuestion" subtitle="Edit" rendered="{!isEditMode}"/>
+                        <apex:sectionHeader title="FlexNoteQuestion" subtitle="New" rendered="{!if(isEditMode==false,true,false)}"/>
+                        <apex:pageBlockButtons >
+                            <apex:commandbutton value="Save" action="{!doSaveFlexNoteQuestion}" reRender="" rendered="{!if(isEditMode==false,true,false)}"/>
+                            <apex:commandbutton value="Update" action="{!doUpdateFlexNoteQuestion}" reRender="" rendered="{!isEditMode}"/>
+                            <apex:commandbutton value="Cancel" action="{!doCancelFlexNoteQuestion}" reRender=""/>
+                        </apex:pageBlockButtons>
+                        
+                                    <div>
+                                       <table>
+                                            <tr>
+                                                <td  ><strong>Object:</strong></td>
+                                                <td >
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                            <apex:inputField value="{!flexNoteQuestion.Object_Name__c}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                                 
+                                                <td  ><strong>Code:</strong></td>
+                                                <td >
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                            <apex:inputField value="{!flexNoteQuestion.Name}"/>
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table >
+                                            <tr>
+                                                <td> <strong>Question</strong></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                <td><strong> Data Type</strong></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <td><strong>Answer Value</strong></td>&nbsp;&nbsp;
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block">
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                        <apex:inputTextArea value="{!flexNoteQuestion.Questions__c}" style="height: 125px; width: 413px;"/>
+                                                    </apex:outputPanel>
+                                                </td>
+
+                                                <td>
+                                                    <apex:outputPanel styleClass="requiredInput" layout="block" >
+                                                        <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                                        <apex:inputField value="{!flexNoteQuestion.Answer_Type__c}">
+                                                            <apex:actionSupport action="{!doConditionalRequiredRender}" event="onchange" reRender="popUpPanelId">
+                                                                <apex:param value="{!flexNoteQuestion.Answer_Type__c}" name="DataType" assignTo="{!dataTypeName}"/>
+                                                            </apex:actionSupport>
+                                                        </apex:inputField>
+                                                    </apex:outputPanel>
+                                                </td>
+
+                                                <td >
+                                                    <apex:outputPanel id="dataTypeOPId" >
+                                                        <apex:inputTextarea value="{!flexNoteQuestion.AnswerValues__c}"  style="width:281px;height:55px;"/>
+                                                       <!--<apex:inputField value="{!flexNoteQuestion.AnswerValues__c}" rendered="{!if(conditionalRequired==false,true,false)}"/>
+                                                        <apex:outputPanel styleClass="requiredInput" layout="block" rendered="{!conditionalRequired}">
+                                                            <apex:outputPanel styleClass="requiredBlock" layout="block" />
+                                                            <apex:inputField value="{!flexNoteQuestion.AnswerValues__c}" />
+                                                        </apex:outputPanel>  --> 
+                                                    </apex:outputPanel>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <table  >
+                                          <tr>
+                                            <td colspan="4"><strong >Flex Notes Attributes:</strong></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="4"></td>
+                                          </tr>
+                                          
+                                          <tr>
+                                            <td width="110"><strong>Hint Text:</strong></td>
+                                            <td width="313"><apex:inputField value="{!flexNoteQuestion.Hint_Text__c}"/></td>
+                                            <td width="251"><strong>List:</strong></td>
+                                            <td width="210"><apex:inputField value="{!flexNoteQuestion.List__c}"/></td>
+                                          </tr>
+                                          <tr>
+                                            <td><strong>Access Classification</strong></td>
+                                            <td><apex:inputField value="{!flexNoteQuestion.Access_Classification__c}"/></td>
+                                            <td><strong>Start Date:</strong></td>
+                                            <td><apex:inputField value="{!flexNoteQuestion.Start_Date__c}"/></td>
+                                          </tr>
+                                          <tr>
+                                            
+                                            <td ><strong>Stop Date:</strong></td>
+                                            <td ><apex:inputField value="{!flexNoteQuestion.Stop_Date__c}"/></td>
+                                            <td></td>
+                                            <td></td>
+                                          </tr>
+                                        </table>
+                                    </div>
+                      </apex:pageblock>
+                  </apex:outputPanel>
+              </apex:outputPanel>
+              
+              
+              
+              
+              
+              
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

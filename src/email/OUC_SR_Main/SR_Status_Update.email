@@ -1,0 +1,12 @@
+Automated Response E-mail Notification:  Service Request Status Update - DO NOT REPLY
+Your Service Request has been updated!
+
+Servicing Agency:  {!Case.Servicing_Agency__c}
+Service Request Type:  {!Case.SRType__c} 
+Service Request Number:   {!Case.CaseNumber}
+Location (if applicable):  {!Case.Address__c}
+Service Request Status:  {!Case.Reason}
+
+If you require additional information or the issue has not been resolved, please refer to the agency website at 311.dc.gov for more information.  If this is an urgent matter or hazardous condition, please call 311.  
+
+DC 311

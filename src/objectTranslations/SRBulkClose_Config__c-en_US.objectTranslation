@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>SR Bulk Close Config</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>SR Bulk Close Config</value>
+    </caseValues>
+    <fields>
+        <help><!-- Please enter a number between 1 - 1000. Any number greater than 1000 will be capped to 1000. --></help>
+        <label><!-- Max Number of Records to Process --></label>
+        <name>Max_Number_of_Records_to_Process__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

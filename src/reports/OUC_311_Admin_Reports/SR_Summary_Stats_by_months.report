@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Service_Request_History__c$Jurisdiction_Code__c</field>
+    </columns>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Service_Request_History__c$Status__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>Service_Request_History__c$DateTimeOpened__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>SR Summary Stats by months</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>SR_Histories_and_Flex_Note_histories__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Service_Request_History__c$DateTimeOpened__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

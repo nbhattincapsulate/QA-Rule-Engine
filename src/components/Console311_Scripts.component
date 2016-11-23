@@ -1,0 +1,54 @@
+<apex:component >
+    
+    <!-- Component Input Attributes  -->
+    <apex:attribute name="dataTableEnabled" description="Flag to indicate whether datatable is enabled" type="Boolean" required="true"/>
+    <apex:attribute name="dataTableSettings" description="Data table settings" type="String" required="true"/>
+    
+    <apex:outputPanel layout="none" rendered="{!dataTableEnabled}">
+        <apex:includeScript value="/support/console/32.0/integration.js"/>  
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> 
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
+        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"/> 
+        <apex:includeScript value="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"/>
+        <script>
+            var tableSettings={!dataTableSettings}; 
+            var pageSize=tableSettings.PageSize.Value__c;
+            var lengthChange=tableSettings.LengthChange.Value__c;
+            var displaySearch=tableSettings.DisplaySearch.Value__c;
+            
+            console.log("pageSize "+pageSize);
+            console.log("lengthChange "+eval(lengthChange));
+            console.log("displaySearch "+eval(displaySearch));
+            
+                function onCompleteHandler(){               
+                    j$('.nav-tabs > li:first-child').addClass('active');
+                    j$('#myTabContent > div:first-child').addClass('active');
+                    j$.each(objectList, function( index, value ) {                   
+                          j$('#results-table-'+value).DataTable({                           
+                            "pageLength": parseInt(pageSize),
+                             "searching": eval(displaySearch),
+                             "lengthChange": eval(lengthChange)
+                        } );  
+                    });
+                }
+        </script>
+    </apex:outputPanel>
+    
+    <apex:outputPanel layout="none" rendered="{!(!dataTableEnabled)}" >
+        <apex:includeScript value="/support/console/32.0/integration.js"/>  
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"/> 
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
+            <script>
+                function onCompleteHandler(){          
+                    j$('.nav-tabs > li:first-child').addClass('active');
+                    j$('#myTabContent > div:first-child').addClass('active');                
+				}
+        </script>
+    </apex:outputPanel>  
+    
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/moment/moment.min.js')}"/> 
+    <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.0/moment-timezone-with-data.min.js"/>
+    <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.3/js/bootstrap-select.min.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.OUC311, 'OUC311/assets/plugins/jquery-ui/jquery-ui.min.js')}"/>  
+</apex:component>
